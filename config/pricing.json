@@ -1,0 +1,6 @@
+{
+  "retail": {"currency":"EUR","setup_eur":4.5,"machine_eur_hour":3.6,"labor_eur":1.5,"material_markup":2.2,"risk_percent":0.10,"minimum_eur":9.9,"vat_percent":0},
+  "stampa3dbologna": {"currency":"EUR","setup_eur":4.5,"machine_eur_hour":3.6,"labor_eur":1.5,"material_markup":2.2,"risk_percent":0.10,"minimum_eur":9.9,"vat_percent":0},
+  "reborn": {"currency":"EUR","setup_eur":4.5,"machine_eur_hour":3.6,"labor_eur":1.8,"material_markup":2.2,"risk_percent":0.12,"platform_percent":0.10,"minimum_eur":11.9,"vat_percent":0},
+  "internal": {"currency":"EUR","setup_eur":0,"machine_eur_hour":2.2,"labor_eur":0,"material_markup":1.0,"risk_percent":0.04,"minimum_eur":0,"vat_percent":0}
+}

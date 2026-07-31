@@ -1,0 +1,8 @@
+{
+  "random": {"label":"Colore casuale","price_factor":0.95,"description":"Affetta usa un colore disponibile compatibile."},
+  "black": {"label":"Nero","price_factor":1.0},
+  "white": {"label":"Bianco","price_factor":1.0},
+  "red": {"label":"Rosso","price_factor":1.0},
+  "blue": {"label":"Blu","price_factor":1.0},
+  "custom": {"label":"Altro colore","price_factor":1.08}
+}

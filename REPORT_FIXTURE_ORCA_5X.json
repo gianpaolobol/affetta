@@ -1,0 +1,684 @@
+{
+  "version": "0.4.11",
+  "generated_at": "2026-07-31T11:37:24.350Z",
+  "base_url": "http://127.0.0.1:18987",
+  "mode": "single_route_repeat",
+  "requested_route": "orca",
+  "cycles": 5,
+  "poll_ms": 500,
+  "max_polls": 900,
+  "transport_retries": 3,
+  "health": {
+    "success": true,
+    "service": "affetta",
+    "version": "0.4.11",
+    "api_version": "v1",
+    "instance_id": "fixture-report-0411",
+    "build_id": "fixture-report-0411",
+    "time": "2026-07-31T11:37:24.374Z",
+    "public_mode": true,
+    "mail_mode": "log",
+    "process_id": 7664,
+    "uptime_seconds": 0,
+    "memory_rss_bytes": 66678784,
+    "cwd": "/mnt/data/affetta-v0.4.11-real-state",
+    "exec_path": "/opt/nvm/versions/node/v22.16.0/bin/node"
+  },
+  "runs": [
+    {
+      "cycle": 1,
+      "route": "orca",
+      "printer_id": "bambu-x1c",
+      "started_at": "2026-07-31T11:37:24.380Z",
+      "job_id": "slice_ms8vbe02_c0fc8ed439",
+      "phases": [
+        {
+          "phase": "create_job",
+          "url": "http://127.0.0.1:18987/api/v1/affetta-jobs",
+          "method": "POST",
+          "started_at": "2026-07-31T11:37:24.380Z",
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "POST",
+              "url": "http://127.0.0.1:18987/api/v1/affetta-jobs",
+              "started_at": "2026-07-31T11:37:24.380Z",
+              "completed_at": "2026-07-31T11:37:24.389Z",
+              "duration_ms": 9,
+              "status": 202,
+              "ok": true,
+              "request_id": "req_ms8vbdzz_524b0feffe"
+            }
+          ],
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:24.389Z",
+          "status": 202
+        },
+        {
+          "phase": "poll_job",
+          "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbe02_c0fc8ed439",
+          "job_id": "slice_ms8vbe02_c0fc8ed439",
+          "started_at": "2026-07-31T11:37:24.390Z",
+          "poll_iterations": 1,
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "GET",
+              "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbe02_c0fc8ed439",
+              "started_at": "2026-07-31T11:37:24.890Z",
+              "completed_at": "2026-07-31T11:37:24.893Z",
+              "duration_ms": 3,
+              "status": 200,
+              "ok": true,
+              "request_id": "req_ms8vbee3_2bc1373a7d"
+            }
+          ],
+          "transport_recoveries": 0,
+          "last_job_status": "completed",
+          "last_job_phase": "completed",
+          "last_progress": 100,
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:24.893Z",
+          "duration_ms": 503
+        },
+        {
+          "phase": "download_artifact",
+          "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbe02_c0fc8ed439/artifact?token=dl_ms8vbe02_767cceee29",
+          "job_id": "slice_ms8vbe02_c0fc8ed439",
+          "started_at": "2026-07-31T11:37:24.894Z",
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "GET",
+              "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbe02_c0fc8ed439/artifact?token=dl_ms8vbe02_767cceee29",
+              "started_at": "2026-07-31T11:37:24.894Z",
+              "completed_at": "2026-07-31T11:37:24.897Z",
+              "duration_ms": 3,
+              "status": 200,
+              "ok": true,
+              "bytes": 24016,
+              "request_id": null
+            }
+          ],
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:24.897Z",
+          "bytes": 24016
+        }
+      ],
+      "ok": true,
+      "completed_at": "2026-07-31T11:37:24.899Z",
+      "gcode_bytes": 24016,
+      "time_seconds": 1800,
+      "filament_g": 2.36,
+      "print_ready": true,
+      "server_alive_after_success": true,
+      "server_probe_after_success": {
+        "alive": true,
+        "attempt": 1,
+        "status": 200,
+        "duration_ms": 2,
+        "process_id": 7664,
+        "pid_file_alive": null,
+        "health": {
+          "success": true,
+          "service": "affetta",
+          "version": "0.4.11",
+          "api_version": "v1",
+          "instance_id": "fixture-report-0411",
+          "build_id": "fixture-report-0411",
+          "time": "2026-07-31T11:37:24.898Z",
+          "public_mode": true,
+          "mail_mode": "log",
+          "process_id": 7664,
+          "uptime_seconds": 1,
+          "memory_rss_bytes": 69623808,
+          "cwd": "/mnt/data/affetta-v0.4.11-real-state",
+          "exec_path": "/opt/nvm/versions/node/v22.16.0/bin/node"
+        }
+      }
+    },
+    {
+      "cycle": 2,
+      "route": "orca",
+      "printer_id": "bambu-x1c",
+      "started_at": "2026-07-31T11:37:24.900Z",
+      "job_id": "slice_ms8vbeee_d640d67947",
+      "phases": [
+        {
+          "phase": "create_job",
+          "url": "http://127.0.0.1:18987/api/v1/affetta-jobs",
+          "method": "POST",
+          "started_at": "2026-07-31T11:37:24.900Z",
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "POST",
+              "url": "http://127.0.0.1:18987/api/v1/affetta-jobs",
+              "started_at": "2026-07-31T11:37:24.900Z",
+              "completed_at": "2026-07-31T11:37:24.906Z",
+              "duration_ms": 6,
+              "status": 202,
+              "ok": true,
+              "request_id": "req_ms8vbeed_017da5bef3"
+            }
+          ],
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:24.906Z",
+          "status": 202
+        },
+        {
+          "phase": "poll_job",
+          "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbeee_d640d67947",
+          "job_id": "slice_ms8vbeee_d640d67947",
+          "started_at": "2026-07-31T11:37:24.906Z",
+          "poll_iterations": 1,
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "GET",
+              "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbeee_d640d67947",
+              "started_at": "2026-07-31T11:37:25.406Z",
+              "completed_at": "2026-07-31T11:37:25.409Z",
+              "duration_ms": 3,
+              "status": 200,
+              "ok": true,
+              "request_id": "req_ms8vbesg_dcb6bf1818"
+            }
+          ],
+          "transport_recoveries": 0,
+          "last_job_status": "completed",
+          "last_job_phase": "completed",
+          "last_progress": 100,
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:25.409Z",
+          "duration_ms": 503
+        },
+        {
+          "phase": "download_artifact",
+          "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbeee_d640d67947/artifact?token=dl_ms8vbeee_e34565130d",
+          "job_id": "slice_ms8vbeee_d640d67947",
+          "started_at": "2026-07-31T11:37:25.409Z",
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "GET",
+              "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbeee_d640d67947/artifact?token=dl_ms8vbeee_e34565130d",
+              "started_at": "2026-07-31T11:37:25.410Z",
+              "completed_at": "2026-07-31T11:37:25.412Z",
+              "duration_ms": 2,
+              "status": 200,
+              "ok": true,
+              "bytes": 24016,
+              "request_id": null
+            }
+          ],
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:25.412Z",
+          "bytes": 24016
+        }
+      ],
+      "ok": true,
+      "completed_at": "2026-07-31T11:37:25.413Z",
+      "gcode_bytes": 24016,
+      "time_seconds": 1800,
+      "filament_g": 2.36,
+      "print_ready": true,
+      "server_alive_after_success": true,
+      "server_probe_after_success": {
+        "alive": true,
+        "attempt": 1,
+        "status": 200,
+        "duration_ms": 1,
+        "process_id": 7664,
+        "pid_file_alive": null,
+        "health": {
+          "success": true,
+          "service": "affetta",
+          "version": "0.4.11",
+          "api_version": "v1",
+          "instance_id": "fixture-report-0411",
+          "build_id": "fixture-report-0411",
+          "time": "2026-07-31T11:37:25.412Z",
+          "public_mode": true,
+          "mail_mode": "log",
+          "process_id": 7664,
+          "uptime_seconds": 1,
+          "memory_rss_bytes": 71852032,
+          "cwd": "/mnt/data/affetta-v0.4.11-real-state",
+          "exec_path": "/opt/nvm/versions/node/v22.16.0/bin/node"
+        }
+      }
+    },
+    {
+      "cycle": 3,
+      "route": "orca",
+      "printer_id": "bambu-x1c",
+      "started_at": "2026-07-31T11:37:25.414Z",
+      "job_id": "slice_ms8vbesn_54edacbf89",
+      "phases": [
+        {
+          "phase": "create_job",
+          "url": "http://127.0.0.1:18987/api/v1/affetta-jobs",
+          "method": "POST",
+          "started_at": "2026-07-31T11:37:25.414Z",
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "POST",
+              "url": "http://127.0.0.1:18987/api/v1/affetta-jobs",
+              "started_at": "2026-07-31T11:37:25.414Z",
+              "completed_at": "2026-07-31T11:37:25.419Z",
+              "duration_ms": 5,
+              "status": 202,
+              "ok": true,
+              "request_id": "req_ms8vbesn_2bbc9caff1"
+            }
+          ],
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:25.419Z",
+          "status": 202
+        },
+        {
+          "phase": "poll_job",
+          "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbesn_54edacbf89",
+          "job_id": "slice_ms8vbesn_54edacbf89",
+          "started_at": "2026-07-31T11:37:25.419Z",
+          "poll_iterations": 1,
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "GET",
+              "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbesn_54edacbf89",
+              "started_at": "2026-07-31T11:37:25.919Z",
+              "completed_at": "2026-07-31T11:37:25.921Z",
+              "duration_ms": 2,
+              "status": 200,
+              "ok": true,
+              "request_id": "req_ms8vbf6o_4e4c7ef805"
+            }
+          ],
+          "transport_recoveries": 0,
+          "last_job_status": "completed",
+          "last_job_phase": "completed",
+          "last_progress": 100,
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:25.921Z",
+          "duration_ms": 502
+        },
+        {
+          "phase": "download_artifact",
+          "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbesn_54edacbf89/artifact?token=dl_ms8vbeso_c9e7ea07a0",
+          "job_id": "slice_ms8vbesn_54edacbf89",
+          "started_at": "2026-07-31T11:37:25.922Z",
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "GET",
+              "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbesn_54edacbf89/artifact?token=dl_ms8vbeso_c9e7ea07a0",
+              "started_at": "2026-07-31T11:37:25.922Z",
+              "completed_at": "2026-07-31T11:37:25.923Z",
+              "duration_ms": 1,
+              "status": 200,
+              "ok": true,
+              "bytes": 24016,
+              "request_id": null
+            }
+          ],
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:25.923Z",
+          "bytes": 24016
+        }
+      ],
+      "ok": true,
+      "completed_at": "2026-07-31T11:37:25.924Z",
+      "gcode_bytes": 24016,
+      "time_seconds": 1800,
+      "filament_g": 2.36,
+      "print_ready": true,
+      "server_alive_after_success": true,
+      "server_probe_after_success": {
+        "alive": true,
+        "attempt": 1,
+        "status": 200,
+        "duration_ms": 0,
+        "process_id": 7664,
+        "pid_file_alive": null,
+        "health": {
+          "success": true,
+          "service": "affetta",
+          "version": "0.4.11",
+          "api_version": "v1",
+          "instance_id": "fixture-report-0411",
+          "build_id": "fixture-report-0411",
+          "time": "2026-07-31T11:37:25.924Z",
+          "public_mode": true,
+          "mail_mode": "log",
+          "process_id": 7664,
+          "uptime_seconds": 2,
+          "memory_rss_bytes": 73031680,
+          "cwd": "/mnt/data/affetta-v0.4.11-real-state",
+          "exec_path": "/opt/nvm/versions/node/v22.16.0/bin/node"
+        }
+      }
+    },
+    {
+      "cycle": 4,
+      "route": "orca",
+      "printer_id": "bambu-x1c",
+      "started_at": "2026-07-31T11:37:25.925Z",
+      "job_id": "slice_ms8vbf6u_013c14c1c3",
+      "phases": [
+        {
+          "phase": "create_job",
+          "url": "http://127.0.0.1:18987/api/v1/affetta-jobs",
+          "method": "POST",
+          "started_at": "2026-07-31T11:37:25.925Z",
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "POST",
+              "url": "http://127.0.0.1:18987/api/v1/affetta-jobs",
+              "started_at": "2026-07-31T11:37:25.925Z",
+              "completed_at": "2026-07-31T11:37:25.930Z",
+              "duration_ms": 5,
+              "status": 202,
+              "ok": true,
+              "request_id": "req_ms8vbf6u_d80c05d95d"
+            }
+          ],
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:25.930Z",
+          "status": 202
+        },
+        {
+          "phase": "poll_job",
+          "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbf6u_013c14c1c3",
+          "job_id": "slice_ms8vbf6u_013c14c1c3",
+          "started_at": "2026-07-31T11:37:25.930Z",
+          "poll_iterations": 1,
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "GET",
+              "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbf6u_013c14c1c3",
+              "started_at": "2026-07-31T11:37:26.430Z",
+              "completed_at": "2026-07-31T11:37:26.432Z",
+              "duration_ms": 2,
+              "status": 200,
+              "ok": true,
+              "request_id": "req_ms8vbfkv_8af6ab2080"
+            }
+          ],
+          "transport_recoveries": 0,
+          "last_job_status": "completed",
+          "last_job_phase": "completed",
+          "last_progress": 100,
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:26.432Z",
+          "duration_ms": 502
+        },
+        {
+          "phase": "download_artifact",
+          "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbf6u_013c14c1c3/artifact?token=dl_ms8vbf6v_c5b2cde346",
+          "job_id": "slice_ms8vbf6u_013c14c1c3",
+          "started_at": "2026-07-31T11:37:26.433Z",
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "GET",
+              "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbf6u_013c14c1c3/artifact?token=dl_ms8vbf6v_c5b2cde346",
+              "started_at": "2026-07-31T11:37:26.433Z",
+              "completed_at": "2026-07-31T11:37:26.434Z",
+              "duration_ms": 1,
+              "status": 200,
+              "ok": true,
+              "bytes": 24016,
+              "request_id": null
+            }
+          ],
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:26.434Z",
+          "bytes": 24016
+        }
+      ],
+      "ok": true,
+      "completed_at": "2026-07-31T11:37:26.435Z",
+      "gcode_bytes": 24016,
+      "time_seconds": 1800,
+      "filament_g": 2.36,
+      "print_ready": true,
+      "server_alive_after_success": true,
+      "server_probe_after_success": {
+        "alive": true,
+        "attempt": 1,
+        "status": 200,
+        "duration_ms": 1,
+        "process_id": 7664,
+        "pid_file_alive": null,
+        "health": {
+          "success": true,
+          "service": "affetta",
+          "version": "0.4.11",
+          "api_version": "v1",
+          "instance_id": "fixture-report-0411",
+          "build_id": "fixture-report-0411",
+          "time": "2026-07-31T11:37:26.435Z",
+          "public_mode": true,
+          "mail_mode": "log",
+          "process_id": 7664,
+          "uptime_seconds": 2,
+          "memory_rss_bytes": 73555968,
+          "cwd": "/mnt/data/affetta-v0.4.11-real-state",
+          "exec_path": "/opt/nvm/versions/node/v22.16.0/bin/node"
+        }
+      }
+    },
+    {
+      "cycle": 5,
+      "route": "orca",
+      "printer_id": "bambu-x1c",
+      "started_at": "2026-07-31T11:37:26.435Z",
+      "job_id": "slice_ms8vbfl1_67e06f0095",
+      "phases": [
+        {
+          "phase": "create_job",
+          "url": "http://127.0.0.1:18987/api/v1/affetta-jobs",
+          "method": "POST",
+          "started_at": "2026-07-31T11:37:26.436Z",
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "POST",
+              "url": "http://127.0.0.1:18987/api/v1/affetta-jobs",
+              "started_at": "2026-07-31T11:37:26.436Z",
+              "completed_at": "2026-07-31T11:37:26.440Z",
+              "duration_ms": 4,
+              "status": 202,
+              "ok": true,
+              "request_id": "req_ms8vbfl0_a5c10d2262"
+            }
+          ],
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:26.440Z",
+          "status": 202
+        },
+        {
+          "phase": "poll_job",
+          "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbfl1_67e06f0095",
+          "job_id": "slice_ms8vbfl1_67e06f0095",
+          "started_at": "2026-07-31T11:37:26.440Z",
+          "poll_iterations": 1,
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "GET",
+              "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbfl1_67e06f0095",
+              "started_at": "2026-07-31T11:37:26.942Z",
+              "completed_at": "2026-07-31T11:37:26.944Z",
+              "duration_ms": 2,
+              "status": 200,
+              "ok": true,
+              "request_id": "req_ms8vbfz3_d2056fbed7"
+            }
+          ],
+          "transport_recoveries": 0,
+          "last_job_status": "completed",
+          "last_job_phase": "completed",
+          "last_progress": 100,
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:26.944Z",
+          "duration_ms": 503
+        },
+        {
+          "phase": "download_artifact",
+          "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbfl1_67e06f0095/artifact?token=dl_ms8vbfl1_e52011b49b",
+          "job_id": "slice_ms8vbfl1_67e06f0095",
+          "started_at": "2026-07-31T11:37:26.944Z",
+          "requests": [
+            {
+              "attempt": 1,
+              "method": "GET",
+              "url": "http://127.0.0.1:18987/api/v1/slice-jobs/slice_ms8vbfl1_67e06f0095/artifact?token=dl_ms8vbfl1_e52011b49b",
+              "started_at": "2026-07-31T11:37:26.944Z",
+              "completed_at": "2026-07-31T11:37:26.946Z",
+              "duration_ms": 2,
+              "status": 200,
+              "ok": true,
+              "bytes": 24016,
+              "request_id": null
+            }
+          ],
+          "ok": true,
+          "completed_at": "2026-07-31T11:37:26.946Z",
+          "bytes": 24016
+        }
+      ],
+      "ok": true,
+      "completed_at": "2026-07-31T11:37:26.947Z",
+      "gcode_bytes": 24016,
+      "time_seconds": 1800,
+      "filament_g": 2.36,
+      "print_ready": true,
+      "server_alive_after_success": true,
+      "server_probe_after_success": {
+        "alive": true,
+        "attempt": 1,
+        "status": 200,
+        "duration_ms": 1,
+        "process_id": 7664,
+        "pid_file_alive": null,
+        "health": {
+          "success": true,
+          "service": "affetta",
+          "version": "0.4.11",
+          "api_version": "v1",
+          "instance_id": "fixture-report-0411",
+          "build_id": "fixture-report-0411",
+          "time": "2026-07-31T11:37:26.946Z",
+          "public_mode": true,
+          "mail_mode": "log",
+          "process_id": 7664,
+          "uptime_seconds": 3,
+          "memory_rss_bytes": 74080256,
+          "cwd": "/mnt/data/affetta-v0.4.11-real-state",
+          "exec_path": "/opt/nvm/versions/node/v22.16.0/bin/node"
+        }
+      }
+    }
+  ],
+  "routes": {
+    "orca": {
+      "printer_id": "bambu-x1c",
+      "attempts": 5,
+      "successes": 5,
+      "failures": 0,
+      "runs": [
+        {
+          "cycle": 1,
+          "ok": true,
+          "job_id": "slice_ms8vbe02_c0fc8ed439",
+          "gcode_bytes": 24016
+        },
+        {
+          "cycle": 2,
+          "ok": true,
+          "job_id": "slice_ms8vbeee_d640d67947",
+          "gcode_bytes": 24016
+        },
+        {
+          "cycle": 3,
+          "ok": true,
+          "job_id": "slice_ms8vbesn_54edacbf89",
+          "gcode_bytes": 24016
+        },
+        {
+          "cycle": 4,
+          "ok": true,
+          "job_id": "slice_ms8vbf6u_013c14c1c3",
+          "gcode_bytes": 24016
+        },
+        {
+          "cycle": 5,
+          "ok": true,
+          "job_id": "slice_ms8vbfl1_67e06f0095",
+          "gcode_bytes": 24016
+        }
+      ]
+    }
+  },
+  "ok": true,
+  "health_check": {
+    "phases": [
+      {
+        "phase": "health",
+        "url": "http://127.0.0.1:18987/api/v1/health",
+        "method": "GET",
+        "started_at": "2026-07-31T11:37:24.351Z",
+        "requests": [
+          {
+            "attempt": 1,
+            "method": "GET",
+            "url": "http://127.0.0.1:18987/api/v1/health",
+            "started_at": "2026-07-31T11:37:24.351Z",
+            "completed_at": "2026-07-31T11:37:24.379Z",
+            "duration_ms": 28,
+            "status": 200,
+            "ok": true,
+            "request_id": "req_ms8vbdzq_f11335fac7"
+          }
+        ],
+        "ok": true,
+        "completed_at": "2026-07-31T11:37:24.380Z",
+        "status": 200
+      }
+    ]
+  },
+  "server_process_id": 7664,
+  "server_cwd": "/mnt/data/affetta-v0.4.11-real-state",
+  "server_exec_path": "/opt/nvm/versions/node/v22.16.0/bin/node",
+  "completed_at": "2026-07-31T11:37:26.947Z",
+  "final_server_probe": {
+    "alive": true,
+    "attempt": 1,
+    "status": 200,
+    "duration_ms": 1,
+    "process_id": 7664,
+    "pid_file_alive": null,
+    "health": {
+      "success": true,
+      "service": "affetta",
+      "version": "0.4.11",
+      "api_version": "v1",
+      "instance_id": "fixture-report-0411",
+      "build_id": "fixture-report-0411",
+      "time": "2026-07-31T11:37:26.947Z",
+      "public_mode": true,
+      "mail_mode": "log",
+      "process_id": 7664,
+      "uptime_seconds": 3,
+      "memory_rss_bytes": 74080256,
+      "cwd": "/mnt/data/affetta-v0.4.11-real-state",
+      "exec_path": "/opt/nvm/versions/node/v22.16.0/bin/node"
+    }
+  }
+}

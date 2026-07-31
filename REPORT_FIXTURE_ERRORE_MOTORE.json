@@ -1,0 +1,137 @@
+{
+  "generated_at": "2026-07-31T11:37:33.428Z",
+  "test": "simulated_engine_failure_http_isolation",
+  "isolated_base_url": "http://127.0.0.1:46619",
+  "isolated_server_pid": 7908,
+  "ok": true,
+  "health_before": {
+    "success": true,
+    "service": "affetta",
+    "version": "0.4.11",
+    "api_version": "v1",
+    "instance_id": "acceptance-engine-failure",
+    "build_id": "acceptance-engine-failure",
+    "time": "2026-07-31T11:37:33.554Z",
+    "public_mode": true,
+    "mail_mode": "log",
+    "process_id": 7908,
+    "uptime_seconds": 0,
+    "memory_rss_bytes": 66727936,
+    "cwd": "/mnt/data/affetta-v0.4.11-real-state",
+    "exec_path": "/opt/nvm/versions/node/v22.16.0/bin/node"
+  },
+  "create_status": 202,
+  "job_id": "slice_ms8vbl31_b45c6885ad",
+  "last_poll": {
+    "attempt": 1,
+    "status": 422,
+    "body": {
+      "success": false,
+      "api_version": "v1",
+      "error": {
+        "code": "all_engines_failed",
+        "message": "Nessun motore compatibile ha completato lo slicing. orca: node terminato con codice 23: fixture stderr: guasto motore simulato\n",
+        "stage": "slice_engine"
+      },
+      "job": {
+        "id": "slice_ms8vbl31_b45c6885ad",
+        "tenant": "public",
+        "source": "failure-isolation-selftest",
+        "external_ref": null,
+        "metadata": {
+          "simulated": "true"
+        },
+        "status": "failed",
+        "phase": "failed",
+        "progress": 100,
+        "message": "Slicing non riuscito",
+        "created_at": "2026-07-31T11:37:33.565Z",
+        "updated_at": "2026-07-31T11:37:33.648Z",
+        "filename": "cube20.stl",
+        "model_sha256": "f8d125e5fd14e37eee89352bced4e7eb1f0ee0c54c8ace6468aa9c2d110402b7",
+        "model_analysis": {
+          "format": "stl-ascii",
+          "triangles": 12,
+          "bounds_mm": {
+            "min": [
+              0,
+              0,
+              0
+            ],
+            "max": [
+              20,
+              20,
+              20
+            ],
+            "size": [
+              20,
+              20,
+              20
+            ]
+          },
+          "volume_mm3": 8000,
+          "surface_area_mm2": 2400,
+          "warnings": []
+        },
+        "layout": {
+          "quantity": 1,
+          "columns": 1,
+          "rows": 1,
+          "spacing_mm": 0
+        },
+        "selections": {
+          "material_id": "pla",
+          "quality_id": "standard",
+          "strength_id": "standard",
+          "color_id": "random",
+          "custom_color": null,
+          "quantity": 1,
+          "pricing_mode": null,
+          "source": "failure-isolation-selftest",
+          "external_ref": null,
+          "metadata": {
+            "simulated": "true"
+          },
+          "printer_id": "bambu-x1c",
+          "nozzle_mm": 0.4
+        },
+        "printer": {
+          "id": "bambu-x1c",
+          "label": "Bambu Lab X1 Carbon",
+          "profile_status": "engine-tested"
+        },
+        "result": null,
+        "error": {
+          "code": "all_engines_failed",
+          "message": "Nessun motore compatibile ha completato lo slicing. orca: node terminato con codice 23: fixture stderr: guasto motore simulato\n",
+          "stage": "slice_engine"
+        },
+        "api_version": "v1",
+        "artifact_url": null
+      }
+    }
+  },
+  "health_after": {
+    "success": true,
+    "service": "affetta",
+    "version": "0.4.11",
+    "api_version": "v1",
+    "instance_id": "acceptance-engine-failure",
+    "build_id": "acceptance-engine-failure",
+    "time": "2026-07-31T11:37:33.671Z",
+    "public_mode": true,
+    "mail_mode": "log",
+    "process_id": 7908,
+    "uptime_seconds": 0,
+    "memory_rss_bytes": 68493312,
+    "cwd": "/mnt/data/affetta-v0.4.11-real-state",
+    "exec_path": "/opt/nvm/versions/node/v22.16.0/bin/node"
+  },
+  "diagnostics": {
+    "engine_process_failed": true,
+    "stderr_captured": true,
+    "job_id_captured": true,
+    "http_422_captured": true
+  },
+  "completed_at": "2026-07-31T11:37:33.672Z"
+}

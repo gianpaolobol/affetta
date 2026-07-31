@@ -1,0 +1,6 @@
+{
+  "light": {"label":"Leggera","infill_percent":12,"walls":2,"pattern":"grid","material_factor":0.78,"time_factor":0.82},
+  "standard": {"label":"Normale","infill_percent":22,"walls":3,"pattern":"gyroid","material_factor":1.0,"time_factor":1.0},
+  "strong": {"label":"Resistente","infill_percent":45,"walls":4,"pattern":"gyroid","material_factor":1.34,"time_factor":1.28},
+  "solid": {"label":"Piena","infill_percent":100,"walls":5,"pattern":"rectilinear","material_factor":2.05,"time_factor":1.78}
+}

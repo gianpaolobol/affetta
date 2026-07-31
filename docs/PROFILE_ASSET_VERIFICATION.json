@@ -1,0 +1,3529 @@
+{
+  "generated_at": "2026-07-31T00:42:54.694Z",
+  "cases": [
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "pla",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.14mm Standard @BBL X1C 0.2 nozzle",
+      "filament": "Generic PLA @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.14mm Standard @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic PLA @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "pla",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.10mm High Quality @BBL X1C 0.2 nozzle",
+      "filament": "Generic PLA @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.10mm High Quality @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic PLA @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "pla",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.06mm High Quality @BBL X1C 0.2 nozzle",
+      "filament": "Generic PLA @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.06mm High Quality @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic PLA @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "pla",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.06mm Standard @BBL X1C 0.2 nozzle",
+      "filament": "Generic PLA @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.06mm Standard @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic PLA @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "petg",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.14mm Standard @BBL X1C 0.2 nozzle",
+      "filament": "Generic PETG @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.14mm Standard @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic PETG @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "petg",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.10mm High Quality @BBL X1C 0.2 nozzle",
+      "filament": "Generic PETG @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.10mm High Quality @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic PETG @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "petg",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.06mm High Quality @BBL X1C 0.2 nozzle",
+      "filament": "Generic PETG @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.06mm High Quality @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic PETG @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "petg",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.06mm Standard @BBL X1C 0.2 nozzle",
+      "filament": "Generic PETG @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.06mm Standard @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic PETG @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "abs",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.14mm Standard @BBL X1C 0.2 nozzle",
+      "filament": "Generic ABS @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.14mm Standard @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic ABS @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "abs",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.10mm High Quality @BBL X1C 0.2 nozzle",
+      "filament": "Generic ABS @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.10mm High Quality @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic ABS @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "abs",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.06mm High Quality @BBL X1C 0.2 nozzle",
+      "filament": "Generic ABS @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.06mm High Quality @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic ABS @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "abs",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.06mm Standard @BBL X1C 0.2 nozzle",
+      "filament": "Generic ABS @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.06mm Standard @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic ABS @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "asa",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.14mm Standard @BBL X1C 0.2 nozzle",
+      "filament": "Generic ASA @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.14mm Standard @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic ASA @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "asa",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.10mm High Quality @BBL X1C 0.2 nozzle",
+      "filament": "Generic ASA @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.10mm High Quality @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic ASA @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "asa",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.06mm High Quality @BBL X1C 0.2 nozzle",
+      "filament": "Generic ASA @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.06mm High Quality @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic ASA @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "asa",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.06mm Standard @BBL X1C 0.2 nozzle",
+      "filament": "Generic ASA @0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.06mm Standard @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Generic ASA @0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "tpu",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.14mm Standard @BBL X1C 0.2 nozzle",
+      "filament": "Overture TPU @BBL X1C 0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.14mm Standard @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Overture/Overture TPU @BBL X1C 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "tpu",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.10mm High Quality @BBL X1C 0.2 nozzle",
+      "filament": "Overture TPU @BBL X1C 0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.10mm High Quality @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Overture/Overture TPU @BBL X1C 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "tpu",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.06mm High Quality @BBL X1C 0.2 nozzle",
+      "filament": "Overture TPU @BBL X1C 0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.06mm High Quality @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Overture/Overture TPU @BBL X1C 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.2,
+      "material": "tpu",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.2 nozzle",
+      "process": "0.06mm Standard @BBL X1C 0.2 nozzle",
+      "filament": "Overture TPU @BBL X1C 0.2 nozzle",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.2 nozzle.json",
+        "BBL/process/0.06mm Standard @BBL X1C 0.2 nozzle.json",
+        "BBL/filament/Overture/Overture TPU @BBL X1C 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.28mm Extra Draft @BBL X1C",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.28mm Extra Draft @BBL X1C.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.20mm Standard @BBL X1C",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.20mm Standard @BBL X1C.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.12mm Fine @BBL X1C",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.12mm Fine @BBL X1C.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.08mm Extra Fine @BBL X1C",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.08mm Extra Fine @BBL X1C.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.28mm Extra Draft @BBL X1C",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.28mm Extra Draft @BBL X1C.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.20mm Standard @BBL X1C",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.20mm Standard @BBL X1C.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.12mm Fine @BBL X1C",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.12mm Fine @BBL X1C.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.08mm Extra Fine @BBL X1C",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.08mm Extra Fine @BBL X1C.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.28mm Extra Draft @BBL X1C",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.28mm Extra Draft @BBL X1C.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.20mm Standard @BBL X1C",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.20mm Standard @BBL X1C.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.12mm Fine @BBL X1C",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.12mm Fine @BBL X1C.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.08mm Extra Fine @BBL X1C",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.08mm Extra Fine @BBL X1C.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.28mm Extra Draft @BBL X1C",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.28mm Extra Draft @BBL X1C.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.20mm Standard @BBL X1C",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.20mm Standard @BBL X1C.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.12mm Fine @BBL X1C",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.12mm Fine @BBL X1C.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.08mm Extra Fine @BBL X1C",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.08mm Extra Fine @BBL X1C.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.28mm Extra Draft @BBL X1C",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.28mm Extra Draft @BBL X1C.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.20mm Standard @BBL X1C",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.20mm Standard @BBL X1C.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.12mm Fine @BBL X1C",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.12mm Fine @BBL X1C.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+      "process": "0.08mm Extra Fine @BBL X1C",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "BBL/process/0.08mm Extra Fine @BBL X1C.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.42mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.42mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.30mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.30mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.18mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.18mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.18mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.18mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.42mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.42mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.30mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.30mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.18mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.18mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.18mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.18mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.42mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.42mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.30mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.30mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.18mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.18mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.18mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.18mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.42mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.42mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.30mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.30mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.18mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.18mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.18mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.18mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.42mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.42mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.30mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.30mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.18mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.18mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.6 nozzle",
+      "process": "0.18mm Standard @BBL X1C 0.6 nozzle",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.6 nozzle.json",
+        "BBL/process/0.18mm Standard @BBL X1C 0.6 nozzle.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.56mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.56mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.40mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.40mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.24mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.24mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.24mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic PLA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.24mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.56mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.56mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.40mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.40mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.24mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.24mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.24mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic PETG",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.24mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.56mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.56mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.40mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.40mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.24mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.24mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.24mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic ABS",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.24mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.56mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.56mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.40mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.40mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.24mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.24mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.24mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic ASA",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.24mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.56mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.56mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.40mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.40mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "high",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.24mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.24mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "bambu-x1c",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Bambu Lab X1 Carbon 0.8 nozzle",
+      "process": "0.24mm Standard @BBL X1C 0.8 nozzle",
+      "filament": "Generic TPU",
+      "files": [
+        "BBL/machine/Bambu Lab X1 Carbon 0.8 nozzle.json",
+        "BBL/process/0.24mm Standard @BBL X1C 0.8 nozzle.json",
+        "BBL/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.28mm Extra Draft @Voron",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.28mm Extra Draft @Voron.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.20mm Standard @Voron",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.20mm Standard @Voron.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.12mm Draft 0.15 nozzle @Voron",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.12mm Draft 0.15 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.08mm Extra Fine @Voron",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.08mm Extra Fine @Voron.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.28mm Extra Draft @Voron",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.28mm Extra Draft @Voron.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.20mm Standard @Voron",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.20mm Standard @Voron.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.12mm Draft 0.15 nozzle @Voron",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.12mm Draft 0.15 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.08mm Extra Fine @Voron",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.08mm Extra Fine @Voron.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.28mm Extra Draft @Voron",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.28mm Extra Draft @Voron.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.20mm Standard @Voron",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.20mm Standard @Voron.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.12mm Draft 0.15 nozzle @Voron",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.12mm Draft 0.15 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.08mm Extra Fine @Voron",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.08mm Extra Fine @Voron.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.28mm Extra Draft @Voron",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.28mm Extra Draft @Voron.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.20mm Standard @Voron",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.20mm Standard @Voron.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.12mm Draft 0.15 nozzle @Voron",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.12mm Draft 0.15 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.08mm Extra Fine @Voron",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.08mm Extra Fine @Voron.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.28mm Extra Draft @Voron",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.28mm Extra Draft @Voron.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.20mm Standard @Voron",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.20mm Standard @Voron.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.12mm Draft 0.15 nozzle @Voron",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.12mm Draft 0.15 nozzle @Voron.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.4 nozzle",
+      "process": "0.08mm Extra Fine @Voron",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.4 nozzle.json",
+        "Voron/process/0.08mm Extra Fine @Voron.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.42mm Extra Draft 0.6 nozzle @Voron",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.42mm Extra Draft 0.6 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.30mm Draft 0.5 nozzle @Voron",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.30mm Draft 0.5 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.18mm Fine 0.6 nozzle @Voron",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.18mm Fine 0.6 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.12mm Draft 0.15 nozzle @Voron",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.12mm Draft 0.15 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.42mm Extra Draft 0.6 nozzle @Voron",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.42mm Extra Draft 0.6 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.30mm Draft 0.5 nozzle @Voron",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.30mm Draft 0.5 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.18mm Fine 0.6 nozzle @Voron",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.18mm Fine 0.6 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.12mm Draft 0.15 nozzle @Voron",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.12mm Draft 0.15 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.42mm Extra Draft 0.6 nozzle @Voron",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.42mm Extra Draft 0.6 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.30mm Draft 0.5 nozzle @Voron",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.30mm Draft 0.5 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.18mm Fine 0.6 nozzle @Voron",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.18mm Fine 0.6 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.12mm Draft 0.15 nozzle @Voron",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.12mm Draft 0.15 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.42mm Extra Draft 0.6 nozzle @Voron",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.42mm Extra Draft 0.6 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.30mm Draft 0.5 nozzle @Voron",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.30mm Draft 0.5 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.18mm Fine 0.6 nozzle @Voron",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.18mm Fine 0.6 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.12mm Draft 0.15 nozzle @Voron",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.12mm Draft 0.15 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.42mm Extra Draft 0.6 nozzle @Voron",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.42mm Extra Draft 0.6 nozzle @Voron.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.30mm Draft 0.5 nozzle @Voron",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.30mm Draft 0.5 nozzle @Voron.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.18mm Fine 0.6 nozzle @Voron",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.18mm Fine 0.6 nozzle @Voron.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.6 nozzle",
+      "process": "0.12mm Draft 0.15 nozzle @Voron",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.6 nozzle.json",
+        "Voron/process/0.12mm Draft 0.15 nozzle @Voron.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.56mm Extra Draft 0.8 nozzle @Voron",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.56mm Extra Draft 0.8 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.40mm Standard 0.8 nozzle @Voron",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.40mm Standard 0.8 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.24mm Draft @Voron",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.24mm Draft @Voron.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.16mm Standard @Thinker X400",
+      "filament": "Generic PLA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Eryone/process/0.16mm Standard @Thinker X400.json",
+        "Elegoo/filament/BASE/Generic PLA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.56mm Extra Draft 0.8 nozzle @Voron",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.56mm Extra Draft 0.8 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.40mm Standard 0.8 nozzle @Voron",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.40mm Standard 0.8 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.24mm Draft @Voron",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.24mm Draft @Voron.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.16mm Standard @Thinker X400",
+      "filament": "Generic PETG @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Eryone/process/0.16mm Standard @Thinker X400.json",
+        "Elegoo/filament/BASE/Generic PETG @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.56mm Extra Draft 0.8 nozzle @Voron",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.56mm Extra Draft 0.8 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.40mm Standard 0.8 nozzle @Voron",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.40mm Standard 0.8 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.24mm Draft @Voron",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.24mm Draft @Voron.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.16mm Standard @Thinker X400",
+      "filament": "Generic ABS @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Eryone/process/0.16mm Standard @Thinker X400.json",
+        "Elegoo/filament/BASE/Generic ABS @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.56mm Extra Draft 0.8 nozzle @Voron",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.56mm Extra Draft 0.8 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.40mm Standard 0.8 nozzle @Voron",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.40mm Standard 0.8 nozzle @Voron.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.24mm Draft @Voron",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.24mm Draft @Voron.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.16mm Standard @Thinker X400",
+      "filament": "Generic ASA @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Eryone/process/0.16mm Standard @Thinker X400.json",
+        "Elegoo/filament/BASE/Generic ASA @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.56mm Extra Draft 0.8 nozzle @Voron",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.56mm Extra Draft 0.8 nozzle @Voron.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.40mm Standard 0.8 nozzle @Voron",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.40mm Standard 0.8 nozzle @Voron.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "high",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.24mm Draft @Voron",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Voron/process/0.24mm Draft @Voron.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "orca",
+      "printer_id": "voron-24",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Voron 2.4 300 0.8 nozzle",
+      "process": "0.16mm Standard @Thinker X400",
+      "filament": "Generic TPU @base",
+      "files": [
+        "Voron/machine/Voron 2.4 300 0.8 nozzle.json",
+        "Eryone/process/0.16mm Standard @Thinker X400.json",
+        "BBL/filament/Generic TPU @base.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "pla",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.14 Standard @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic PLA @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.14 Standard @Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/filament/Generic PLA @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "pla",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.10 High Quality @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic PLA @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.10 High Quality @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic PLA @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "pla",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.06 High Quality @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic PLA @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.06 High Quality @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic PLA @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "pla",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.06 Standard @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic PLA @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.06 Standard @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic PLA @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "petg",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.14 Standard @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic PETG @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.14 Standard @Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/filament/Generic PETG @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "petg",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.10 High Quality @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic PETG @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.10 High Quality @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic PETG @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "petg",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.06 High Quality @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic PETG @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.06 High Quality @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic PETG @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "petg",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.06 Standard @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic PETG @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.06 Standard @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic PETG @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "abs",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.14 Standard @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic ABS @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.14 Standard @Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/filament/Generic ABS @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "abs",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.10 High Quality @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic ABS @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.10 High Quality @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic ABS @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "abs",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.06 High Quality @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic ABS @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.06 High Quality @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic ABS @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "abs",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.06 Standard @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic ABS @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.06 Standard @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic ABS @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "asa",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.14 Standard @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic ASA @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.14 Standard @Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/filament/Generic ASA @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "asa",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.10 High Quality @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic ASA @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.10 High Quality @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic ASA @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "asa",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.06 High Quality @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic ASA @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.06 High Quality @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic ASA @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "asa",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.06 Standard @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic ASA @U1 0.2 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.06 Standard @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic ASA @U1 0.2 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "tpu",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.14 Standard @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic TPU 95A HF @base2",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.14 Standard @Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/filament/Generic TPU 95A HF @base2.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "tpu",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.10 High Quality @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic TPU 95A HF @base2",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.10 High Quality @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic TPU 95A HF @base2.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "tpu",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.06 High Quality @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic TPU 95A HF @base2",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.06 High Quality @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic TPU 95A HF @base2.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.2,
+      "material": "tpu",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.2 nozzle)",
+      "process": "0.06 Standard @Snapmaker U1 (0.2 nozzle)",
+      "filament": "Generic TPU 95A HF @base2",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.2 nozzle).json",
+        "Snapmaker/process/0.06 Standard @Snapmaker U1 (0.2 nozzle) copy.json",
+        "Snapmaker/filament/Generic TPU 95A HF @base2.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.28 Extra Draft @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic PLA",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.28 Extra Draft @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.20 Standard @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic PLA",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.20 Standard @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.12 Fine @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic PLA",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.12 Fine @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "pla",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.08 Extra Fine @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic PLA",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.08 Extra Fine @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic PLA.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.28 Extra Draft @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic PETG",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.28 Extra Draft @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.20 Standard @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic PETG",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.20 Standard @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.12 Fine @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic PETG",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.12 Fine @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "petg",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.08 Extra Fine @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic PETG",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.08 Extra Fine @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic PETG.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.28 Extra Draft @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic ABS",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.28 Extra Draft @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.20 Standard @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic ABS",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.20 Standard @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.12 Fine @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic ABS",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.12 Fine @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "abs",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.08 Extra Fine @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic ABS",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.08 Extra Fine @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic ABS.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.28 Extra Draft @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic ASA",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.28 Extra Draft @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.20 Standard @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic ASA",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.20 Standard @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.12 Fine @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic ASA",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.12 Fine @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "asa",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.08 Extra Fine @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic ASA",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.08 Extra Fine @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic ASA.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.28 Extra Draft @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic TPU",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.28 Extra Draft @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.20 Standard @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic TPU",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.20 Standard @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.12 Fine @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic TPU",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.12 Fine @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.4,
+      "material": "tpu",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.4 nozzle)",
+      "process": "0.08 Extra Fine @Snapmaker U1 (0.4 nozzle)",
+      "filament": "Generic TPU",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/process/0.08 Extra Fine @Snapmaker U1 (0.4 nozzle).json",
+        "Snapmaker/filament/Generic TPU.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.42 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic PLA @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.42 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic PLA @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.30 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic PLA @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.30 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic PLA @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.18 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic PLA @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.18 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic PLA @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "pla",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.18 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic PLA @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.18 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic PLA @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.42 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic PETG @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.42 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic PETG @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.30 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic PETG @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.30 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic PETG @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.18 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic PETG @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.18 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic PETG @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "petg",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.18 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic PETG @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.18 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic PETG @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.42 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic ABS @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.42 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic ABS @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.30 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic ABS @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.30 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic ABS @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.18 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic ABS @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.18 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic ABS @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "abs",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.18 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic ABS @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.18 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic ABS @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.42 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic ASA @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.42 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic ASA @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.30 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic ASA @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.30 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic ASA @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.18 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic ASA @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.18 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic ASA @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "asa",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.18 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic ASA @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.18 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic ASA @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.42 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic TPU 95A HF @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.42 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic TPU 95A HF @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.30 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic TPU 95A HF @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.30 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic TPU 95A HF @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.18 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic TPU 95A HF @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.18 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic TPU 95A HF @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.6,
+      "material": "tpu",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.6 nozzle)",
+      "process": "0.18 Standard @Snapmaker U1 (0.6 nozzle)",
+      "filament": "Generic TPU 95A HF @U1 0.6 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.6 nozzle).json",
+        "Snapmaker/process/0.18 Standard @Snapmaker U1 (0.6 nozzle) copy.json",
+        "Snapmaker/filament/Generic TPU 95A HF @U1 0.6 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.56 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic PLA @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.56 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic PLA @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.40 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic PLA @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.40 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic PLA @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.24 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic PLA @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.24 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic PLA @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "pla",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.24 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic PLA @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.24 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic PLA @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.56 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic PETG @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.56 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic PETG @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.40 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic PETG @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.40 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic PETG @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.24 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic PETG @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.24 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic PETG @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "petg",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.24 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic PETG @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.24 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic PETG @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.56 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic ABS @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.56 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic ABS @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.40 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic ABS @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.40 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic ABS @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.24 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic ABS @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.24 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic ABS @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "abs",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.24 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic ABS @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.24 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic ABS @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.56 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic ASA @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.56 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic ASA @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.40 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic ASA @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.40 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic ASA @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.24 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic ASA @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.24 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic ASA @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "asa",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.24 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic ASA @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.24 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic ASA @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "draft",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.56 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic TPU 95A HF @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.56 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic TPU 95A HF @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "standard",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.40 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic TPU 95A HF @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.40 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic TPU 95A HF @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "high",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.24 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic TPU 95A HF @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.24 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic TPU 95A HF @U1 0.8 nozzle.json"
+      ]
+    },
+    {
+      "engine": "snapmaker_orca",
+      "printer_id": "snapmaker-u1",
+      "nozzle_mm": 0.8,
+      "material": "tpu",
+      "quality": "ultra",
+      "ok": true,
+      "machine": "Snapmaker U1 (0.8 nozzle)",
+      "process": "0.24 Standard @Snapmaker U1 (0.8 nozzle)",
+      "filament": "Generic TPU 95A HF @U1 0.8 nozzle",
+      "files": [
+        "Snapmaker/machine/Snapmaker U1 (0.8 nozzle).json",
+        "Snapmaker/process/0.24 Standard @Snapmaker U1 (0.8 nozzle) copy.json",
+        "Snapmaker/filament/Generic TPU 95A HF @U1 0.8 nozzle.json"
+      ]
+    }
+  ],
+  "totals": {
+    "ok": 220,
+    "failed": 0
+  }
+}

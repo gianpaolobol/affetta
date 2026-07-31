@@ -1,0 +1,10 @@
+AFFETTA 0.4.12 — INSTALLAZIONE RAPIDA
+
+1. NON estrarre direttamente sopra C:\AFFETTA.
+2. Estrarre in C:\AFFETTA_UPDATE_0412 o altra cartella di staging.
+3. Eseguire APPLICA_AFFETTA_0412.cmd.
+4. Avviare C:\AFFETTA\AVVIA_AFFETTA.cmd.
+5. Eseguire C:\AFFETTA\COLLAUDO_FORENSE_AFFETTA.cmd.
+6. Eseguire il collaudatore matrice Affetta v0.2.
+
+Rollback: C:\AFFETTA\ROLLBACK_AFFETTA_0412.cmd

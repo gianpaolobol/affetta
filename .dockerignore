@@ -1,0 +1,5 @@
+.env
+data/artifacts/*
+data/uploads/*
+.git
+*.zip

@@ -1,0 +1,858 @@
+--- a/VERSION
++++ b/VERSION
+@@ -1 +1 @@
+-0.4.11
++0.4.12
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "affetta-standalone",
+-  "version": "0.4.11",
++  "version": "0.4.12",
+   "private": true,
+   "type": "module",
+   "description": "Affetta — slicer FDM standalone con viewer 3D, account verificati, profili costi personali e API provider-agnostic.",
+--- a/config/app.json
++++ b/config/app.json
+@@ -7,5 +7,5 @@
+   "public_slice_enabled": true,
+   "show_price_breakdown": false,
+   "support_email": "",
+-  "version": "0.4.11"
++  "version": "0.4.12"
+ }
+--- a/config/printers.json
++++ b/config/printers.json
+@@ -439,6 +439,13 @@
+         "Standard @BBL X1C",
+         "0.20mm Standard"
+       ],
++      "bed_type_by_material": {
++        "pla": "Cool Plate",
++        "petg": "Textured PEI Plate",
++        "abs": "High Temp Plate",
++        "asa": "High Temp Plate",
++        "tpu": "Textured PEI Plate"
++      },
+       "min_version": "2.3.2"
+     },
+     "validation": {
+--- a/src/config.js
++++ b/src/config.js
+@@ -45,7 +45,7 @@
+ const dataDir = path.resolve(process.env.AFFETTA_DATA_DIR || path.join(ROOT, 'data'));
+ 
+ export const config = Object.freeze({
+-  version: '0.4.11',
++  version: '0.4.12',
+   apiVersion: 'v1',
+   instanceId: process.env.AFFETTA_INSTANCE_ID || '',
+   buildId: process.env.AFFETTA_BUILD_ID || '',
+--- a/src/providers/profile-resolver.js
++++ b/src/providers/profile-resolver.js
+@@ -19,6 +19,10 @@
+   return String(text).replace(/\[([a-z_]+)\]/g, (_, key) => values[key] ?? `[${key}]`);
+ }
+ 
++function resolveBuildPlate(printer, materialId) {
++  return printer.orca?.bed_type_by_material?.[materialId] || null;
++}
++
+ export function resolvePrintProfile({ printerId, nozzleMm, materialId, qualityId, strengthId }) {
+   const printer = catalogs.printers[printerId];
+   const material = catalogs.materials[materialId];
+@@ -54,6 +58,7 @@
+   const retractLength = materialId === 'tpu' ? round(Math.min(machine.retract_length, 1.2), 2) : machine.retract_length;
+   const retractSpeed = materialId === 'tpu' ? round(Math.min(machine.retract_speed, 20), 1) : machine.retract_speed;
+   const warnings = [];
++  const buildPlate = resolveBuildPlate(printer, materialId);
+   if (material.enclosure === 'recommended' && ['creality-ender3', 'anycubic-i3-mega', 'generic-reprap-marlin'].includes(printerId)) {
+     warnings.push(`${material.label}: per ridurre deformazioni è consigliata una camera chiusa.`);
+   }
+@@ -63,6 +68,7 @@
+       ? 'I preset del produttore sono presenti e la composizione automatica è stata verificata; prima dell’uso produttivo esegui il collaudo CLI sul computer Windows e una stampa fisica.'
+       : 'Il profilo automatico è predisposto nel backend; prima dell’uso produttivo esegui il collaudo del motore reale e una stampa fisica.');
+   }
++  if (buildPlate) warnings.push(`Piatto selezionato automaticamente: ${buildPlate}. Verifica che il piatto montato sulla stampante corrisponda.`);
+ 
+   const tokenValues = {
+     first_layer_temperature: firstLayerTemperature,
+@@ -111,7 +117,14 @@
+     retract_length_mm: retractLength,
+     retract_speed_mm_s: retractSpeed,
+     z_hop_mm: machine.z_hop,
+-    supports: { enabled: true, automatic: true, threshold_deg: 50, buildplate_only: true },
++    supports: {
++      enabled: true,
++      automatic: true,
++      threshold_deg: 50,
++      buildplate_only: true,
++      type: nozzle >= 0.8 ? 'normal(auto)' : 'tree(auto)'
++    },
++    build_plate: buildPlate,
+     adhesion: nozzle >= 0.8 || materialId === 'abs' || materialId === 'asa' ? 'brim' : 'skirt',
+     start_gcode: replaceGcodeTokens(machine.start_gcode || '', tokenValues),
+     end_gcode: replaceGcodeTokens(machine.end_gcode || '', tokenValues),
+@@ -142,6 +155,7 @@
+     retract_speed_mm_s: profile.retract_speed_mm_s,
+     fan_percent: profile.fan_percent,
+     supports: profile.supports,
++    build_plate: profile.build_plate,
+     adhesion: profile.adhesion,
+     warnings: profile.warnings
+   };
+--- a/src/providers/engines/orca.js
++++ b/src/providers/engines/orca.js
+@@ -272,7 +272,25 @@
+   }
+ }
+ 
+-function prepareOrcaProfiles(selection, printer, profile) {
++const bedTemperatureKeys = {
++  'Cool Plate': 'cool_plate',
++  'Engineering Plate': 'eng_plate',
++  'High Temp Plate': 'hot_plate',
++  'Textured PEI Plate': 'textured_plate'
++};
++
++function safeSupportGeometry(profile) {
++  const supportWidth = Math.max(Number(profile.line_width_mm) || 0, Number(profile.nozzle_mm) || 0.4);
++  const tipDiameter = Math.max(0.8, supportWidth + 0.02);
++  const branchDiameter = Math.max(2, tipDiameter * 2.2);
++  return {
++    supportWidth: Number(supportWidth.toFixed(2)),
++    tipDiameter: Number(tipDiameter.toFixed(2)),
++    branchDiameter: Number(branchDiameter.toFixed(2))
++  };
++}
++
++export function prepareOrcaProfiles(selection, printer, profile) {
+   const machine = preservePresetIdentity({ ...selection.machine }, selection.machineEntry.value);
+   const processProfile = preservePresetIdentity({ ...selection.process }, selection.processEntry.value);
+   const filament = preservePresetIdentity({ ...selection.filament }, selection.filamentEntry.value);
+@@ -301,15 +319,28 @@
+   processProfile.enable_support = profile.supports.enabled ? '1' : '0';
+   processProfile.support_threshold_angle = String(profile.supports.threshold_deg);
+   processProfile.support_on_build_plate_only = profile.supports.buildplate_only ? '1' : '0';
++  processProfile.support_type = profile.supports.type || (profile.nozzle_mm >= 0.8 ? 'normal(auto)' : 'tree(auto)');
++  const supportGeometry = safeSupportGeometry(profile);
++  processProfile.support_line_width = String(supportGeometry.supportWidth);
++  processProfile.tree_support_tip_diameter = String(supportGeometry.tipDiameter);
++  processProfile.tree_support_branch_diameter = String(supportGeometry.branchDiameter);
++  processProfile.tree_support_branch_diameter_organic = String(supportGeometry.branchDiameter);
+   processProfile.brim_width = profile.adhesion === 'brim' ? String(Math.max(4, profile.nozzle_mm * 8)) : '0';
+ 
++  if (profile.build_plate) processProfile.curr_bed_type = profile.build_plate;
++
+   // I valori filamento di Orca sono array di stringhe, anche con un solo estrusore.
+   filament.filament_type = [profile.material_id.toUpperCase()];
+   filament.filament_density = [String(profile.density_g_cm3)];
+   filament.nozzle_temperature = [String(profile.temperature_c)];
+   filament.nozzle_temperature_initial_layer = [String(profile.first_layer_temperature_c)];
+-  filament.hot_plate_temp = [String(profile.bed_temperature_c)];
+-  filament.hot_plate_temp_initial_layer = [String(profile.first_layer_bed_temperature_c)];
++  const plateTemperaturePrefix = bedTemperatureKeys[profile.build_plate] || 'hot_plate';
++  const plateTempKey = `${plateTemperaturePrefix}_temp`;
++  const plateInitialTempKey = `${plateTemperaturePrefix}_temp_initial_layer`;
++  const existingPlateTemp = Number(Array.isArray(filament[plateTempKey]) ? filament[plateTempKey][0] : filament[plateTempKey]);
++  const existingInitialPlateTemp = Number(Array.isArray(filament[plateInitialTempKey]) ? filament[plateInitialTempKey][0] : filament[plateInitialTempKey]);
++  if (!(existingPlateTemp > 0)) filament[plateTempKey] = [String(profile.bed_temperature_c)];
++  if (!(existingInitialPlateTemp > 0)) filament[plateInitialTempKey] = [String(profile.first_layer_bed_temperature_c)];
+   filament.filament_max_volumetric_speed = [String(profile.max_volumetric_mm3_s)];
+   filament.fan_max_speed = [String(profile.fan_percent)];
+   filament.fan_min_speed = [String(Math.min(profile.fan_percent, 20))];
+--- a/src/stl.js
++++ b/src/stl.js
+@@ -149,7 +149,7 @@
+   const [sizeX, sizeY, sizeZ] = analysis.bounds_mm.size;
+   if (![sizeX, sizeY, sizeZ].every((value) => Number.isFinite(value) && value > 0)) throw new Error('Dimensioni STL non valide per la disposizione multipla.');
+   const [buildX, buildY, buildZ] = buildMm;
+-  if (sizeZ > buildZ + 0.01) throw Object.assign(new Error('Il modello supera l’altezza utile della stampante.'), { code: 'model_too_large' });
++  if (sizeZ > buildZ + 0.01) throw Object.assign(new Error('Il modello supera l’altezza utile della stampante.'), { code: 'model_too_large', statusCode: 422 });
+ 
+   let best = null;
+   for (let columns = 1; columns <= units; columns++) {
+@@ -162,11 +162,11 @@
+     }
+   }
+   if (!best) {
+-    throw Object.assign(new Error(`Le ${units} copie non entrano tutte sul piano selezionato. Riduci la quantità o scegli una stampante più grande.`), { code: 'quantity_does_not_fit' });
++    throw Object.assign(new Error(`Le ${units} copie non entrano tutte sul piano selezionato. Riduci la quantità o scegli una stampante più grande.`), { code: 'quantity_does_not_fit', statusCode: 422 });
+   }
+ 
+   const source = readTriangles(buffer);
+-  if (source.length * units > maxTriangles) throw Object.assign(new Error('La quantità richiesta produrrebbe un file troppo complesso.'), { code: 'arrangement_too_complex' });
++  if (source.length * units > maxTriangles) throw Object.assign(new Error('La quantità richiesta produrrebbe un file troppo complesso.'), { code: 'arrangement_too_complex', statusCode: 422 });
+   const translated = [];
+   const min = analysis.bounds_mm.min;
+   const originX = -best.width / 2;
+--- a/src/gcode.js
++++ b/src/gcode.js
+@@ -6,6 +6,83 @@
+   return params;
+ }
+ 
++function parseNumber(value) {
++  const number = Number(String(value).trim().replace(',', '.'));
++  return Number.isFinite(number) ? number : null;
++}
++
++function parseNumberList(value) {
++  const numbers = String(value)
++    .split(/[,;\s]+/)
++    .map(parseNumber)
++    .filter((number) => number != null && number >= 0);
++  return numbers.length ? numbers.reduce((sum, number) => sum + number, 0) : null;
++}
++
++export function parseDurationSeconds(value) {
++  const text = String(value || '').trim().toLowerCase().replace(/,/g, '.');
++  if (!text) return null;
++
++  const colon = text.match(/^(\d+):(\d{1,2})(?::(\d{1,2}(?:\.\d+)?))?$/);
++  if (colon) {
++    if (colon[3] != null) return Number(colon[1]) * 3600 + Number(colon[2]) * 60 + Number(colon[3]);
++    return Number(colon[1]) * 60 + Number(colon[2]);
++  }
++
++  let total = 0;
++  let foundUnit = false;
++  const units = /([0-9]+(?:\.[0-9]+)?)\s*(days?|d|hours?|hrs?|hr|h|minutes?|mins?|min|m|seconds?|secs?|sec|s)\b/g;
++  for (const match of text.matchAll(units)) {
++    const number = Number(match[1]);
++    const unit = match[2];
++    if (!Number.isFinite(number)) continue;
++    foundUnit = true;
++    if (/^(?:days?|d)$/.test(unit)) total += number * 86400;
++    else if (/^(?:hours?|hrs?|hr|h)$/.test(unit)) total += number * 3600;
++    else if (/^(?:minutes?|mins?|min|m)$/.test(unit)) total += number * 60;
++    else total += number;
++  }
++  return foundUnit && total > 0 ? total : null;
++}
++
++function timeCandidate(raw) {
++  const exactSeconds = raw.match(/^\s*;?\s*(?:TIME|PRINT_TIME)\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*$/i);
++  if (exactSeconds) return { seconds: Number(exactSeconds[1]), priority: 100, source: 'gcode_seconds_tag' };
++
++  const definitions = [
++    { pattern: /total estimated time\s*[:=]\s*([^;]+)/i, priority: 90, source: 'slicer_total_estimate' },
++    { pattern: /estimated printing time(?:\s*\([^)]*\))?\s*[:=]\s*([^;]+)/i, priority: 80, source: 'slicer_estimate' },
++    { pattern: /total printing time\s*[:=]\s*([^;]+)/i, priority: 75, source: 'slicer_total_printing_time' },
++    { pattern: /model printing time\s*[:=]\s*([^;]+)/i, priority: 60, source: 'slicer_model_estimate' }
++  ];
++  for (const definition of definitions) {
++    const match = raw.match(definition.pattern);
++    if (!match) continue;
++    const seconds = parseDurationSeconds(match[1]);
++    if (seconds != null && seconds > 0) return { seconds, priority: definition.priority, source: definition.source };
++  }
++  return null;
++}
++
++function metadataCandidate(raw, kind) {
++  const definitions = kind === 'length'
++    ? [
++        /(?:total\s+)?filament(?:\s+used|\s+length)?\s*\[mm\]\s*[:=]\s*([0-9.,;\s]+)/i,
++        /total\s+filament\s+length\s*[:=]\s*([0-9.,;\s]+)\s*mm\b/i
++      ]
++    : [
++        /(?:total\s+)?filament(?:\s+used|\s+weight)?\s*\[g\]\s*[:=]\s*([0-9.,;\s]+)/i,
++        /total\s+filament\s+weight\s*[:=]\s*([0-9.,;\s]+)\s*g\b/i
++      ];
++  for (const pattern of definitions) {
++    const match = raw.match(pattern);
++    if (!match) continue;
++    const value = parseNumberList(match[1]);
++    if (value != null && value > 0) return value;
++  }
++  return null;
++}
++
+ export function analyzeGcode(text, { filamentDiameterMm = 1.75, densityGcm3 = 1.24 } = {}) {
+   let absoluteXYZ = true;
+   let absoluteE = true;
+@@ -14,11 +91,24 @@
+   let moveDistanceMm = 0;
+   let estimatedSeconds = 0;
+   let explicitTime = null;
++  let explicitTimePriority = -1;
++  let explicitTimeSource = null;
++  let explicitFilamentLengthMm = null;
++  let explicitFilamentG = null;
+   let layerCount = 0;
+ 
+   for (const raw of String(text).split(/\r?\n/)) {
+-    const timeMatch = raw.match(/(?:TIME|PRINT_TIME|estimated printing time[^=]*=)[:= ]+([0-9.]+)/i);
+-    if (timeMatch) explicitTime = Number(timeMatch[1]);
++    const candidate = timeCandidate(raw);
++    if (candidate && candidate.priority > explicitTimePriority) {
++      explicitTime = candidate.seconds;
++      explicitTimePriority = candidate.priority;
++      explicitTimeSource = candidate.source;
++    }
++    const lengthCandidate = metadataCandidate(raw, 'length');
++    if (lengthCandidate != null) explicitFilamentLengthMm = Math.max(explicitFilamentLengthMm || 0, lengthCandidate);
++    const weightCandidate = metadataCandidate(raw, 'weight');
++    if (weightCandidate != null) explicitFilamentG = Math.max(explicitFilamentG || 0, weightCandidate);
++
+     if (/;\s*LAYER[: ]/i.test(raw)) layerCount += 1;
+     const line = raw.split(';', 1)[0].trim().toUpperCase();
+     if (!line) continue;
+@@ -48,13 +138,19 @@
+     }
+   }
+ 
++  const filamentLengthMm = explicitFilamentLengthMm || extrusionMm;
+   const radius = filamentDiameterMm / 2;
+-  const filamentVolumeMm3 = Math.PI * radius * radius * extrusionMm;
+-  const filamentG = filamentVolumeMm3 / 1000 * densityGcm3;
++  const filamentVolumeMm3 = Math.PI * radius * radius * filamentLengthMm;
++  const calculatedFilamentG = filamentVolumeMm3 / 1000 * densityGcm3;
++  const filamentG = explicitFilamentG || calculatedFilamentG;
++  const timeSeconds = explicitTime && explicitTime > 0 ? explicitTime : estimatedSeconds * 1.12;
++
+   return {
+-    time_seconds: round(explicitTime && explicitTime > 0 ? explicitTime : estimatedSeconds * 1.12, 1),
+-    filament_length_mm: round(extrusionMm, 1),
++    time_seconds: round(timeSeconds, 1),
++    time_source: explicitTimeSource || 'motion_estimate',
++    filament_length_mm: round(filamentLengthMm, 1),
+     filament_g: round(filamentG, 2),
++    filament_source: explicitFilamentG != null || explicitFilamentLengthMm != null ? 'slicer_metadata' : 'extrusion_commands',
+     move_distance_mm: round(moveDistanceMm, 1),
+     layers: layerCount || null
+   };
+--- a/public/index.html
++++ b/public/index.html
+@@ -5,7 +5,7 @@
+   <meta name="viewport" content="width=device-width,initial-scale=1">
+   <meta name="description" content="Affetta: il G-code fatto semplice.">
+   <title>Affetta — Il G-code fatto semplice</title>
+-  <link rel="stylesheet" href="/styles.css?v=0.4.11">
++  <link rel="stylesheet" href="/styles.css?v=0.4.12">
+ </head>
+ <body>
+   <header class="topbar">
+@@ -13,7 +13,7 @@
+       <span class="brand-mark">A</span>
+       <strong>AFFETTA</strong>
+       <span class="tagline">Il G-code fatto semplice.</span>
+-      <span class="version-badge">v0.4.11</span>
++      <span class="version-badge">v0.4.12</span>
+     </a>
+     <nav class="nav-actions">
+       <button class="nav-link" data-route="slicer">Slicer</button>
+@@ -185,6 +185,6 @@
+   </dialog>
+ 
+   <div id="toast" class="toast hidden" role="status"></div>
+-  <script type="module" src="/app.js?v=0.4.11"></script>
++  <script type="module" src="/app.js?v=0.4.12"></script>
+ </body>
+ </html>
+--- a/public/app.js
++++ b/public/app.js
+@@ -204,7 +204,8 @@
+     const data = await api(`/api/v1/profile-preview?${params}`);
+     if (sequence !== profilePreviewSequence) return;
+     const p = data.profile;
+-    $('auto-profile-summary').textContent = `Layer ${p.layer_height_mm} mm · ${p.infill_percent}% · ${p.walls} pareti · ${p.temperature_c}/${p.bed_temperature_c} °C · ${p.print_speed_mm_s} mm/s · retrazione ${p.retract_length_mm} mm`;
++    const plate = p.build_plate ? ` · piatto ${p.build_plate}` : '';
++    $('auto-profile-summary').textContent = `Layer ${p.layer_height_mm} mm · ${p.infill_percent}% · ${p.walls} pareti · ${p.temperature_c}/${p.bed_temperature_c} °C · ${p.print_speed_mm_s} mm/s · retrazione ${p.retract_length_mm} mm${plate}`;
+   } catch (error) {
+     if (sequence === profilePreviewSequence) $('auto-profile-summary').textContent = error.message;
+   }
+@@ -309,7 +310,7 @@
+       <div class="metric"><small>Materiale G-code</small><strong>${esc(data.filament_g)} g</strong></div>
+       <div class="metric"><small>Quantità richiesta</small><strong>${esc(job.selections.quantity)}</strong></div>
+     </div>
+-    ${data.applied_profile ? `<div class="info-card"><strong>Profilo applicato automaticamente</strong><br>Layer ${esc(data.applied_profile.layer_height_mm)} mm · ${esc(data.applied_profile.infill_percent)}% riempimento · ${esc(data.applied_profile.walls)} pareti · ${esc(data.applied_profile.temperature_c)}/${esc(data.applied_profile.bed_temperature_c)} °C · ${esc(data.applied_profile.print_speed_mm_s)} mm/s</div>` : ''}
++    ${data.applied_profile ? `<div class="info-card"><strong>Profilo applicato automaticamente</strong><br>Layer ${esc(data.applied_profile.layer_height_mm)} mm · ${esc(data.applied_profile.infill_percent)}% riempimento · ${esc(data.applied_profile.walls)} pareti · ${esc(data.applied_profile.temperature_c)}/${esc(data.applied_profile.bed_temperature_c)} °C · ${esc(data.applied_profile.print_speed_mm_s)} mm/s${data.applied_profile.build_plate ? ` · piatto ${esc(data.applied_profile.build_plate)}` : ''}</div>` : ''}
+     <div class="result-actions">
+       ${data.print_ready ? `<a class="download" href="${esc(job.artifact_url)}">Scarica il G-code</a>` : ''}
+       ${!state.user ? '<button class="button ghost" id="result-register">Registrati per i costi</button>' : '<button class="button ghost" id="result-dashboard">Modifica profilo costi</button>'}
+--- a/public/viewer.js
++++ b/public/viewer.js
+@@ -1,4 +1,4 @@
+-/* Affetta STL Viewer v0.4.11
++/* Affetta STL Viewer v0.4.12
+  * Viewer WebGL interattivo con fallback Canvas 2D interattivo.
+  * Il caricamento del file non viene mai bloccato dall'assenza di WebGL.
+  */
+--- a/scripts/apply-update-windows.ps1
++++ b/scripts/apply-update-windows.ps1
+@@ -12,14 +12,15 @@
+ }
+ if (-not (Test-Path $TargetFull)) { throw "Installazione Affetta non trovata: $TargetFull" }
+ if (-not (Test-Path (Join-Path $TargetFull 'VERSION'))) { throw "La cartella non sembra un’installazione Affetta: $TargetFull" }
+-if ((Get-Content (Join-Path $Source 'VERSION') -Raw).Trim() -ne '0.4.11') { throw 'Pacchetto aggiornamento non valido: VERSION diversa da 0.4.11.' }
++if ((Get-Content (Join-Path $Source 'VERSION') -Raw).Trim() -ne '0.4.12') { throw 'Pacchetto aggiornamento non valido: VERSION diversa da 0.4.12.' }
+ 
+ $timestamp = Get-Date -Format 'yyyyMMdd_HHmmss'
+ $parent = Split-Path -Parent $TargetFull
+-$Backup = Join-Path $parent "AFFETTA_BACKUP_PRE_0411_$timestamp"
++$Backup = Join-Path $parent "AFFETTA_BACKUP_PRE_0412_$timestamp"
+ $replaceDirs = @('config','docs','integration','public','samples','scripts','src','test','tools')
+ $protectedNames = @('.env','data','runtime','node_modules')
+ $obsoleteFiles = @(
++    'APPLICA_AFFETTA_0411.cmd','ROLLBACK_AFFETTA_0411.cmd',
+     'APPLICA_CORREZIONE_DEFINITIVA_047.cmd','APPLICA_CORREZIONE_SNAPMAKER_048.cmd',
+     'APPLICA_HOTFIX_044_E_VERIFICA.cmd','APPLICA_HOTFIX_045_E_VERIFICA.cmd','APPLICA_HOTFIX_046_E_VERIFICA.cmd',
+     'LEGGIMI_049R1.txt','LEGGIMI_049R2.txt','LEGGIMI_CORREZIONE_047.txt','LEGGIMI_CORREZIONE_048.txt',
+@@ -50,7 +51,7 @@
+     $installedTopFiles += $item.Name
+ }
+ $manifest = [ordered]@{
+-    version = '0.4.11'
++    version = '0.4.12'
+     applied_at = (Get-Date).ToString('o')
+     source = $Source
+     target = $TargetFull
+@@ -80,11 +81,11 @@
+ New-Item -ItemType Directory -Force -Path $dataDir | Out-Null
+ $pointer = Join-Path $dataDir 'last-update-backup.txt'
+ Set-Content -LiteralPath $pointer -Value $Backup -Encoding UTF8
+-$manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $dataDir 'update-0411-manifest.json') -Encoding UTF8
++$manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $dataDir 'update-0412-manifest.json') -Encoding UTF8
+ 
+ $installedVersion = (Get-Content (Join-Path $TargetFull 'VERSION') -Raw).Trim()
+-if ($installedVersion -ne '0.4.11') { throw "Verifica finale fallita: VERSION=$installedVersion" }
++if ($installedVersion -ne '0.4.12') { throw "Verifica finale fallita: VERSION=$installedVersion" }
+ Write-Host ''
+-Write-Host 'AGGIORNAMENTO AFFETTA 0.4.11 APPLICATO.' -ForegroundColor Green
++Write-Host 'AGGIORNAMENTO AFFETTA 0.4.12 APPLICATO.' -ForegroundColor Green
+ Write-Host "Backup rollback: $Backup"
+ Write-Host 'Ora esegui AVVIA_AFFETTA.cmd e poi COLLAUDO_FORENSE_AFFETTA.cmd.'
+--- a/scripts/rollback-update-windows.ps1
++++ b/scripts/rollback-update-windows.ps1
+@@ -20,7 +20,7 @@
+ }
+ 
+ $replaceDirs = @('config','docs','integration','public','samples','scripts','src','test','tools')
+-$manifestPath = Join-Path $TargetFull 'data\update-0411-manifest.json'
++$manifestPath = Join-Path $TargetFull 'data\update-0412-manifest.json'
+ if (Test-Path $manifestPath) {
+     $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json
+     foreach ($name in @($manifest.installed_top_files)) {
+--- a/scripts/start-windows.ps1
++++ b/scripts/start-windows.ps1
+@@ -12,7 +12,7 @@
+ $DataDir = Join-Path $Root 'data'
+ $RuntimeDir = Join-Path $Root 'runtime'
+ $VersionFile = Join-Path $Root 'VERSION'
+-$ExpectedVersion = if (Test-Path $VersionFile) { (Get-Content $VersionFile -Raw).Trim() } else { '0.4.11' }
++$ExpectedVersion = if (Test-Path $VersionFile) { (Get-Content $VersionFile -Raw).Trim() } else { '0.4.12' }
+ $NodeVersion = '24.18.1'
+ $NodeFolder = "node-v$NodeVersion-win-x64"
+ $NodeHome = Join-Path $RuntimeDir $NodeFolder
+@@ -268,9 +268,9 @@
+     $BaseUrl = "http://127.0.0.1:$Port"
+     $InstanceId = Get-InstanceId $Root
+     $env:AFFETTA_INSTANCE_ID = $InstanceId
+-    $env:AFFETTA_BUILD_ID = 'windows-forensic-0411'
++    $env:AFFETTA_BUILD_ID = 'windows-matrix-fixed-0412'
+     Set-DotEnvValue 'AFFETTA_INSTANCE_ID' $InstanceId
+-    Set-DotEnvValue 'AFFETTA_BUILD_ID' 'windows-forensic-0411'
++    Set-DotEnvValue 'AFFETTA_BUILD_ID' 'windows-matrix-fixed-0412'
+ 
+     $ExistingHealth = Test-AffettaHealth $BaseUrl
+     if ($ExistingHealth -and $ExistingHealth.service -eq 'affetta') {
+--- a/scripts/verify-engines-windows.ps1
++++ b/scripts/verify-engines-windows.ps1
+@@ -23,7 +23,7 @@
+ }
+ 
+ try {
+-  Write-Host 'AFFETTA v0.4.11 - VERIFICA RAPIDA DEI PERCORSI DI PRODUZIONE' -ForegroundColor Cyan
++  Write-Host 'AFFETTA v0.4.12 - VERIFICA RAPIDA DEI PERCORSI DI PRODUZIONE' -ForegroundColor Cyan
+   Write-Host "Cartella: $Root"
+   $nodePath = Find-NodePath
+   if (-not $nodePath) { throw 'Node.js non trovato.' }
+@@ -42,8 +42,8 @@
+   try { $engineReport = $engineOutput | ConvertFrom-Json }
+   catch { throw "Il nuovo engine-selftest.json non è JSON valido: $($_.Exception.Message)" }
+ 
+-  if ([string]$engineReport.version -ne '0.4.11') {
+-    throw "Self-test non aggiornato: rilevata versione $($engineReport.version), attesa 0.4.11. Verifica di aver sostituito i file in C:\AFFETTA."
++  if ([string]$engineReport.version -ne '0.4.12') {
++    throw "Self-test non aggiornato: rilevata versione $($engineReport.version), attesa 0.4.12. Verifica di aver sostituito i file in C:\AFFETTA."
+   }
+ 
+   foreach ($property in $engineReport.production_routes.PSObject.Properties) {
+--- a/scripts/init.mjs
++++ b/scripts/init.mjs
+@@ -15,7 +15,7 @@
+ const admin = token();
+ const stampa = token();
+ const reborn = token();
+-const content = `# Affetta standalone v0.4.11 — configurazione locale
++const content = `# Affetta standalone v0.4.12 — configurazione locale
+ AFFETTA_PORT=8787
+ AFFETTA_HOST=127.0.0.1
+ AFFETTA_PUBLIC_MODE=true
+@@ -66,7 +66,7 @@
+   const target = path.join(root, 'data', file);
+   if (!fs.existsSync(target)) fs.writeFileSync(target, `${JSON.stringify(initial, null, 2)}\n`);
+ }
+-console.log('Configurazione Affetta v0.4.11 creata in .env');
++console.log('Configurazione Affetta v0.4.12 creata in .env');
+ console.log(`Token amministratore: ${admin}`);
+ console.log('Modalità email locale attiva: le conferme saranno salvate in data/mail-outbox.');
+ console.log('Le chiavi partner sono predisposte per le integrazioni future con Stampa3DBologna e Reborn.');
+--- a/scripts/live-production-selftest.mjs
++++ b/scripts/live-production-selftest.mjs
+@@ -373,12 +373,12 @@
+         custom_color: null,
+         quantity: 1,
+         source: 'standalone-runtime-selftest',
+-        metadata: { test: 'live-production-0411', cycle, route: route.id }
++        metadata: { test: 'live-production-0412', cycle, route: route.id }
+       };
+       try {
+         const created = await requestJson(`${baseUrl}/api/v1/affetta-jobs`, {
+           method: 'POST',
+-          headers: { 'content-type': 'application/json', 'x-affetta-client': 'selftest-0411' },
++          headers: { 'content-type': 'application/json', 'x-affetta-client': 'selftest-0412' },
+           body: JSON.stringify(body)
+         }, 'create_job', run, 30_000);
+         run.job_id = created.data.job.id;
+--- a/test/gcode.test.js
++++ b/test/gcode.test.js
+@@ -1,6 +1,6 @@
+ import assert from 'node:assert/strict';
+ import test from 'node:test';
+-import { analyzeGcode } from '../src/gcode.js';
++import { analyzeGcode, parseDurationSeconds } from '../src/gcode.js';
+ import { validateGcode } from '../src/gcode-validator.js';
+ 
+ test('analizza estrusione e movimenti G-code', () => {
+@@ -11,3 +11,25 @@
+   const valid = validateGcode(code.repeat(4), { buildMm:[220,220,250], material:{nozzle_c:210} });
+   assert.equal(valid.valid, true);
+ });
++
++test('interpreta correttamente i tempi umani di Prusa e Orca', () => {
++  assert.equal(parseDurationSeconds('1h 2m 3s'), 3723);
++  assert.equal(parseDurationSeconds('02:03:04'), 7384);
++  assert.equal(parseDurationSeconds('12:34'), 754);
++
++  const prusa = analyzeGcode('; estimated printing time (normal mode) = 1h 2m 3s\nG1 X10 F600\n');
++  assert.equal(prusa.time_seconds, 3723);
++  assert.equal(prusa.time_source, 'slicer_estimate');
++
++  const orca = analyzeGcode('; model printing time: 10m 5s; total estimated time: 12m 30s\nG1 X10 F600\n');
++  assert.equal(orca.time_seconds, 750);
++  assert.equal(orca.time_source, 'slicer_total_estimate');
++});
++
++test('preferisce i metadati filamento dello slicer ai reset E del G-code', () => {
++  const code = `; filament used [mm] = 950.9\n; filament used [g] = 2.84\nM82\nG92 E0\nG1 X10 E1 F600\nG92 E0\nG1 X20 E1\n`;
++  const stats = analyzeGcode(code);
++  assert.equal(stats.filament_length_mm, 950.9);
++  assert.equal(stats.filament_g, 2.84);
++  assert.equal(stats.filament_source, 'slicer_metadata');
++});
+--- a/test/stl.test.js
++++ b/test/stl.test.js
+@@ -26,7 +26,10 @@
+ test('rifiuta una quantità che non entra sul piano', async () => {
+   const { arrangeStlCopies } = await import('../src/stl.js');
+   const source = fs.readFileSync(new URL('../samples/cube20.stl', import.meta.url));
+-  assert.throws(() => arrangeStlCopies(source, 10, [50, 50, 100], { spacingMm: 5 }), /non entrano/);
++  assert.throws(
++    () => arrangeStlCopies(source, 10, [50, 50, 100], { spacingMm: 5 }),
++    (error) => error.code === 'quantity_does_not_fit' && error.statusCode === 422
++  );
+ });
+ 
+ test('parser STL del viewer legge il file caricato dal browser', async () => {
+--- a/test/engine-routing.test.js
++++ b/test/engine-routing.test.js
+@@ -53,14 +53,20 @@
+ if(a.includes('--version')||a.includes('--help')){console.log('OrcaSlicer 2.4.1');process.exit(0)}
+ if(a[a.indexOf('--ensure-on-bed')+1]==='1'||a[a.indexOf('--allow-newer-file')+1]==='1'){console.error('No such file: 1');process.exit(253)}
+ const outdir=a[a.indexOf('--outputdir')+1]; const settings=a[a.indexOf('--load-settings')+1].split(';'); const fil=a[a.indexOf('--load-filaments')+1];
+-const proc=JSON.parse(fs.readFileSync(settings[1],'utf8')); const mach=JSON.parse(fs.readFileSync(settings[0],'utf8'));
++const proc=JSON.parse(fs.readFileSync(settings[1],'utf8')); const mach=JSON.parse(fs.readFileSync(settings[0],'utf8')); const filament=JSON.parse(fs.readFileSync(fil,'utf8'));
+ if(JSON.stringify(mach).includes('chamber_cooling_mode')){console.error('invalid custom g-code: chamber_cooling_mode');process.exit(156)}
++const material=String((filament.filament_type||[])[0]||'').toUpperCase();
++if(proc.curr_bed_type==='Cool Plate' && material && material!=='PLA'){console.error('Plate 1: Cool Plate does not support filament 1');process.exit(195)}
++const nozzle=Number((mach.nozzle_diameter||[])[0]); const supportWidth=Number(proc.support_line_width||0); const tip=Number(proc.tree_support_tip_diameter||0);
++if(nozzle>=0.8 && proc.support_type==='tree(auto)' && tip<supportWidth){console.error('Organic support tree tip diameter must not be smaller than support material extrusion width.');process.exit(205)}
+ fs.mkdirSync(outdir,{recursive:true}); fs.writeFileSync(path.join(outdir,'output.gcode'), ${JSON.stringify(gcode('ENGINE=orca'))}.replace(';ENGINE=orca',';ENGINE=orca;LAYER='+proc.layer_height+';INFILL='+proc.sparse_infill_density+';NOZZLE='+(mach.nozzle_diameter||[])[0]));`);
+   const profiles = path.join(orcaRoot, 'resources', 'profiles');
+   fs.mkdirSync(profiles, { recursive: true });
+   const machines = [
+     {name:'Bambu Lab X1 Carbon 0.4 nozzle',type:'machine',printer_model:'Bambu Lab X1 Carbon',nozzle_diameter:['0.4']},
++    {name:'Bambu Lab X1 Carbon 0.8 nozzle',type:'machine',printer_model:'Bambu Lab X1 Carbon',nozzle_diameter:['0.8']},
+     {name:'Snapmaker U1 0.4 nozzle',type:'machine',printer_model:'Snapmaker U1',nozzle_diameter:['0.4'],machine_start_gcode:'PRINT_START'},
++    {name:'Snapmaker U1 0.8 nozzle',type:'machine',printer_model:'Snapmaker U1',nozzle_diameter:['0.8'],machine_start_gcode:'PRINT_START'},
+     {name:'Voron 2.4 0.4 nozzle',type:'machine',printer_model:'Voron 2.4',nozzle_diameter:['0.4']}
+   ];
+   const processes = machines.map(m=>({name:`0.20mm Standard @${m.name}`,type:'process',compatible_printers:[m.name],layer_height:'0.2'}));
+@@ -74,13 +80,15 @@
+ if(a[a.indexOf('--ensure-on-bed')+1]==='1'||a[a.indexOf('--allow-newer-file')+1]==='1'){console.error('No such file: 1');process.exit(253)}
+ const outdir=a[a.indexOf('--outputdir')+1]; const settings=a[a.indexOf('--load-settings')+1].split(';');
+ const proc=JSON.parse(fs.readFileSync(settings[1],'utf8')); const mach=JSON.parse(fs.readFileSync(settings[0],'utf8'));
++const nozzle=Number((mach.nozzle_diameter||[])[0]); const supportWidth=Number(proc.support_line_width||0); const tip=Number(proc.tree_support_tip_diameter||0);
++if(nozzle>=0.8 && proc.support_type==='tree(auto)' && tip<supportWidth){console.error('Organic support tree tip diameter must not be smaller than support material extrusion width.');process.exit(205)}
+ fs.mkdirSync(outdir,{recursive:true}); fs.writeFileSync(path.join(outdir,'output.gcode'), ${JSON.stringify(gcode('ENGINE=snapmaker_orca'))}.replace(';ENGINE=snapmaker_orca',';ENGINE=snapmaker_orca;LAYER='+proc.layer_height+';INFILL='+proc.sparse_infill_density+';NOZZLE='+(mach.nozzle_diameter||[])[0]));`);
+   const snapProfiles = path.join(snapRoot, 'resources', 'profiles');
+   fs.mkdirSync(snapProfiles, { recursive:true });
+-  const snapMachine = {name:'Snapmaker U1 (0.4 nozzle)',type:'machine',printer_model:'Snapmaker U1',nozzle_diameter:['0.4'],machine_start_gcode:'{if chamber_cooling_mode==0}'};
+-  const snapProcess = {name:'0.20 Standard @Snapmaker U1 (0.4 nozzle)',type:'process',compatible_printers:[snapMachine.name],layer_height:'0.2',instantiation:'true'};
+-  const snapFilament = {name:'Generic PLA @U1 0.4 nozzle',type:'filament',filament_type:'PLA',compatible_printers:[snapMachine.name]};
+-  fs.writeFileSync(path.join(snapProfiles,'snapmaker-test.json'),JSON.stringify({machines:[snapMachine],processes:[snapProcess],filaments:[snapFilament]}));
++  const snapMachines = [0.4,0.8].map(nozzle=>({name:`Snapmaker U1 (${nozzle} nozzle)`,type:'machine',printer_model:'Snapmaker U1',nozzle_diameter:[String(nozzle)],machine_start_gcode:'{if chamber_cooling_mode==0}'}));
++  const snapProcesses = snapMachines.map(machine=>({name:`0.20 Standard @${machine.name}`,type:'process',compatible_printers:[machine.name],layer_height:'0.2',instantiation:'true'}));
++  const snapFilaments = snapMachines.flatMap(machine=>['PLA','PETG','ABS','ASA','TPU'].map(material=>({name:`Generic ${material} @${machine.name}`,type:'filament',filament_type:material,compatible_printers:[machine.name]})));
++  fs.writeFileSync(path.join(snapProfiles,'snapmaker-test.json'),JSON.stringify({machines:snapMachines,processes:snapProcesses,filaments:snapFilaments}));
+   return { prusa, cura, orca, snap };
+ }
+ 
+@@ -120,6 +128,14 @@
+       const {result,text}=await runCase({provider,resolvePrinter,printerId:'snapmaker-u1',nozzleMm:0.4,materialId:'pla',qualityId:'standard',strengthId:'standard'});
+       assert.equal(result.provider,'snapmaker_orca'); assert.match(text,/ENGINE=orca/); assert.match(text,/LAYER=0.2/); assert.match(text,/INFILL=22%/); assert.match(text,/NOZZLE=0.4/);
+     });
++    await t.test('Bambu X1C ABS seleziona un piatto compatibile', async () => {
++      const {result,text}=await runCase({provider,resolvePrinter,printerId:'bambu-x1c',nozzleMm:0.4,materialId:'abs',qualityId:'standard',strengthId:'standard'});
++      assert.equal(result.provider,'orca'); assert.match(text,/ENGINE=orca/);
++    });
++    await t.test('Snapmaker U1 0.8 evita il supporto organico incompatibile', async () => {
++      const {result,text}=await runCase({provider,resolvePrinter,printerId:'snapmaker-u1',nozzleMm:0.8,materialId:'petg',qualityId:'standard',strengthId:'strong'});
++      assert.equal(result.provider,'snapmaker_orca'); assert.match(text,/NOZZLE=0.8/);
++    });
+   } finally {fs.rmSync(temp,{recursive:true,force:true});}
+ });
+ 
+--- a/test/forensic-runtime.test.js
++++ b/test/forensic-runtime.test.js
+@@ -219,3 +219,52 @@
+     fs.rmSync(temp, { recursive: true, force: true });
+   }
+ });
++
++test('quantità oltre capacità restituisce 422 JSON senza avviare il motore', { timeout: 15_000 }, async () => {
++  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'affetta-quantity-422-'));
++  const port = await freePort();
++  const baseUrl = `http://127.0.0.1:${port}`;
++  const fake = path.join(root, 'scripts', 'fake-slicer.mjs');
++  const custom = JSON.stringify([process.execPath, fake, '{input}', '{output}']);
++  const env = {
++    ...process.env,
++    AFFETTA_PORT: String(port),
++    AFFETTA_HOST: '127.0.0.1',
++    AFFETTA_PUBLIC_BASE_URL: baseUrl,
++    AFFETTA_DATA_DIR: temp,
++    AFFETTA_INSTANCE_ID: 'quantity-422-test',
++    AFFETTA_BUILD_ID: 'quantity-422-test',
++    AFFETTA_PUBLIC_MODE: 'true',
++    AFFETTA_ALLOW_DEMO_GCODE: 'false',
++    AFFETTA_ENGINE_COMMAND_PRUSA: custom
++  };
++  const stdout = fs.openSync(path.join(temp, 'server.stdout.log'), 'w');
++  const stderr = fs.openSync(path.join(temp, 'server.stderr.log'), 'w');
++  const server = spawn(process.execPath, [path.join(root, 'bootstrap.js')], { cwd: root, env, stdio: ['ignore', stdout, stderr] });
++  try {
++    const healthBefore = await waitForHealth(baseUrl);
++    const model = fs.readFileSync(path.join(root, 'samples', 'cube20.stl')).toString('base64');
++    const response = await fetch(`${baseUrl}/api/v1/slice-jobs`, {
++      method: 'POST',
++      headers: { 'content-type': 'application/json', 'x-affetta-client': 'quantity-422-test' },
++      body: JSON.stringify({
++        filename: 'cube20.stl', file_base64: model, printer_id: 'prusa-mk4', nozzle_mm: 0.4,
++        material_id: 'pla', quality_id: 'standard', strength_id: 'standard', color_id: 'random',
++        custom_color: null, quantity: 999, source: 'quantity-422-test'
++      })
++    });
++    const body = await response.json();
++    assert.equal(response.status, 422);
++    assert.equal(body.success, false);
++    assert.equal(body.error.code, 'quantity_does_not_fit');
++    assert.match(body.error.message, /non entrano/);
++    const healthAfter = await waitForHealth(baseUrl);
++    assert.equal(healthAfter.process_id, healthBefore.process_id);
++  } finally {
++    server.kill('SIGTERM');
++    await new Promise((resolve) => server.once('close', resolve));
++    fs.closeSync(stdout);
++    fs.closeSync(stderr);
++    fs.rmSync(temp, { recursive: true, force: true });
++  }
++});
+--- a/test/windows-updater.test.js
++++ b/test/windows-updater.test.js
+@@ -9,9 +9,9 @@
+ test('aggiornamento Windows preserva configurazione, dati, runtime e dipendenze', () => {
+   const script = fs.readFileSync(path.join(root, 'scripts', 'apply-update-windows.ps1'), 'utf8');
+   for (const name of ['.env', 'data', 'runtime', 'node_modules']) assert.match(script, new RegExp(name.replace('.', '\\.')));
+-  assert.match(script, /AFFETTA_BACKUP_PRE_0411/);
++  assert.match(script, /AFFETTA_BACKUP_PRE_0412/);
+   assert.match(script, /last-update-backup\.txt/);
+-  assert.match(script, /VERSION diversa da 0\.4\.11/);
++  assert.match(script, /VERSION diversa da 0\.4\.12/);
+ });
+ 
+ test('rollback usa il backup registrato e non elimina runtime o data', () => {
+--- a/test/orca-matrix-regressions.test.js
++++ b/test/orca-matrix-regressions.test.js
+@@ -0,0 +1,57 @@
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import { catalogs } from '../src/config.js';
++import { resolvePrintProfile } from '../src/providers/profile-resolver.js';
++import { prepareOrcaProfiles } from '../src/providers/engines/orca.js';
++
++function fakeSelection(profile) {
++  const machineName = `${profile.printer_label} ${profile.nozzle_mm} nozzle`;
++  return {
++    machine: { name: machineName, type: 'machine', nozzle_diameter: [String(profile.nozzle_mm)] },
++    process: { name: `Process ${profile.layer_height_mm}`, type: 'process' },
++    filament: { name: `Generic ${profile.material_id.toUpperCase()}`, type: 'filament' },
++    machineEntry: { value: { name: machineName, type: 'machine' } },
++    processEntry: { value: { name: `Process ${profile.layer_height_mm}`, type: 'process' } },
++    filamentEntry: { value: { name: `Generic ${profile.material_id.toUpperCase()}`, type: 'filament' } }
++  };
++}
++
++const platePrefix = {
++  'Cool Plate': 'cool_plate',
++  'High Temp Plate': 'hot_plate',
++  'Textured PEI Plate': 'textured_plate',
++  'Engineering Plate': 'eng_plate'
++};
++
++test('tutte le 640 combinazioni Orca generano profili coerenti', () => {
++  let checked = 0;
++  for (const printerId of ['bambu-x1c', 'snapmaker-u1']) {
++    const printer = catalogs.printers[printerId];
++    for (const nozzleMm of printer.nozzles) {
++      for (const materialId of printer.materials) {
++        for (const qualityId of Object.keys(catalogs.qualities)) {
++          for (const strengthId of Object.keys(catalogs.strengths)) {
++            const profile = resolvePrintProfile({ printerId, nozzleMm, materialId, qualityId, strengthId });
++            const { processProfile, filament } = prepareOrcaProfiles(fakeSelection(profile), printer, profile);
++            const supportWidth = Number(processProfile.support_line_width);
++            const tipDiameter = Number(processProfile.tree_support_tip_diameter);
++            assert.ok(Number.isFinite(supportWidth) && supportWidth >= nozzleMm, `${printerId}/${nozzleMm}: support width`);
++            assert.ok(Number.isFinite(tipDiameter) && tipDiameter >= supportWidth, `${printerId}/${nozzleMm}: tree tip`);
++            assert.equal(processProfile.support_type, nozzleMm >= 0.8 ? 'normal(auto)' : 'tree(auto)');
++
++            if (printerId === 'bambu-x1c') {
++              const expectedPlate = printer.orca.bed_type_by_material[materialId];
++              assert.equal(processProfile.curr_bed_type, expectedPlate);
++              const prefix = platePrefix[expectedPlate];
++              assert.ok(prefix, `plate non mappato: ${expectedPlate}`);
++              assert.ok(Number(filament[`${prefix}_temp`]?.[0]) > 0, `${materialId}: temperatura piatto`);
++              assert.ok(Number(filament[`${prefix}_temp_initial_layer`]?.[0]) > 0, `${materialId}: temperatura primo layer`);
++            }
++            checked += 1;
++          }
++        }
++      }
++    }
++  }
++  assert.equal(checked, 640);
++});
+--- a/APPLICA_AFFETTA_0412.cmd
++++ b/APPLICA_AFFETTA_0412.cmd
+@@ -0,0 +1,5 @@
++@echo off
++setlocal
++cd /d "%~dp0"
++powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\apply-update-windows.ps1" -Target "C:\AFFETTA"
++pause
+--- a/ROLLBACK_AFFETTA_0412.cmd
++++ b/ROLLBACK_AFFETTA_0412.cmd
+@@ -0,0 +1,4 @@
++@echo off
++setlocal
++powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\AFFETTA\scripts\rollback-update-windows.ps1" -Target "C:\AFFETTA"
++pause
+--- a/REPORT_MATRICE_0411_ANALISI.md
++++ b/REPORT_MATRICE_0411_ANALISI.md
+@@ -0,0 +1,23 @@
++# Report analisi risultati matrice Affetta 0.4.11
++
++## Esito ricevuto
++
++- Combinazioni logiche rappresentate: 5.754.240
++- Slicing reali: 960
++- Superati: 672
++- Falliti: 288
++- Server stabile: sì
++
++## Errori reali raggruppati
++
++| Problema | Casi | Stampanti |
++|---|---:|---|
++| Cool Plate incompatibile col filamento | 128 | Bambu X1C |
++| Punta supporto organico inferiore alla larghezza supporto | 160 | X1C 80, Snapmaker U1 80 |
++| Quantità oltre piano classificata HTTP 500 anziché 422 | 4 controlli | tutte e tre |
++
++Non risultano guasti Prusa né crash del processo Node.
++
++## Anomalia aggiuntiva
++
++I 672 casi superati riportavano esclusivamente 3, 4, 5 o 8 secondi. Il G-code massimo pesava 38.503.761 byte e conteneva 1.334.756 movimenti. La causa era il parser dei commenti temporali, non lo slicer.
+--- a/docs/CHANGELOG_V0.4.12.md
++++ b/docs/CHANGELOG_V0.4.12.md
+@@ -0,0 +1,12 @@
++# Changelog Affetta 0.4.12
++
++- Selezione automatica e visibile del piatto X1C per materiale.
++- Conservazione delle temperature del preset produttore quando valide.
++- Supporti `normal(auto)` per ugelli da 0,8 mm.
++- Geometria supporti Orca parametrizzata su nozzle e line width.
++- Errori geometrici e di quantità restituiti come HTTP 422 JSON.
++- Parser tempi G-code corretto per formati umani Prusa/Orca.
++- Lettura affidabile di lunghezza e peso filamento dai metadati dello slicer.
++- Nuovi campi diagnostici `time_source` e `filament_source`.
++- Interfaccia aggiornata per mostrare il piatto applicato.
++- Test esaustivo statico di 640 combinazioni Orca e test HTTP quantità.
+--- a/docs/ROOT_CAUSE_MATRIX_V0.4.12.md
++++ b/docs/ROOT_CAUSE_MATRIX_V0.4.12.md
+@@ -0,0 +1,41 @@
++# Analisi causa radice — matrice Affetta 0.4.11
++
++## Risultato reale analizzato
++
++La matrice Windows ha eseguito 960 slicing reali:
++
++- 672 superati;
++- 288 falliti;
++- processo server rimasto stabile;
++- 4 errori di classificazione HTTP per quantità oltre il piano.
++
++## Famiglia 1 — X1C e piatto incompatibile
++
++128 job X1C fallivano con `Cool Plate does not support filament 1`.
++
++Il preset processo ereditava `Cool Plate` anche per ABS, ASA, PETG e TPU. Affetta modificava temperature e materiale, ma non selezionava esplicitamente il tipo di piatto. La v0.4.12 associa il piatto al materiale:
++
++- PLA → Cool Plate;
++- PETG e TPU → Textured PEI Plate;
++- ABS e ASA → High Temp Plate.
++
++Le temperature originali del preset produttore vengono conservate quando valide; i valori Affetta sono usati soltanto se il preset selezionato contiene zero o nessun valore.
++
++## Famiglia 2 — supporti organici e ugello 0,8 mm
++
++160 job fallivano perché il diametro della punta del supporto organico era inferiore alla larghezza di estrusione del supporto:
++
++- 80 X1C;
++- 80 Snapmaker U1.
++
++La v0.4.12 usa `normal(auto)` con ugello 0,8 mm e `tree(auto)` con ugelli più piccoli. Inoltre imposta larghezza supporto, diametro punta e diametro ramo in modo coerente con ugello e line width.
++
++## Famiglia 3 — quantità oltre capacità
++
++I quattro rifiuti attesi venivano classificati HTTP 500 perché gli errori geometrici non avevano `statusCode`. Ora `model_too_large`, `quantity_does_not_fit` e `arrangement_too_complex` restituiscono HTTP 422 con messaggio JSON leggibile.
++
++## Famiglia 4 — statistiche G-code
++
++Tutti i 672 casi formalmente superati riportavano tempi di soli 3–8 secondi. In 93 casi il G-code conteneva più di 100.000 movimenti; il massimo era 1.334.756 movimenti e 38.503.761 byte, ma il tempo riportato era 4 secondi.
++
++Il parser precedente leggeva soltanto il primo numero di commenti come `estimated printing time = 1h 2m 3s`, interpretandolo come secondi. Ora supporta giorni, ore, minuti, secondi e formati `HH:MM:SS`, privilegiando il tempo totale dello slicer. Per il materiale usa i metadati `filament used [mm]` e `filament used [g]` quando presenti, evitando errori dovuti a `G92 E0`, estrusione relativa e reset dell'estrusore.

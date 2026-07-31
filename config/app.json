@@ -1,0 +1,11 @@
+{
+  "name": "Affetta",
+  "tagline": "Il G-code fatto semplice.",
+  "locale": "it-IT",
+  "currency": "EUR",
+  "public_quote_enabled": true,
+  "public_slice_enabled": true,
+  "show_price_breakdown": false,
+  "support_email": "",
+  "version": "0.4.12"
+}

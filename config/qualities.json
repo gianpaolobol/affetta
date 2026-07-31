@@ -1,0 +1,38 @@
+{
+  "draft": {
+    "label": "Bozza",
+    "layer_ratio": 0.7,
+    "speed_factor": 1.18,
+    "time_factor": 0.76,
+    "top_layers": 3,
+    "bottom_layers": 3,
+    "layer_height_mm": 0.28
+  },
+  "standard": {
+    "label": "Standard",
+    "layer_ratio": 0.5,
+    "speed_factor": 1.0,
+    "time_factor": 1.0,
+    "top_layers": 4,
+    "bottom_layers": 4,
+    "layer_height_mm": 0.2
+  },
+  "high": {
+    "label": "Alta qualità",
+    "layer_ratio": 0.3,
+    "speed_factor": 0.76,
+    "time_factor": 1.52,
+    "top_layers": 6,
+    "bottom_layers": 5,
+    "layer_height_mm": 0.12
+  },
+  "ultra": {
+    "label": "Massima definizione",
+    "layer_ratio": 0.2,
+    "speed_factor": 0.58,
+    "time_factor": 2.15,
+    "top_layers": 8,
+    "bottom_layers": 6,
+    "layer_height_mm": 0.08
+  }
+}

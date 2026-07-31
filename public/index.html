@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Affetta: il G-code fatto semplice.">
+  <title>Affetta — Il G-code fatto semplice</title>
+  <link rel="stylesheet" href="/styles.css?v=0.4.12">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" data-route="slicer" aria-label="Affetta home">
+      <span class="brand-mark">A</span>
+      <strong>AFFETTA</strong>
+      <span class="tagline">Il G-code fatto semplice.</span>
+      <span class="version-badge">v0.4.12</span>
+    </a>
+    <nav class="nav-actions">
+      <button class="nav-link" data-route="slicer">Slicer</button>
+      <button class="nav-link hidden" id="dashboard-nav" data-route="dashboard">Dashboard costi</button>
+      <button class="button ghost" id="auth-button">Accedi</button>
+      <button class="avatar hidden" id="user-button" title="Profilo utente"></button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="slicer-view" class="view active">
+      <div class="hero-copy">
+        <p class="eyebrow">SLICER FDM ONLINE</p>
+        <h1>Carica. Affetta. Stampa.</h1>
+        <p>Genera liberamente il G-code per la tua stampante. Registrandoti puoi aggiungere allo stesso risultato anche la stima personalizzata dei costi.</p>
+      </div>
+
+      <div class="workspace">
+        <section class="viewer-card card">
+          <div class="viewer-toolbar">
+            <div>
+              <strong id="viewer-title">Piano di stampa</strong>
+              <span id="viewer-status">Caricamento viewer…</span>
+            </div>
+            <div class="tool-buttons">
+              <button type="button" class="icon-button" id="fit-model" title="Centra modello">Centra</button>
+              <button type="button" class="icon-button" id="wireframe" title="Vista reticolo">Reticolo</button>
+            </div>
+          </div>
+          <div id="viewer-shell" class="viewer-shell">
+            <div id="viewer"></div>
+            <div id="drop-zone" class="drop-zone" role="button" tabindex="0" aria-label="Carica un file STL">
+              <input id="file-input" type="file" accept=".stl,model/stl,application/sla" class="visually-hidden">
+              <span class="upload-icon">＋</span>
+              <strong>Trascina qui il file STL</strong>
+              <small>oppure clicca per selezionarlo · massimo 25 MB</small>
+            </div>
+          </div>
+          <div class="viewer-footer">
+            <div class="file-info">
+              <span id="file-label">Nessun modello caricato</span>
+              <button type="button" id="change-file" class="text-button compact hidden">Sostituisci STL</button>
+            </div>
+            <span id="model-dimensions">—</span>
+          </div>
+        </section>
+
+        <section class="settings-card card">
+          <div class="section-heading">
+            <div><p class="eyebrow">IMPOSTAZIONI</p><h2>Prepara il tuo G-code</h2></div>
+            <span id="account-badge" class="badge neutral">G-code libero</span>
+          </div>
+
+          <form id="slice-form">
+            <div class="field-grid two">
+              <label class="field"><span>Stampante 3D</span><select id="printer" required></select><small id="printer-note"></small></label>
+              <label class="field"><span>Ugello</span><select id="nozzle" required></select></label>
+            </div>
+            <div id="auto-profile" class="auto-profile" aria-live="polite">
+              <strong>Profilo automatico</strong>
+              <span id="auto-profile-summary">Seleziona le impostazioni per vedere i parametri applicati.</span>
+            </div>
+
+            <div class="field-grid two">
+              <label class="field"><span>Materiale</span><select id="material" required></select></label>
+              <label class="field"><span>Colore</span><select id="color" required></select></label>
+            </div>
+            <label class="field hidden" id="custom-color-field"><span>Specifica altro colore</span><input id="custom-color" maxlength="80" placeholder="Es. verde oliva, RAL 6003"></label>
+
+            <fieldset class="choice-field"><legend>Risoluzione di stampa</legend><div id="quality-options" class="segmented"></div></fieldset>
+            <fieldset class="choice-field"><legend>Resistenza</legend><div id="strength-options" class="segmented"></div></fieldset>
+
+            <div class="field-grid two">
+              <label class="field"><span>Quantità</span><input id="quantity" type="number" min="1" max="999" value="1" required><small>Affetta dispone realmente le copie sul piano selezionato.</small></label>
+              <div class="login-benefit" id="pricing-message">
+                <strong>Aggiungi la stima dei costi</strong>
+                <span>Registrati e configura il tuo profilo costi personale.</span>
+                <button type="button" class="text-button" id="pricing-login">Accedi o registrati</button>
+              </div>
+            </div>
+
+            <button id="submit-button" class="button primary large" type="submit" disabled>
+              <span class="button-label">Carica un modello STL</span>
+            </button>
+            <p class="form-note">Il motore di slicing viene selezionato automaticamente in base alla stampante scelta.</p>
+          </form>
+        </section>
+      </div>
+
+      <section id="result" class="result-card card hidden" aria-live="polite"></section>
+    </section>
+
+    <section id="dashboard-view" class="view">
+      <div class="dashboard-header">
+        <div><p class="eyebrow">AREA RISERVATA</p><h1>Dashboard costi</h1><p>Personalizza ogni voce usata per calcolare i tuoi preventivi.</p></div>
+        <button class="button ghost" id="back-to-slicer">Torna allo slicer</button>
+      </div>
+      <div class="dashboard-layout">
+        <aside class="profile-card card">
+          <div class="profile-avatar" id="profile-avatar">A</div>
+          <h2 id="profile-name">Utente</h2>
+          <p id="profile-username"></p>
+          <dl>
+            <div><dt>Email</dt><dd id="profile-email"></dd></div>
+            <div><dt>Cellulare</dt><dd id="profile-phone"></dd></div>
+            <div><dt>Stato</dt><dd><span class="badge success">Email verificata</span></dd></div>
+          </dl>
+          <button class="button ghost full" id="logout-button">Esci</button>
+        </aside>
+
+        <section class="pricing-card card">
+          <div class="section-heading"><div><p class="eyebrow">PROFILO ECONOMICO</p><h2>Parametri di preventivazione</h2></div><span id="save-status"></span></div>
+          <form id="pricing-form">
+            <div class="pricing-section">
+              <h3>Costi generali</h3>
+              <div class="field-grid three" id="general-pricing-fields"></div>
+            </div>
+            <div class="pricing-section">
+              <h3>Costo materiali</h3>
+              <p>Inserisci il tuo costo effettivo di acquisto in €/kg.</p>
+              <div class="field-grid three" id="material-pricing-fields"></div>
+            </div>
+            <div class="pricing-section">
+              <h3>Coefficienti qualità</h3>
+              <p>1,00 non modifica il prezzo; valori superiori applicano una maggiorazione.</p>
+              <div class="field-grid four" id="quality-pricing-fields"></div>
+            </div>
+            <div class="pricing-section">
+              <h3>Coefficienti resistenza</h3>
+              <div class="field-grid four" id="strength-pricing-fields"></div>
+            </div>
+            <div class="pricing-section">
+              <h3>Coefficienti colore</h3>
+              <div class="field-grid four" id="color-pricing-fields"></div>
+            </div>
+            <button class="button primary" type="submit">Salva profilo costi</button>
+          </form>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="auth-dialog" class="auth-dialog">
+    <button class="dialog-close" id="close-auth" aria-label="Chiudi">×</button>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-auth-tab="login">Accedi</button>
+      <button class="auth-tab" data-auth-tab="register">Registrati</button>
+    </div>
+    <section id="login-panel" class="auth-panel active">
+      <h2>Bentornato</h2><p>Accedi per usare il tuo profilo costi.</p>
+      <form id="login-form">
+        <label class="field"><span>Email o nome utente</span><input id="login-identity" autocomplete="username" required></label>
+        <label class="field"><span>Password</span><input id="login-password" type="password" autocomplete="current-password" required></label>
+        <button class="button primary full" type="submit">Accedi</button>
+      </form>
+    </section>
+    <section id="register-panel" class="auth-panel">
+      <h2>Crea il tuo account</h2><p>Dopo la registrazione riceverai una mail di conferma.</p>
+      <form id="register-form">
+        <label class="field"><span>Nome e cognome</span><input id="register-name" autocomplete="name" required></label>
+        <label class="field"><span>Nome utente</span><input id="register-username" autocomplete="username" minlength="3" maxlength="32" required></label>
+        <label class="field"><span>Email</span><input id="register-email" type="email" autocomplete="email" required></label>
+        <label class="field"><span>Cellulare</span><input id="register-phone" type="tel" autocomplete="tel" required></label>
+        <label class="field"><span>Password</span><input id="register-password" type="password" autocomplete="new-password" minlength="10" required><small>Minimo 10 caratteri, almeno una lettera e un numero.</small></label>
+        <button class="button primary full" type="submit">Registrati</button>
+      </form>
+    </section>
+    <div id="auth-message" class="dialog-message hidden"></div>
+  </dialog>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script type="module" src="/app.js?v=0.4.12"></script>
+</body>
+</html>
