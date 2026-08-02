@@ -93,8 +93,10 @@ export interface OutputArtifact {
 export interface JobResultV1 {
   schema_version: 'affetta.result.v1';
   job_id: string;
+  request_id: string;
+  idempotency_key: string;
   status: 'completed';
-  completed_at: string;
+  updated_at: string;
   result: {
     printer_profile_id: string;
     printer_profile_version: string;

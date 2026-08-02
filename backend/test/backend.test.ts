@@ -138,7 +138,9 @@ test('pairing, heartbeat, lease e completamento G-code sono compatibili con Agen
       } })).statusCode, 200);
 
     const result = {
-      schema_version: 'affetta.result.v1', job_id: jobId, status: 'completed', completed_at: context.clock.now().toISOString(),
+      schema_version: 'affetta.result.v1', job_id: jobId,
+      request_id: 'req_idem-001', idempotency_key: 'idem-001',
+      status: 'completed', updated_at: context.clock.now().toISOString(),
       result: {
         printer_profile_id: 'bambu-x1c-04', printer_profile_version: '2.3.1', printer_profile_sha256: 'b'.repeat(64),
         profile_status: 'validated', fleet_unit_id: 'x1c-01', engine: { id: 'orca', version: '2.3.0' },

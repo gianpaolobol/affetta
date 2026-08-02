@@ -65,3 +65,10 @@ contratto distribuito.
 Gli upload PUT firmati dichiarano la lunghezza esatta del corpo. L'Agent ricava
 `Content-Length` dal file locale, verifica valori già presenti negli header e
 mantiene lo streaming.
+
+
+## Identità del risultato
+
+Il risultato finale deve conservare `request_id` e `idempotency_key` della
+richiesta originale e usare `updated_at`. Proprietà legacy non dichiarate dallo
+schema, incluso `completed_at`, sono vietate.

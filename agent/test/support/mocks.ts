@@ -15,6 +15,39 @@ function json(response: http.ServerResponse, status: number, value: unknown): vo
   response.end(body);
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function validateCompletedResultEnvelope(value: unknown, request: JobRequestV1): string | null {
+  if (!isRecord(value) || typeof value.lease_id !== 'string' || !isRecord(value.result)) {
+    return 'Envelope complete non valido.';
+  }
+  const result = value.result;
+  const allowed = new Set([
+    'schema_version', 'job_id', 'request_id', 'idempotency_key',
+    'status', 'updated_at', 'result', 'extensions'
+  ]);
+  for (const key of Object.keys(result)) {
+    if (!allowed.has(key)) return `Proprietà risultato non consentita: ${key}`;
+  }
+  if (result.schema_version !== 'affetta.result.v1' || result.status !== 'completed') {
+    return 'Versione o stato risultato non valido.';
+  }
+  if (result.job_id !== 'job_mock_01' || result.request_id !== request.request_id ||
+      result.idempotency_key !== request.idempotency_key) {
+    return 'Identità o idempotenza risultato non coerente.';
+  }
+  if (typeof result.updated_at !== 'string' || Number.isNaN(Date.parse(result.updated_at))) {
+    return 'updated_at risultato non valido.';
+  }
+  if ('completed_at' in result) return 'completed_at non appartiene ad affetta.result.v1.';
+  if (!isRecord(result.result) || !Array.isArray(result.result.artifacts) || result.result.artifacts.length < 1) {
+    return 'Corpo risultato o artefatti non validi.';
+  }
+  return null;
+}
+
 async function listen(server: http.Server): Promise<{ baseUrl: string; close: () => Promise<void> }> {
   server.listen(0, '127.0.0.1');
   await once(server, 'listening');
@@ -234,7 +267,14 @@ export async function startMockCloud(options: { failFirstUpload?: boolean; revok
     }
     if (httpRequest.method === 'POST' && /\/upload-complete$/.test(url.pathname)) return json(response, 200, {});
     if (httpRequest.method === 'POST' && /\/complete$/.test(url.pathname)) {
-      completed = JSON.parse((await readBody(httpRequest)).toString('utf8'));
+      const body = JSON.parse((await readBody(httpRequest)).toString('utf8')) as unknown;
+      const contractError = validateCompletedResultEnvelope(body, request);
+      if (contractError) {
+        return json(response, 422, {
+          error: { code: 'invalid_job_result', message: contractError }
+        });
+      }
+      completed = body;
       return json(response, 200, {});
     }
     if (httpRequest.method === 'POST' && /\/fail$/.test(url.pathname)) {

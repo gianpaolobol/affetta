@@ -58,3 +58,10 @@ backend reale, così un ritorno futuro di `queued/queue` rende la suite rossa.
 Il PUT del risultato usa uno stream con `Content-Length` ricavato dalla
 dimensione reale del file. Questo evita HTTP 411 di MinIO senza caricare il
 G-code interamente in memoria.
+
+
+## Contratto del risultato finale
+
+Prima di `/complete`, l'Agent costruisce un `affetta.result.v1` con
+`request_id`, `idempotency_key` e `updated_at` derivati dalla richiesta. Il
+campo legacy `completed_at` non viene emesso.

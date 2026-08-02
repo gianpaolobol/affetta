@@ -72,8 +72,10 @@ export async function buildJobResult(options: {
   const result: JobResultV1 = {
     schema_version: 'affetta.result.v1',
     job_id: cloudJobId,
+    request_id: request.request_id,
+    idempotency_key: request.idempotency_key,
     status: 'completed',
-    completed_at: nowIso(),
+    updated_at: nowIso(),
     result: {
       printer_profile_id: printerId,
       printer_profile_version: /^\d+\.\d+\.\d+/.test(health.version) ? health.version : '0.0.0',

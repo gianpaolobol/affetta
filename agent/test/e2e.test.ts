@@ -37,7 +37,26 @@ test('completa end-to-end un job X3G con checksum, GPX e capability sperimentali
   assert.equal(local.createCount(), 1);
   assert.deepEqual(cloud.uploaded(), local.output);
   assert.equal(cloud.uploadContentLength(), String(local.output.length));
-  const completion = cloud.completedResult() as { result?: { result?: { output_format?: string; postprocessors?: unknown[]; validation?: { valid?: boolean } } } };
+  const completion = cloud.completedResult() as {
+    result?: {
+      schema_version?: string;
+      job_id?: string;
+      request_id?: string;
+      idempotency_key?: string;
+      status?: string;
+      updated_at?: string;
+      completed_at?: string;
+      result?: { output_format?: string; postprocessors?: unknown[]; validation?: { valid?: boolean } };
+    };
+  };
+  assert.equal(completion.result?.schema_version, 'affetta.result.v1');
+  assert.equal(completion.result?.job_id, 'job_mock_01');
+  assert.equal(completion.result?.request_id, 'req_mock_01');
+  assert.equal(completion.result?.idempotency_key, 'mock-idempotency-01');
+  assert.equal(completion.result?.status, 'completed');
+  assert.equal(typeof completion.result?.updated_at, 'string');
+  assert.equal(Number.isNaN(Date.parse(completion.result?.updated_at || '')), false);
+  assert.equal('completed_at' in (completion.result || {}), false);
   assert.equal(completion.result?.result?.output_format, 'x3g');
   assert.equal(completion.result?.result?.postprocessors?.length, 1);
   assert.equal(completion.result?.result?.validation?.valid, true);
