@@ -229,8 +229,18 @@ async function main() {
     agentId = first.events.find((event) => event.event === 'agent_paired')?.agent_id || null;
     if (!agentId) throw new Error('agent_id non rilevato dai log del pairing.');
     report.agent_id = agentId;
+    const failedEvent = first.events.find((event) => event.event === 'job_failed' && event.job_id === jobId);
+    if (failedEvent) {
+      const code = failedEvent.error?.code || 'job_failed';
+      const message = failedEvent.error?.message || 'errore Agent non specificato';
+      const error = new Error(`Agent job_failed (${code}): ${message}`);
+      error.agentRun = first;
+      throw error;
+    }
     if (!first.events.some((event) => event.event === 'job_completed' && event.job_id === jobId)) {
-      throw new Error('L’Agent non ha registrato job_completed per il job P3.3.');
+      const error = new Error('L’Agent non ha registrato job_completed per il job P3.3.');
+      error.agentRun = first;
+      throw error;
     }
     report.checks.pair_heartbeat_lease_slice_upload = 'ok';
 

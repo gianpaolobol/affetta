@@ -33,3 +33,10 @@ La Thing-O-Matic è esclusa dal target del collaudo perché resta sperimentale,
 - i dati temporanei Agent vengono eliminati dopo il successo;
 - backend, storage e Affetta restano non esposti in LAN;
 - nessun comando viene inviato a una stampante fisica.
+
+
+## Compatibilità con il catalogo locale
+
+I valori di `print_intent` che Affetta valida come enumerazioni devono essere
+derivati dal catalogo locale. In particolare `color_id` viene selezionato dagli
+ID pubblicati da `/api/v1/catalog`; P3.3 non mantiene un valore colore fisso.

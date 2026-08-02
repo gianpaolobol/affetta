@@ -30,3 +30,14 @@ Il messaggio finale deve essere:
 
 Il report senza segreti viene scritto sotto `agent\agent-data`, cartella ignorata
 da Git.
+
+
+## Selezione del colore
+
+Il job sintetico non usa un `color_id` inventato. Il collaudo legge gli ID
+reali da `/api/v1/catalog`, preferisce `random`, poi `black` e `white`, e usa
+infine il primo ID disponibile in ordine stabile. Se il catalogo non espone
+colori, il test viene bloccato prima del pairing.
+
+Un errore `job_failed` dell'Agent viene riportato con codice e messaggio
+originali, senza essere sostituito dal generico mancato completamento.

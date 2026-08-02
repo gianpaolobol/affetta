@@ -4,6 +4,7 @@ import { test } from 'node:test';
 import {
   assertLocalLoopback,
   buildJobRequest,
+  chooseCatalogColor,
   chooseProductionGcodeTarget,
   parseDotEnv,
   parseJsonEvents,
@@ -20,9 +21,19 @@ test('P3.3 accetta solo endpoint loopback', () => {
   assert.throws(() => assertLocalLoopback('http://192.168.1.10:8790', 'backend'), /loopback/);
 });
 
+test('seleziona un color_id realmente esposto dal catalogo Affetta', () => {
+  assert.equal(chooseCatalogColor({ colors: { black: {}, random: {}, white: {} } }), 'random');
+  assert.equal(chooseCatalogColor({ colors: { white: {}, black: {} } }), 'black');
+  assert.equal(chooseCatalogColor({ colors: { red: {}, blue: {} } }), 'blue');
+});
+
+test('rifiuta un catalogo senza color_id', () => {
+  assert.throws(() => chooseCatalogColor({ colors: {} }), /non espone alcun color_id/);
+});
+
 test('seleziona una unità production_ready G-code e scarta Thing-O-Matic', () => {
   const selected = chooseProductionGcodeTarget({
-    catalog: { printers: {
+    catalog: { colors: { random: { label: 'Colore casuale' }, black: { label: 'Nero' } }, printers: {
       'thing-o-matic': { materials: ['pla'], nozzles: [0.35] },
       'bambu-x1c': { materials: ['pla', 'petg'], nozzles: [0.4], default_nozzle: 0.4, status: 'validated' }
     } },
@@ -37,12 +48,13 @@ test('seleziona una unità production_ready G-code e scarta Thing-O-Matic', () =
   });
   assert.equal(selected.fleet_unit_id, 'x1c-01');
   assert.equal(selected.material_id, 'pla');
+  assert.equal(selected.color_id, 'random');
   assert.equal(selected.output_format, 'gcode');
 });
 
 test('rifiuta il collaudo se non esiste una unità production_ready G-code', () => {
   assert.throws(() => chooseProductionGcodeTarget({
-    catalog: { printers: { 'thing-o-matic': { materials: ['pla'], nozzles: [0.35] } } },
+    catalog: { colors: { random: { label: 'Colore casuale' } }, printers: { 'thing-o-matic': { materials: ['pla'], nozzles: [0.35] } } },
     fleet: { fleet: { units: [{ id: 'thing-o-matic-01', printer_id: 'thing-o-matic', production_ready: false }] } },
     diagnostics: { slicing: { printers: { 'thing-o-matic': { output_format: 'x3g' } } } }
   }), /Nessuna unità G-code production_ready/);
@@ -51,12 +63,13 @@ test('rifiuta il collaudo se non esiste una unità production_ready G-code', () 
 test('costruisce un job manuale senza invio a stampante fisica', () => {
   const request = buildJobRequest({
     artifact: { id: 'art_test_01' }, sha256: 'a'.repeat(64), sizeBytes: 123,
-    target: { material_id: 'pla', nozzle_mm: 0.4, printer_profile_id: 'bambu-x1c', fleet_unit_id: 'x1c-01' },
+    target: { material_id: 'pla', color_id: 'random', nozzle_mm: 0.4, printer_profile_id: 'bambu-x1c', fleet_unit_id: 'x1c-01' },
     suffix: 'abcdef12', filename: 'cube.stl'
   });
   assert.equal(request.routing.mode, 'manual');
   assert.equal(request.routing.require_production_ready, true);
   assert.equal(request.print_intent.requested_output_format, 'gcode');
+  assert.equal(request.print_intent.color_id, 'random');
   assert.equal(request.extensions['affetta.p3-3.no-physical-print'], true);
 });
 

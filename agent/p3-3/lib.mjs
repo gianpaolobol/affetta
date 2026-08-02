@@ -59,8 +59,21 @@ function unique(values) {
   return [...new Set(values)];
 }
 
+export function chooseCatalogColor(catalog) {
+  const colors = object(catalog?.colors);
+  const ids = Object.keys(colors).filter((id) => typeof id === 'string' && id.trim().length > 0);
+  if (ids.length === 0) {
+    throw new Error('Il catalogo Affetta non espone alcun color_id valido per il collaudo P3.3.');
+  }
+  for (const preferred of ['random', 'black', 'white']) {
+    if (ids.includes(preferred)) return preferred;
+  }
+  return ids.sort((a, b) => a.localeCompare(b))[0];
+}
+
 export function chooseProductionGcodeTarget({ catalog, fleet, diagnostics }) {
   const printers = object(catalog?.printers);
+  const colorId = chooseCatalogColor(catalog);
   const units = Array.isArray(fleet?.fleet?.units) ? fleet.fleet.units : [];
   const slicing = object(diagnostics?.slicing);
   const printerDiagnostics = object(slicing.printers);
@@ -97,6 +110,7 @@ export function chooseProductionGcodeTarget({ catalog, fleet, diagnostics }) {
       fleet_unit_id: String(unit.id),
       printer_profile_id: profileId,
       material_id: material,
+      color_id: colorId,
       nozzle_mm: nozzle,
       output_format: 'gcode',
       profile_status: String(profile.status || diagnostic.profile_status || 'unknown'),
@@ -136,7 +150,7 @@ export function buildJobRequest({ artifact, sha256, sizeBytes, target, suffix, f
       material_id: target.material_id,
       quality_id: 'standard',
       strength_id: 'standard',
-      color_id: 'natural',
+      color_id: target.color_id,
       quantity: 1,
       nozzle_mm: target.nozzle_mm,
       requested_output_format: 'gcode'
