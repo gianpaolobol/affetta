@@ -15,9 +15,11 @@ function safeName(value: string): string {
   return path.basename(value).replace(/[^A-Za-z0-9._-]+/g, '_').slice(0, 160) || 'model.stl';
 }
 
-function mapLocalState(job: LocalJob): { status: JobStatus; stage: JobStage; progress: number } {
+export function mapLocalState(job: LocalJob): { status: JobStatus; stage: JobStage; progress: number } {
   const phase = String(job.phase || '').toLowerCase();
-  if (job.status === 'queued') return { status: 'queued', stage: 'queue', progress: Number(job.progress || 5) };
+  // Il job cloud è già in lease/assigned: la coda di Affetta è interna al runtime
+  // locale e non deve far regredire lo stato cloud a queued/queue.
+  if (job.status === 'queued') return { status: 'preparing', stage: 'prepare', progress: Number(job.progress || 10) };
   if (phase.includes('postprocess')) return { status: 'postprocessing', stage: 'postprocess', progress: Number(job.progress || 92) };
   if (phase.includes('validate')) return { status: 'validating', stage: 'validate', progress: Number(job.progress || 82) };
   if (phase.includes('slice') || job.status === 'running') return { status: 'slicing', stage: 'slice', progress: Number(job.progress || 20) };

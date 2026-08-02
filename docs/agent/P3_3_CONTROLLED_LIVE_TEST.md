@@ -41,3 +41,13 @@ colori, il test viene bloccato prima del pairing.
 
 Un errore `job_failed` dell'Agent viene riportato con codice e messaggio
 originali, senza essere sostituito dal generico mancato completamento.
+
+
+## Normalizzazione della coda locale
+
+La risposta iniziale di `POST /api/v1/slice-jobs` può contenere
+`queued/queued`. Poiché il job cloud è già stato preso in lease, l'Agent
+pubblica al backend `preparing/prepare` fino all'avvio effettivo dello slicing.
+
+I mock end-to-end applicano lo stesso insieme di stati e stage consentiti dal
+backend reale, così un ritorno futuro di `queued/queue` rende la suite rossa.

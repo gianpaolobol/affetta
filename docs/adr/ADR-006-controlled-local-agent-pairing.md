@@ -40,3 +40,21 @@ La Thing-O-Matic è esclusa dal target del collaudo perché resta sperimentale,
 I valori di `print_intent` che Affetta valida come enumerazioni devono essere
 derivati dal catalogo locale. In particolare `color_id` viene selezionato dagli
 ID pubblicati da `/api/v1/catalog`; P3.3 non mantiene un valore colore fisso.
+
+
+## Stato della coda locale
+
+Dopo il lease cloud, Affetta locale può restituire temporaneamente
+`status=queued` e `phase=queued`. Questo stato descrive soltanto la coda
+interna del runtime Windows e non rappresenta una regressione del job cloud.
+
+L'Agent normalizza pertanto:
+
+```text
+local queued/queued -> cloud preparing/prepare
+```
+
+Il backend continua a rifiutare `queued/queue` sugli endpoint di avanzamento
+di un job già assegnato. Questa separazione preserva una macchina a stati cloud
+monotona e impedisce che dettagli interni del runtime locale modifichino il
+contratto distribuito.

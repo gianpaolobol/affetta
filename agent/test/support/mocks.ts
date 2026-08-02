@@ -157,7 +157,7 @@ export interface MockCloud {
 
 export async function startMockCloud(options: { failFirstUpload?: boolean; revokeHeartbeat?: boolean } = {}): Promise<MockCloud> {
   const input = Buffer.from('solid mock\nendsolid mock\n', 'utf8');
-  let uploaded: Buffer = Buffer.alloc(0);
+  let uploaded = Buffer.alloc(0);
   let completed: unknown = null;
   let uploadAttempts = 0;
   let failures = 0;
@@ -210,6 +210,24 @@ export async function startMockCloud(options: { failFirstUpload?: boolean; revok
     }
     if (httpRequest.method === 'POST' && /\/ack$/.test(url.pathname)) return json(response, 200, {});
     if (httpRequest.method === 'POST' && /\/progress$/.test(url.pathname)) {
+      const body = JSON.parse((await readBody(httpRequest)).toString('utf8')) as { status?: string; stage?: string };
+      const allowedStatuses = new Set([
+        'assigned', 'downloading', 'preparing', 'slicing', 'validating',
+        'postprocessing', 'uploading', 'cancel_requested'
+      ]);
+      const allowedStages = new Set([
+        'lease', 'download', 'prepare', 'slice', 'validate',
+        'postprocess', 'upload_result', 'cancel'
+      ]);
+      if (!allowedStatuses.has(String(body.status)) || !allowedStages.has(String(body.stage))) {
+        return json(response, 422, {
+          error: {
+            code: 'invalid_progress_transition',
+            message: 'Stato o stage di avanzamento non consentito.',
+            details: { status: body.status, stage: body.stage }
+          }
+        });
+      }
       return json(response, 200, { lease_expires_at: new Date(Date.now() + 10 * 60_000).toISOString() });
     }
     if (httpRequest.method === 'POST' && /\/upload-complete$/.test(url.pathname)) return json(response, 200, {});
@@ -229,7 +247,7 @@ export async function startMockCloud(options: { failFirstUpload?: boolean; revok
       uploadAttempts += 1;
       const body = await readBody(httpRequest);
       if (options.failFirstUpload && uploadAttempts === 1) return json(response, 503, { error: { code: 'storage_unavailable' } });
-      uploaded = body;
+      uploaded = Buffer.from(body);
       response.writeHead(200);
       return response.end();
     }
