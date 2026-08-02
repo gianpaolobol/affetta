@@ -13,6 +13,7 @@ COPY --from=build /app/backend/package*.json ./
 RUN npm install --omit=dev --no-audit --no-fund
 COPY --from=build /app/backend/dist ./dist
 COPY --from=build /app/backend/migrations ./migrations
+COPY --from=build /app/backend/public ./public
 COPY --from=build /app/schemas /app/schemas
 USER node
 EXPOSE 8790

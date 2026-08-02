@@ -24,7 +24,8 @@
     "backend:start": "npm --prefix backend start",
     "backend:migrate": "npm --prefix backend run migrate",
     "agent:p3.3:test": "npm --prefix agent run test:p3.3",
-    "agent:p3.3:live": "npm --prefix agent run live:p3.3"
+    "agent:p3.3:live": "npm --prefix agent run live:p3.3",
+    "backend:p4.1:live": "npm --prefix backend run live:p4.1"
   },
   "engines": {
     "node": ">=20"

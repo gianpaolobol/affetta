@@ -1,6 +1,11 @@
 import { BackendError } from '../errors.js';
 import type {
   AgentCapabilitiesV1,
+  BetaAccountSnapshot,
+  BetaEmailVerificationRecord,
+  BetaProfileRecord,
+  BetaSessionRecord,
+  BetaUserRecord,
   AgentRecord,
   ApiKeyRecord,
   ArtifactRecord,
@@ -9,6 +14,8 @@ import type {
   JobEventRecord,
   JobRecord,
   JobResultV1,
+  MembershipRecord,
+  EmailOutboxRecord,
   OrganizationRecord,
   PairingCodeRecord,
   ReadyQueue,
@@ -97,6 +104,12 @@ export class MemoryArtifactStorage implements ArtifactStorage {
 
 export class MemoryBackendRepository implements BackendRepository {
   private readonly organizations = new Map<string, OrganizationRecord>();
+  private readonly betaUsers = new Map<string, BetaUserRecord>();
+  private readonly memberships = new Map<string, MembershipRecord>();
+  private readonly betaProfiles = new Map<string, BetaProfileRecord>();
+  private readonly betaVerifications = new Map<string, BetaEmailVerificationRecord>();
+  private readonly betaSessions = new Map<string, BetaSessionRecord>();
+  private readonly emailOutbox = new Map<string, EmailOutboxRecord>();
   private readonly apiKeys = new Map<string, ApiKeyRecord>();
   private readonly pairingCodes = new Map<string, PairingCodeRecord>();
   private readonly agents = new Map<string, AgentRecord>();
@@ -124,6 +137,93 @@ export class MemoryBackendRepository implements BackendRepository {
   async findApiKeyByHash(keyHash: string): Promise<ApiKeyRecord | null> {
     const record = [...this.apiKeys.values()].find((key) => key.key_hash === keyHash && !key.revoked_at);
     return record ? copy(record) : null;
+  }
+
+  async findBetaUserByEmail(email: string): Promise<BetaUserRecord | null> {
+    const record = [...this.betaUsers.values()].find((user) => user.email === email);
+    return record ? copy(record) : null;
+  }
+
+  async findBetaUserByUsername(username: string): Promise<BetaUserRecord | null> {
+    const record = [...this.betaUsers.values()].find((user) => user.username === username);
+    return record ? copy(record) : null;
+  }
+
+  async createBetaAccount(input: {
+    organization: OrganizationRecord;
+    user: BetaUserRecord;
+    membership: MembershipRecord;
+    profile: BetaProfileRecord;
+    verification: BetaEmailVerificationRecord;
+    outbox: EmailOutboxRecord;
+  }): Promise<BetaAccountSnapshot> {
+    if ([...this.betaUsers.values()].some((user) => user.email === input.user.email)) {
+      throw new BackendError('beta_email_exists', 'Esiste già un account con questa email.', { statusCode: 409 });
+    }
+    if ([...this.betaUsers.values()].some((user) => user.username === input.user.username)) {
+      throw new BackendError('beta_username_exists', 'Username già utilizzato.', { statusCode: 409 });
+    }
+    this.organizations.set(input.organization.id, copy(input.organization));
+    this.betaUsers.set(input.user.id, copy(input.user));
+    this.memberships.set(input.membership.id, copy(input.membership));
+    this.betaProfiles.set(input.profile.user_id, copy(input.profile));
+    this.betaVerifications.set(input.verification.id, copy(input.verification));
+    this.emailOutbox.set(input.outbox.id, copy(input.outbox));
+    return {
+      organization: copy(input.organization), user: copy(input.user),
+      membership: copy(input.membership), profile: copy(input.profile)
+    };
+  }
+
+  async consumeBetaEmailVerification(tokenHash: string, now: string): Promise<BetaUserRecord | null> {
+    const verification = [...this.betaVerifications.values()].find((item) => item.token_hash === tokenHash);
+    if (!verification || verification.used_at || new Date(verification.expires_at) <= new Date(now)) return null;
+    const user = this.betaUsers.get(verification.user_id);
+    if (!user || user.status === 'disabled') return null;
+    verification.used_at = now;
+    user.email_verified_at = user.email_verified_at ?? now;
+    user.status = 'active';
+    user.updated_at = now;
+    return copy(user);
+  }
+
+  async createBetaSession(record: BetaSessionRecord): Promise<BetaSessionRecord> {
+    this.betaSessions.set(record.id, copy(record));
+    return copy(record);
+  }
+
+  async findBetaSessionByTokenHash(tokenHash: string, now: string): Promise<BetaSessionRecord | null> {
+    const session = [...this.betaSessions.values()].find((item) => item.token_hash === tokenHash);
+    if (!session || session.revoked_at || new Date(session.expires_at) <= new Date(now)) return null;
+    return copy(session);
+  }
+
+  async touchBetaSession(sessionId: string, now: string): Promise<void> {
+    const session = this.betaSessions.get(sessionId);
+    if (session && !session.revoked_at) session.last_seen_at = now;
+  }
+
+  async revokeBetaSession(sessionId: string, userId: string, now: string): Promise<boolean> {
+    const session = this.betaSessions.get(sessionId);
+    if (!session || session.user_id !== userId) return false;
+    session.revoked_at = session.revoked_at ?? now;
+    return true;
+  }
+
+  async getBetaAccount(userId: string): Promise<BetaAccountSnapshot | null> {
+    const user = this.betaUsers.get(userId);
+    const membership = [...this.memberships.values()].find((item) => item.user_id === userId);
+    const profile = this.betaProfiles.get(userId);
+    if (!user || !membership || !profile) return null;
+    const organization = this.organizations.get(membership.organization_id);
+    if (!organization) return null;
+    return { user: copy(user), membership: copy(membership), profile: copy(profile), organization: copy(organization) };
+  }
+
+  async updateBetaProfile(userId: string, profile: BetaProfileRecord): Promise<BetaProfileRecord | null> {
+    if (!this.betaUsers.has(userId)) return null;
+    this.betaProfiles.set(userId, copy(profile));
+    return copy(profile);
   }
 
   async createPairingCode(record: PairingCodeRecord): Promise<PairingCodeRecord> {

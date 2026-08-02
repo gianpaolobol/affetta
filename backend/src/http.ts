@@ -3,7 +3,8 @@ import { randomUUID } from 'node:crypto';
 import { BackendError, asBackendError } from './errors.js';
 import { openApiDocument } from './openapi.js';
 import type { BackendService } from './service.js';
-import type { ApiPrincipal, AgentPrincipal, Principal } from './types.js';
+import type { ApiPrincipal, AgentPrincipal, BetaPrincipal, Principal } from './types.js';
+import { readBetaAsset } from './beta-web.js';
 import type { MetricsRegistry } from './metrics.js';
 
 export interface InjectRequest {
@@ -68,7 +69,7 @@ export class BackendHttpApi {
 
   private async dispatch(method: string, path: string, headers: Record<string, string>, body: unknown, correlationId: string): Promise<{ statusCode: number; headers: Record<string, string>; body: unknown }> {
     if (method === 'GET' && path === '/healthz') {
-      return { statusCode: 200, headers: {}, body: { ok: true, service: 'affetta-backend', version: '0.1.1' } };
+      return { statusCode: 200, headers: {}, body: { ok: true, service: 'affetta-backend', version: '0.2.0' } };
     }
     if (method === 'GET' && path === '/readyz') {
       const health = await this.service.health();
@@ -79,6 +80,36 @@ export class BackendHttpApi {
     }
     if (method === 'GET' && path === '/openapi.json') {
       return { statusCode: 200, headers: {}, body: openApiDocument };
+    }
+
+    if (method === 'GET' && path.startsWith('/beta')) {
+      const asset = await readBetaAsset(path);
+      if (asset) return { statusCode: 200, headers: { 'content-type': asset.contentType, 'cache-control': 'no-store' }, body: asset.body };
+    }
+
+    if (method === 'GET' && path === '/v1/beta/limits') {
+      return { statusCode: 200, headers: {}, body: this.service.betaLimits() };
+    }
+    if (method === 'POST' && path === '/v1/beta/register') {
+      return { statusCode: 201, headers: {}, body: await this.service.registerBeta(body) };
+    }
+    if (method === 'POST' && path === '/v1/beta/verify-email') {
+      return { statusCode: 200, headers: {}, body: await this.service.verifyBetaEmail(body) };
+    }
+    if (method === 'POST' && path === '/v1/beta/login') {
+      return { statusCode: 200, headers: {}, body: await this.service.loginBeta(body) };
+    }
+    if (method === 'GET' && path === '/v1/beta/me') {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 200, headers: {}, body: await this.service.betaMe(principal) };
+    }
+    if (method === 'PATCH' && path === '/v1/beta/me/cost-profile') {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 200, headers: {}, body: await this.service.updateBetaCostProfile(principal, body) };
+    }
+    if (method === 'POST' && path === '/v1/beta/logout') {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 200, headers: {}, body: await this.service.logoutBeta(principal) };
     }
 
     if (method === 'POST' && path === '/v1/pairing-codes') {
@@ -161,6 +192,10 @@ export class BackendHttpApi {
     return this.service.authenticateAgent(bearer(headers.authorization), expectedAgentId);
   }
 
+  private betaPrincipal(headers: Record<string, string>): Promise<BetaPrincipal> {
+    return this.service.authenticateBeta(bearer(headers.authorization));
+  }
+
   private async artifactPrincipal(headers: Record<string, string>): Promise<Principal> {
     if (headers.authorization) return this.agentPrincipal(headers);
     return this.apiPrincipal(headers);
@@ -195,7 +230,8 @@ export function createNodeServer(api: BackendHttpApi, maxJsonBytes: number): Ser
       });
       response.writeHead(result.statusCode, result.headers);
       const contentType = result.headers['content-type'] || '';
-      response.end(contentType.startsWith('text/plain') && typeof result.body === 'string' ? result.body : JSON.stringify(result.body));
+      const textual = typeof result.body === 'string' && !contentType.includes('application/json');
+      response.end(textual ? result.body : JSON.stringify(result.body));
     } catch (error) {
       const normalized = asBackendError(error);
       response.writeHead(normalized.statusCode, { 'content-type': 'application/json; charset=utf-8' });

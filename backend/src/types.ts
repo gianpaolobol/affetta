@@ -118,6 +118,81 @@ export interface JobResultV1 {
   };
 }
 
+
+export interface BetaUserRecord {
+  id: string;
+  email: string;
+  username: string;
+  phone_e164: string;
+  password_hash: string;
+  status: 'pending_verification' | 'active' | 'disabled';
+  email_verified_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface MembershipRecord {
+  id: string;
+  user_id: string;
+  organization_id: string;
+  role: 'owner' | 'member';
+  created_at: string;
+}
+
+export interface BetaCostProfile {
+  currency: 'EUR';
+  energy_eur_per_kwh: number;
+  machine_hour_eur: number;
+  labor_hour_eur: number;
+  material_markup_percent: number;
+}
+
+export interface BetaProfileRecord {
+  user_id: string;
+  display_name: string;
+  cost_profile: BetaCostProfile;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface BetaEmailVerificationRecord {
+  id: string;
+  user_id: string;
+  token_hash: string;
+  expires_at: string;
+  used_at: string | null;
+  created_at: string;
+}
+
+export interface BetaSessionRecord {
+  id: string;
+  user_id: string;
+  organization_id: string;
+  token_hash: string;
+  expires_at: string;
+  revoked_at: string | null;
+  created_at: string;
+  last_seen_at: string;
+}
+
+export interface EmailOutboxRecord {
+  id: string;
+  user_id: string;
+  recipient: string;
+  template: 'verify_beta_email';
+  payload: Record<string, unknown>;
+  status: 'pending' | 'sent' | 'failed';
+  created_at: string;
+  sent_at: string | null;
+}
+
+export interface BetaAccountSnapshot {
+  user: BetaUserRecord;
+  organization: OrganizationRecord;
+  membership: MembershipRecord;
+  profile: BetaProfileRecord;
+}
+
 export interface OrganizationRecord {
   id: string;
   name: string;
@@ -245,6 +320,13 @@ export interface ApiPrincipal {
   scopes: string[];
 }
 
+export interface BetaPrincipal {
+  kind: 'beta_user';
+  organization_id: string;
+  user_id: string;
+  session_id: string;
+}
+
 export interface AgentPrincipal {
   kind: 'agent';
   organization_id: string;
@@ -268,6 +350,23 @@ export interface BackendRepository {
     pairing_code?: PairingCodeRecord;
   }): Promise<void>;
   findApiKeyByHash(keyHash: string): Promise<ApiKeyRecord | null>;
+  findBetaUserByEmail(email: string): Promise<BetaUserRecord | null>;
+  findBetaUserByUsername(username: string): Promise<BetaUserRecord | null>;
+  createBetaAccount(input: {
+    organization: OrganizationRecord;
+    user: BetaUserRecord;
+    membership: MembershipRecord;
+    profile: BetaProfileRecord;
+    verification: BetaEmailVerificationRecord;
+    outbox: EmailOutboxRecord;
+  }): Promise<BetaAccountSnapshot>;
+  consumeBetaEmailVerification(tokenHash: string, now: string): Promise<BetaUserRecord | null>;
+  createBetaSession(record: BetaSessionRecord): Promise<BetaSessionRecord>;
+  findBetaSessionByTokenHash(tokenHash: string, now: string): Promise<BetaSessionRecord | null>;
+  touchBetaSession(sessionId: string, now: string): Promise<void>;
+  revokeBetaSession(sessionId: string, userId: string, now: string): Promise<boolean>;
+  getBetaAccount(userId: string): Promise<BetaAccountSnapshot | null>;
+  updateBetaProfile(userId: string, profile: BetaProfileRecord): Promise<BetaProfileRecord | null>;
   createPairingCode(record: PairingCodeRecord): Promise<PairingCodeRecord>;
   consumePairingCode(codeHash: string, now: string): Promise<PairingCodeRecord | null>;
   pairAgent(record: AgentRecord): Promise<AgentRecord>;

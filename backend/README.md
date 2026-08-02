@@ -1,6 +1,6 @@
-# Affetta Backend 0.1.0
+# Affetta Backend 0.2.0 — P4.1
 
-Backend P3 per coordinare Agent, job, lease, coda e artefatti. Non sostituisce Affetta locale e non esegue slicing.
+Backend Affetta per coordinare account beta, Agent, job, lease, coda e artefatti. Non sostituisce Affetta locale e non esegue slicing.
 
 ## Architettura
 
@@ -12,9 +12,33 @@ Backend P3 per coordinare Agent, job, lease, coda e artefatti. Non sostituisce A
 
 Il lease viene confermato nel database con un aggiornamento atomico. Redis accelera la selezione ma non può, da solo, autorizzare l'esecuzione di un job.
 
+## Beta web P4.1
+
+La fondazione della beta gratuita è disponibile su:
+
+```text
+http://127.0.0.1:8790/beta/
+```
+
+Comprende registrazione, verifica email tramite outbox, login, sessione bearer,
+profilo costi personale e limiti Free. Il Compose locale può esporre il token
+di verifica soltanto perché resta vincolato a `127.0.0.1`; non usare
+`AFFETTA_BETA_EXPOSE_DEV_TOKENS=true` su Internet.
+
+Il collegamento browser upload → job → download e l'enforcement delle quote
+sono P4.2.
+
 ## Endpoint principali
 
 ```text
+GET  /beta/
+GET  /v1/beta/limits
+POST /v1/beta/register
+POST /v1/beta/verify-email
+POST /v1/beta/login
+GET  /v1/beta/me
+PATCH /v1/beta/me/cost-profile
+POST /v1/beta/logout
 POST /v1/pairing-codes
 POST /v1/agents/pair
 POST /v1/agents/{id}/heartbeat
@@ -68,7 +92,9 @@ Il compose usa PostgreSQL 18.4, Redis 8.8.1 e uno storage S3 compatibile MinIO p
 
 ## Sicurezza
 
-- API key e token Agent sono conservati solo come SHA-256;
+- API key, token Agent e token di sessione beta sono conservati come SHA-256;
+- password beta derivate con scrypt e salt casuale;
+- la tabella di verifica conserva il token come hash; l’outbox locale contiene il link di consegna a breve scadenza e non è ancora adatta a Internet;
 - pairing code a scadenza e numero massimo di utilizzi;
 - tenant isolation su tutte le entità;
 - checksum SHA-256 verificato leggendo l'oggetto S3 dopo l'upload;
@@ -78,9 +104,9 @@ Il compose usa PostgreSQL 18.4, Redis 8.8.1 e uno storage S3 compatibile MinIO p
 - body JSON limitato;
 - errori strutturati e correlation ID.
 
-## Limiti P3
+## Limiti correnti
 
-- niente account utente o billing;
+- account beta disponibile; billing, recupero password, 2FA e worker SMTP non ancora inclusi;
 - niente scheduler multi-piatto/fleet score avanzato;
 - niente webhook;
 - niente antivirus/CAD sandbox: previsto nella fase beta;

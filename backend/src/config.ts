@@ -32,6 +32,16 @@ export interface BackendConfig {
   bootstrapPairingCode: string | null;
   contractsRoot: string;
   allowInsecureMemoryDefaults: boolean;
+  beta: {
+    enabled: boolean;
+    exposeDevTokens: boolean;
+    verificationTtlHours: number;
+    sessionTtlHours: number;
+    freeDailyJobs: number;
+    freeMaxInputBytes: number;
+    freeRetentionHours: number;
+    freeMaxAgents: number;
+  };
 }
 
 function integer(name: string, value: string | undefined, fallback: number, min = 0): number {
@@ -82,7 +92,17 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): BackendConfig 
     bootstrapApiKey: env.AFFETTA_BOOTSTRAP_API_KEY || null,
     bootstrapPairingCode: env.AFFETTA_BOOTSTRAP_PAIRING_CODE || null,
     contractsRoot: env.AFFETTA_CONTRACTS_ROOT || defaultContractsRoot,
-    allowInsecureMemoryDefaults: bool(env.AFFETTA_ALLOW_INSECURE_MEMORY_DEFAULTS, mode === 'memory')
+    allowInsecureMemoryDefaults: bool(env.AFFETTA_ALLOW_INSECURE_MEMORY_DEFAULTS, mode === 'memory'),
+    beta: {
+      enabled: bool(env.AFFETTA_BETA_ENABLED, true),
+      exposeDevTokens: bool(env.AFFETTA_BETA_EXPOSE_DEV_TOKENS, mode === 'memory'),
+      verificationTtlHours: integer('AFFETTA_BETA_VERIFICATION_TTL_HOURS', env.AFFETTA_BETA_VERIFICATION_TTL_HOURS, 24, 1),
+      sessionTtlHours: integer('AFFETTA_BETA_SESSION_TTL_HOURS', env.AFFETTA_BETA_SESSION_TTL_HOURS, 168, 1),
+      freeDailyJobs: integer('AFFETTA_BETA_FREE_DAILY_JOBS', env.AFFETTA_BETA_FREE_DAILY_JOBS, 5, 1),
+      freeMaxInputBytes: integer('AFFETTA_BETA_FREE_MAX_INPUT_BYTES', env.AFFETTA_BETA_FREE_MAX_INPUT_BYTES, 50_000_000, 1),
+      freeRetentionHours: integer('AFFETTA_BETA_FREE_RETENTION_HOURS', env.AFFETTA_BETA_FREE_RETENTION_HOURS, 24, 1),
+      freeMaxAgents: integer('AFFETTA_BETA_FREE_MAX_AGENTS', env.AFFETTA_BETA_FREE_MAX_AGENTS, 1, 1)
+    }
   };
 
   if (mode === 'production') {

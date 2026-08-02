@@ -90,6 +90,9 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       S3_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
       S3_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
+      AFFETTA_BETA_ENABLED: ${AFFETTA_BETA_ENABLED:-true}
+      # Solo profilo locale loopback: mostra il token che sostituisce temporaneamente l'invio email.
+      AFFETTA_BETA_EXPOSE_DEV_TOKENS: ${AFFETTA_BETA_EXPOSE_DEV_TOKENS:-true}
     depends_on:
       postgres:
         condition: service_healthy

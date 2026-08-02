@@ -2,14 +2,15 @@ export const openApiDocument = {
   openapi: '3.1.0',
   info: {
     title: 'Affetta Backend API',
-    version: '0.1.0',
-    description: 'Backend cloud-coordinated per job, Agent, lease e artefatti Affetta.'
+    version: '0.2.0',
+    description: 'Backend Affetta per beta web, account, Agent, job, lease e artefatti.'
   },
   servers: [{ url: '/' }],
   components: {
     securitySchemes: {
       ApiKey: { type: 'apiKey', in: 'header', name: 'x-api-key' },
-      AgentBearer: { type: 'http', scheme: 'bearer', bearerFormat: 'opaque' }
+      AgentBearer: { type: 'http', scheme: 'bearer', bearerFormat: 'opaque' },
+      BetaBearer: { type: 'http', scheme: 'bearer', bearerFormat: 'opaque-session' }
     },
     schemas: {
       StructuredError: {
@@ -22,6 +23,14 @@ export const openApiDocument = {
     }
   },
   paths: {
+    '/beta/': { get: { summary: 'Interfaccia web beta gratuita', responses: { '200': { description: 'Pagina beta' } } } },
+    '/v1/beta/limits': { get: { summary: 'Limiti piano Free', responses: { '200': { description: 'Limiti beta' } } } },
+    '/v1/beta/register': { post: { summary: 'Registra account beta', responses: { '201': { description: 'Account creato' } } } },
+    '/v1/beta/verify-email': { post: { summary: 'Verifica email beta', responses: { '200': { description: 'Email verificata' } } } },
+    '/v1/beta/login': { post: { summary: 'Crea sessione beta', responses: { '200': { description: 'Sessione creata' } } } },
+    '/v1/beta/me': { get: { summary: 'Legge account beta', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Account e limiti' } } } },
+    '/v1/beta/me/cost-profile': { patch: { summary: 'Aggiorna profilo costi', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Profilo aggiornato' } } } },
+    '/v1/beta/logout': { post: { summary: 'Revoca sessione beta', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Sessione revocata' } } } },
     '/healthz': { get: { summary: 'Liveness', responses: { '200': { description: 'Backend attivo' } } } },
     '/metrics': { get: { summary: 'Metriche Prometheus', responses: { '200': { description: 'Metriche backend' } } } },
     '/readyz': { get: { summary: 'Readiness dipendenze', responses: { '200': { description: 'Dipendenze disponibili' }, '503': { description: 'Dipendenza non pronta' } } } },

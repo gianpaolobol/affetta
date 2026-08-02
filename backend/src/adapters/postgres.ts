@@ -1,6 +1,11 @@
 import { BackendError } from '../errors.js';
 import type {
   AgentCapabilitiesV1,
+  BetaAccountSnapshot,
+  BetaEmailVerificationRecord,
+  BetaProfileRecord,
+  BetaSessionRecord,
+  BetaUserRecord,
   AgentRecord,
   ApiKeyRecord,
   ArtifactRecord,
@@ -8,6 +13,8 @@ import type {
   JobEventRecord,
   JobRecord,
   JobResultV1,
+  MembershipRecord,
+  EmailOutboxRecord,
   OrganizationRecord,
   PairingCodeRecord,
   StructuredError
@@ -92,6 +99,37 @@ function eventFromRow(row: Row): JobEventRecord {
   };
 }
 
+function betaUserFromRow(row: Row): BetaUserRecord {
+  return {
+    id: String(row.id), email: String(row.email), username: String(row.username), phone_e164: String(row.phone_e164),
+    password_hash: String(row.password_hash), status: row.status as BetaUserRecord['status'],
+    email_verified_at: dateString(row.email_verified_at), created_at: dateString(row.created_at)!, updated_at: dateString(row.updated_at)!
+  };
+}
+
+function membershipFromRow(row: Row): MembershipRecord {
+  return {
+    id: String(row.id), user_id: String(row.user_id), organization_id: String(row.organization_id),
+    role: row.role as MembershipRecord['role'], created_at: dateString(row.created_at)!
+  };
+}
+
+function betaProfileFromRow(row: Row): BetaProfileRecord {
+  return {
+    user_id: String(row.user_id), display_name: String(row.display_name),
+    cost_profile: row.cost_profile as BetaProfileRecord['cost_profile'],
+    created_at: dateString(row.created_at)!, updated_at: dateString(row.updated_at)!
+  };
+}
+
+function betaSessionFromRow(row: Row): BetaSessionRecord {
+  return {
+    id: String(row.id), user_id: String(row.user_id), organization_id: String(row.organization_id),
+    token_hash: String(row.token_hash), expires_at: dateString(row.expires_at)!, revoked_at: dateString(row.revoked_at),
+    created_at: dateString(row.created_at)!, last_seen_at: dateString(row.last_seen_at)!
+  };
+}
+
 export class PgBackendRepository implements BackendRepository {
   private constructor(private readonly pool: PgPoolLike) {}
 
@@ -158,6 +196,120 @@ export class PgBackendRepository implements BackendRepository {
   async findApiKeyByHash(keyHash: string): Promise<ApiKeyRecord | null> {
     const result = await this.pool.query<Row>('SELECT * FROM api_keys WHERE key_hash=$1 AND revoked_at IS NULL LIMIT 1', [keyHash]);
     return result.rows[0] ? apiKeyFromRow(result.rows[0]) : null;
+  }
+
+  async findBetaUserByEmail(email: string): Promise<BetaUserRecord | null> {
+    const result = await this.pool.query<Row>('SELECT * FROM users WHERE email=$1 LIMIT 1', [email]);
+    return result.rows[0] ? betaUserFromRow(result.rows[0]) : null;
+  }
+
+  async findBetaUserByUsername(username: string): Promise<BetaUserRecord | null> {
+    const result = await this.pool.query<Row>('SELECT * FROM users WHERE username=$1 LIMIT 1', [username]);
+    return result.rows[0] ? betaUserFromRow(result.rows[0]) : null;
+  }
+
+  async createBetaAccount(input: {
+    organization: OrganizationRecord;
+    user: BetaUserRecord;
+    membership: MembershipRecord;
+    profile: BetaProfileRecord;
+    verification: BetaEmailVerificationRecord;
+    outbox: EmailOutboxRecord;
+  }): Promise<BetaAccountSnapshot> {
+    try {
+      return await this.tx(async (client) => {
+        await client.query('INSERT INTO organizations (id,name,created_at) VALUES ($1,$2,$3)', [
+          input.organization.id, input.organization.name, input.organization.created_at
+        ]);
+        await client.query(`INSERT INTO users
+          (id,email,username,phone_e164,password_hash,status,email_verified_at,created_at,updated_at)
+          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`, [input.user.id,input.user.email,input.user.username,
+          input.user.phone_e164,input.user.password_hash,input.user.status,input.user.email_verified_at,
+          input.user.created_at,input.user.updated_at]);
+        await client.query(`INSERT INTO memberships (id,user_id,organization_id,role,created_at)
+          VALUES ($1,$2,$3,$4,$5)`, [input.membership.id,input.membership.user_id,input.membership.organization_id,
+          input.membership.role,input.membership.created_at]);
+        await client.query(`INSERT INTO beta_profiles (user_id,display_name,cost_profile,created_at,updated_at)
+          VALUES ($1,$2,$3::jsonb,$4,$5)`, [input.profile.user_id,input.profile.display_name,
+          JSON.stringify(input.profile.cost_profile),input.profile.created_at,input.profile.updated_at]);
+        await client.query(`INSERT INTO beta_email_verifications (id,user_id,token_hash,expires_at,used_at,created_at)
+          VALUES ($1,$2,$3,$4,$5,$6)`, [input.verification.id,input.verification.user_id,input.verification.token_hash,
+          input.verification.expires_at,input.verification.used_at,input.verification.created_at]);
+        await client.query(`INSERT INTO email_outbox (id,user_id,recipient,template,payload,status,created_at,sent_at)
+          VALUES ($1,$2,$3,$4,$5::jsonb,$6,$7,$8)`, [input.outbox.id,input.outbox.user_id,input.outbox.recipient,
+          input.outbox.template,JSON.stringify(input.outbox.payload),input.outbox.status,input.outbox.created_at,input.outbox.sent_at]);
+        return { organization: input.organization, user: input.user, membership: input.membership, profile: input.profile };
+      });
+    } catch (error) {
+      const pg = error as { code?: string; constraint?: string };
+      if (pg.code === '23505' && pg.constraint === 'users_email_unique') {
+        throw new BackendError('beta_email_exists', 'Esiste già un account con questa email.', { statusCode: 409 });
+      }
+      if (pg.code === '23505' && pg.constraint === 'users_username_unique') {
+        throw new BackendError('beta_username_exists', 'Username già utilizzato.', { statusCode: 409 });
+      }
+      throw error;
+    }
+  }
+
+  async consumeBetaEmailVerification(tokenHash: string, now: string): Promise<BetaUserRecord | null> {
+    return this.tx(async (client) => {
+      const token = await client.query<Row>(`UPDATE beta_email_verifications SET used_at=$2
+        WHERE token_hash=$1 AND used_at IS NULL AND expires_at>$2 RETURNING *`, [tokenHash, now]);
+      if (!token.rows[0]) return null;
+      const user = await client.query<Row>(`UPDATE users SET status='active',email_verified_at=COALESCE(email_verified_at,$2),updated_at=$2
+        WHERE id=$1 AND status<>'disabled' RETURNING *`, [String(token.rows[0].user_id), now]);
+      return user.rows[0] ? betaUserFromRow(user.rows[0]) : null;
+    });
+  }
+
+  async createBetaSession(record: BetaSessionRecord): Promise<BetaSessionRecord> {
+    const result = await this.pool.query<Row>(`INSERT INTO beta_sessions
+      (id,user_id,organization_id,token_hash,expires_at,revoked_at,created_at,last_seen_at)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`, [record.id,record.user_id,record.organization_id,
+      record.token_hash,record.expires_at,record.revoked_at,record.created_at,record.last_seen_at]);
+    return betaSessionFromRow(result.rows[0]!);
+  }
+
+  async findBetaSessionByTokenHash(tokenHash: string, now: string): Promise<BetaSessionRecord | null> {
+    const result = await this.pool.query<Row>(`SELECT * FROM beta_sessions
+      WHERE token_hash=$1 AND revoked_at IS NULL AND expires_at>$2 LIMIT 1`, [tokenHash, now]);
+    return result.rows[0] ? betaSessionFromRow(result.rows[0]) : null;
+  }
+
+  async touchBetaSession(sessionId: string, now: string): Promise<void> {
+    await this.pool.query('UPDATE beta_sessions SET last_seen_at=$2 WHERE id=$1 AND revoked_at IS NULL', [sessionId, now]);
+  }
+
+  async revokeBetaSession(sessionId: string, userId: string, now: string): Promise<boolean> {
+    const result = await this.pool.query(`UPDATE beta_sessions SET revoked_at=COALESCE(revoked_at,$3)
+      WHERE id=$1 AND user_id=$2`, [sessionId, userId, now]);
+    return (result.rowCount ?? 0) > 0;
+  }
+
+  async getBetaAccount(userId: string): Promise<BetaAccountSnapshot | null> {
+    const result = await this.pool.query<Row>(`SELECT u.*,m.id AS membership_id,m.organization_id,m.role,m.created_at AS membership_created_at,
+      o.name AS organization_name,o.created_at AS organization_created_at,p.display_name,p.cost_profile,
+      p.created_at AS profile_created_at,p.updated_at AS profile_updated_at
+      FROM users u JOIN memberships m ON m.user_id=u.id JOIN organizations o ON o.id=m.organization_id
+      JOIN beta_profiles p ON p.user_id=u.id WHERE u.id=$1 LIMIT 1`, [userId]);
+    const row = result.rows[0];
+    if (!row) return null;
+    return {
+      user: betaUserFromRow(row),
+      organization: { id: String(row.organization_id), name: String(row.organization_name), created_at: dateString(row.organization_created_at)! },
+      membership: { id: String(row.membership_id), user_id: String(row.id), organization_id: String(row.organization_id),
+        role: row.role as MembershipRecord['role'], created_at: dateString(row.membership_created_at)! },
+      profile: { user_id: String(row.id), display_name: String(row.display_name),
+        cost_profile: row.cost_profile as BetaProfileRecord['cost_profile'], created_at: dateString(row.profile_created_at)!,
+        updated_at: dateString(row.profile_updated_at)! }
+    };
+  }
+
+  async updateBetaProfile(userId: string, profile: BetaProfileRecord): Promise<BetaProfileRecord | null> {
+    const result = await this.pool.query<Row>(`UPDATE beta_profiles SET display_name=$2,cost_profile=$3::jsonb,updated_at=$4
+      WHERE user_id=$1 RETURNING *`, [userId,profile.display_name,JSON.stringify(profile.cost_profile),profile.updated_at]);
+    return result.rows[0] ? betaProfileFromRow(result.rows[0]) : null;
   }
 
   async createPairingCode(record: PairingCodeRecord): Promise<PairingCodeRecord> {

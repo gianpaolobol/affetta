@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Affetta Beta gratuita: profilo personale e preparazione del flusso di slicing online.">
+  <title>Affetta Beta</title>
+  <link rel="stylesheet" href="/beta/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/beta/" aria-label="Affetta Beta">AFFETTA <span>BETA</span></a>
+    <nav><button id="logout" class="ghost hidden" type="button">Esci</button></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">SLICING SEMPLICE · MOTORI NASCOSTI · RISULTATI TRACCIABILI</p>
+      <h1>Dal modello al file stampabile,<br>senza scegliere lo slicer.</h1>
+      <p class="lead">La prima fondazione della beta gratuita gestisce account verificati, sessioni sicure, profilo costi e limiti Free. Il collegamento upload → job arriva nel task P4.2.</p>
+      <div id="limits" class="limit-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="auth" class="grid two">
+      <form id="register-form" class="card">
+        <p class="kicker">NUOVO ACCOUNT</p><h2>Registrati</h2>
+        <label>Nome visualizzato<input name="display_name" autocomplete="name" required minlength="2"></label>
+        <label>Username<input name="username" autocomplete="username" required minlength="3"></label>
+        <label>Email<input name="email" type="email" autocomplete="email" required></label>
+        <label>Cellulare internazionale<input name="phone_e164" placeholder="+393331234567" autocomplete="tel" required></label>
+        <label>Password<input name="password" type="password" autocomplete="new-password" required minlength="12"></label>
+        <label class="check"><input name="terms_accepted" type="checkbox" required> Accetto i termini della beta gratuita.</label>
+        <button type="submit">Crea account</button>
+      </form>
+
+      <div class="stack">
+        <form id="verify-form" class="card compact">
+          <p class="kicker">VERIFICA</p><h2>Conferma email</h2>
+          <label>Token<input name="token" required></label>
+          <button type="submit">Verifica account</button>
+        </form>
+        <form id="login-form" class="card compact">
+          <p class="kicker">ACCESSO</p><h2>Accedi</h2>
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+          <button type="submit">Entra nella beta</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="workspace" class="hidden">
+      <div class="section-head"><div><p class="kicker">SPAZIO PERSONALE</p><h2 id="welcome">Account</h2></div><span class="badge">FREE</span></div>
+      <div class="grid workspace-grid">
+        <section class="card upload-card">
+          <h3>Prepara il modello</h3>
+          <label id="dropzone" class="dropzone">
+            <input id="file" type="file" accept=".stl,.obj,.amf,.3mf,.step" hidden>
+            <strong>Trascina qui il modello</strong><span>oppure seleziona un file</span>
+          </label>
+          <div id="file-info" class="file-info">Nessun file selezionato.</div>
+          <div class="selectors">
+            <label>Materiale<select><option>PLA</option><option>PETG</option><option>ABS</option><option>ASA</option><option>TPU</option></select></label>
+            <label>Qualità<select><option>Standard</option><option>Dettaglio</option><option>Rapida</option></select></label>
+            <label>Resistenza<select><option>Normale</option><option>Forte</option><option>Leggera</option></select></label>
+            <label>Colore<select><option>Casuale</option><option>Nero</option><option>Bianco</option></select></label>
+          </div>
+          <button type="button" disabled title="Disponibile nel task P4.2">Genera artefatto — P4.2</button>
+          <p class="note">Il pannello base non mostra Cura, Orca, Prusa o GPX.</p>
+        </section>
+
+        <form id="profile-form" class="card">
+          <h3>Profilo costi personale</h3>
+          <label>Nome visualizzato<input name="display_name" required></label>
+          <label>Energia €/kWh<input name="energy_eur_per_kwh" type="number" min="0" max="10" step="0.01" required></label>
+          <label>Macchina €/h<input name="machine_hour_eur" type="number" min="0" max="1000" step="0.01" required></label>
+          <label>Lavoro €/h<input name="labor_hour_eur" type="number" min="0" max="1000" step="0.01" required></label>
+          <label>Ricarico materiale %<input name="material_markup_percent" type="number" min="0" max="1000" step="0.1" required></label>
+          <button type="submit">Salva profilo</button>
+        </form>
+      </div>
+    </section>
+
+    <div id="notice" class="notice hidden" role="status"></div>
+  </main>
+  <script type="module" src="/beta/app.js"></script>
+</body>
+</html>

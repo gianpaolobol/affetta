@@ -1,15 +1,16 @@
 {
   "name": "@affetta/backend",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Backend Affetta per Agent, job, lease, coda e artefatti.",
+  "description": "Backend Affetta con Agent, job, artefatti e fondazione account della beta web gratuita.",
   "scripts": {
     "clean": "node scripts/clean.mjs",
     "build": "tsc -p tsconfig.json",
     "test": "npm run clean && npm run build && node scripts/run-tests.mjs",
     "start": "node dist/src/index.js",
-    "migrate": "node dist/src/migrate.js"
+    "migrate": "node dist/src/migrate.js",
+    "live:p4.1": "node p4-1/live.mjs"
   },
   "engines": {
     "node": ">=22.16"

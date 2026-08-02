@@ -1,11 +1,17 @@
 import { BackendError } from './errors.js';
 import { sha256 } from './crypto.js';
+import { hashPassword, normalizeEmail, validateEmail, validatePhoneE164, validateUsername, verifyPassword } from './beta-auth.js';
 import { evaluateEligibility } from './eligibility.js';
 import type { BackendConfig } from './config.js';
 import type { MetricsRegistry } from './metrics.js';
 import type {
   AgentCapabilitiesV1,
   AgentPrincipal,
+  BetaAccountSnapshot,
+  BetaCostProfile,
+  BetaPrincipal,
+  BetaProfileRecord,
+  BetaSessionRecord,
   AgentRecord,
   ApiPrincipal,
   ArtifactRecord,
@@ -44,6 +50,31 @@ export class SystemClock implements Clock {
 function iso(date: Date): string { return date.toISOString(); }
 function plusSeconds(date: Date, seconds: number): string { return new Date(date.getTime() + seconds * 1000).toISOString(); }
 function plusHours(date: Date, hours: number): string { return new Date(date.getTime() + hours * 3_600_000).toISOString(); }
+
+const DEFAULT_BETA_COST_PROFILE: BetaCostProfile = {
+  currency: 'EUR', energy_eur_per_kwh: 0.30, machine_hour_eur: 1.50,
+  labor_hour_eur: 25, material_markup_percent: 20
+};
+
+function safeBetaAccount(account: BetaAccountSnapshot): Record<string, unknown> {
+  return {
+    user: {
+      id: account.user.id, email: account.user.email, username: account.user.username,
+      phone_e164: account.user.phone_e164, status: account.user.status,
+      email_verified_at: account.user.email_verified_at, created_at: account.user.created_at
+    },
+    organization: account.organization,
+    membership: { role: account.membership.role },
+    profile: account.profile
+  };
+}
+
+function betaNumber(value: unknown, name: string, min: number, max: number): number {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < min || value > max) {
+    throw new BackendError('invalid_cost_profile', `${name} non valido.`, { statusCode: 422, details: { field: name, min, max } });
+  }
+  return Math.round(value * 10000) / 10000;
+}
 
 function requiredString(value: unknown, name: string, min = 1, max = 500): string {
   if (typeof value !== 'string' || value.length < min || value.length > max) {
@@ -114,7 +145,7 @@ export class BackendService {
       this.deps.repository.health(), this.deps.queue.health(), this.deps.storage.health()
     ]);
     const ok = database.ok && queue.ok && storage.ok;
-    return { ok, service: 'affetta-backend', version: '0.1.0', database, queue, storage };
+    return { ok, service: 'affetta-backend', version: '0.2.0', database, queue, storage };
   }
 
   async authenticateApiKey(rawKey: string | undefined): Promise<ApiPrincipal> {
@@ -140,6 +171,159 @@ export class BackendService {
     if (!principal.scopes.includes(scope)) {
       throw new BackendError('insufficient_scope', `Scope richiesto: ${scope}.`, { statusCode: 403 });
     }
+  }
+
+  private requireBetaEnabled(): void {
+    if (!this.deps.config.beta.enabled) {
+      throw new BackendError('beta_disabled', 'La beta web non è attiva.', { statusCode: 404 });
+    }
+  }
+
+  betaLimits(): Record<string, unknown> {
+    this.requireBetaEnabled();
+    return {
+      plan: 'free', daily_jobs: this.deps.config.beta.freeDailyJobs,
+      max_input_bytes: this.deps.config.beta.freeMaxInputBytes,
+      retention_hours: this.deps.config.beta.freeRetentionHours,
+      max_agents: this.deps.config.beta.freeMaxAgents,
+      sla: false, enforcement_stage: 'P4.2-job-workflow'
+    };
+  }
+
+  async registerBeta(body: unknown): Promise<Record<string, unknown>> {
+    this.requireBetaEnabled();
+    const data = asObject(body);
+    const email = validateEmail(requiredString(data.email, 'email', 5, 254));
+    const username = validateUsername(requiredString(data.username, 'username', 3, 32));
+    const phone = validatePhoneE164(requiredString(data.phone_e164, 'phone_e164', 8, 16));
+    const displayName = requiredString(data.display_name, 'display_name', 2, 120).trim();
+    const password = requiredString(data.password, 'password', 12, 200);
+    if (data.terms_accepted !== true) {
+      throw new BackendError('terms_required', 'È necessario accettare i termini della beta.', { statusCode: 422, details: { field: 'terms_accepted' } });
+    }
+    if (await this.deps.repository.findBetaUserByEmail(email)) {
+      throw new BackendError('beta_email_exists', 'Esiste già un account con questa email.', { statusCode: 409 });
+    }
+    if (await this.deps.repository.findBetaUserByUsername(username)) {
+      throw new BackendError('beta_username_exists', 'Username già utilizzato.', { statusCode: 409 });
+    }
+
+    const now = this.deps.clock.now();
+    const nowIso = iso(now);
+    const userId = this.deps.ids.create('usr');
+    const organizationId = this.deps.ids.create('org');
+    const verificationToken = this.deps.tokens.create(32);
+    const account = await this.deps.repository.createBetaAccount({
+      organization: { id: organizationId, name: `${displayName} — spazio personale`, created_at: nowIso },
+      user: {
+        id: userId, email, username, phone_e164: phone, password_hash: await hashPassword(password),
+        status: 'pending_verification', email_verified_at: null, created_at: nowIso, updated_at: nowIso
+      },
+      membership: { id: this.deps.ids.create('mbr'), user_id: userId, organization_id: organizationId, role: 'owner', created_at: nowIso },
+      profile: { user_id: userId, display_name: displayName, cost_profile: { ...DEFAULT_BETA_COST_PROFILE }, created_at: nowIso, updated_at: nowIso },
+      verification: {
+        id: this.deps.ids.create('ver'), user_id: userId, token_hash: sha256(verificationToken),
+        expires_at: plusHours(now, this.deps.config.beta.verificationTtlHours), used_at: null, created_at: nowIso
+      },
+      outbox: {
+        id: this.deps.ids.create('mail'), user_id: userId, recipient: email, template: 'verify_beta_email',
+        payload: { verification_url: `${this.deps.config.publicBaseUrl}/beta/#verify=${encodeURIComponent(verificationToken)}` },
+        status: 'pending', created_at: nowIso, sent_at: null
+      }
+    });
+    this.deps.metrics.increment('beta_registrations_total');
+    return {
+      account: safeBetaAccount(account), verification_required: true, verification_delivery: 'email_outbox',
+      ...(this.deps.config.beta.exposeDevTokens ? { dev_verification_token: verificationToken } : {})
+    };
+  }
+
+  async verifyBetaEmail(body: unknown): Promise<Record<string, unknown>> {
+    this.requireBetaEnabled();
+    const data = asObject(body);
+    const token = requiredString(data.token, 'token', 16, 500);
+    const user = await this.deps.repository.consumeBetaEmailVerification(sha256(token), iso(this.deps.clock.now()));
+    if (!user) throw new BackendError('invalid_verification_token', 'Token di verifica non valido o scaduto.', { statusCode: 422 });
+    const account = await this.deps.repository.getBetaAccount(user.id);
+    if (!account) throw new BackendError('beta_account_not_found', 'Account beta non trovato.', { statusCode: 404 });
+    this.deps.metrics.increment('beta_email_verifications_total');
+    return { verified: true, account: safeBetaAccount(account) };
+  }
+
+  async loginBeta(body: unknown): Promise<Record<string, unknown>> {
+    this.requireBetaEnabled();
+    const data = asObject(body);
+    const email = validateEmail(requiredString(data.email, 'email', 5, 254));
+    const password = requiredString(data.password, 'password', 1, 200);
+    const user = await this.deps.repository.findBetaUserByEmail(email);
+    if (!user || !(await verifyPassword(password, user.password_hash))) {
+      throw new BackendError('invalid_credentials', 'Email o password non corretti.', { statusCode: 401 });
+    }
+    if (user.status === 'disabled') throw new BackendError('beta_account_disabled', 'Account disabilitato.', { statusCode: 403 });
+    if (!user.email_verified_at || user.status !== 'active') {
+      throw new BackendError('email_not_verified', 'Verificare l’email prima di accedere.', { statusCode: 403 });
+    }
+    const account = await this.deps.repository.getBetaAccount(user.id);
+    if (!account) throw new BackendError('beta_account_not_found', 'Account beta non trovato.', { statusCode: 404 });
+    const now = this.deps.clock.now();
+    const accessToken = this.deps.tokens.create(32);
+    const session: BetaSessionRecord = {
+      id: this.deps.ids.create('ses'), user_id: user.id, organization_id: account.organization.id,
+      token_hash: sha256(accessToken), expires_at: plusHours(now, this.deps.config.beta.sessionTtlHours),
+      revoked_at: null, created_at: iso(now), last_seen_at: iso(now)
+    };
+    await this.deps.repository.createBetaSession(session);
+    this.deps.metrics.increment('beta_logins_total');
+    return { access_token: accessToken, token_type: 'Bearer', expires_at: session.expires_at, account: safeBetaAccount(account) };
+  }
+
+  async authenticateBeta(rawToken: string | undefined): Promise<BetaPrincipal> {
+    this.requireBetaEnabled();
+    if (!rawToken) throw new BackendError('beta_session_required', 'Sessione beta mancante.', { statusCode: 401 });
+    const now = iso(this.deps.clock.now());
+    const session = await this.deps.repository.findBetaSessionByTokenHash(sha256(rawToken), now);
+    if (!session) throw new BackendError('invalid_beta_session', 'Sessione beta non valida o scaduta.', { statusCode: 401 });
+    const account = await this.deps.repository.getBetaAccount(session.user_id);
+    if (!account || account.user.status !== 'active') throw new BackendError('beta_account_disabled', 'Account beta non attivo.', { statusCode: 403 });
+    await this.deps.repository.touchBetaSession(session.id, now);
+    return { kind: 'beta_user', organization_id: session.organization_id, user_id: session.user_id, session_id: session.id };
+  }
+
+  async betaMe(principal: BetaPrincipal): Promise<Record<string, unknown>> {
+    const account = await this.deps.repository.getBetaAccount(principal.user_id);
+    if (!account || account.organization.id !== principal.organization_id) {
+      throw new BackendError('beta_account_not_found', 'Account beta non trovato.', { statusCode: 404 });
+    }
+    return { account: safeBetaAccount(account), limits: this.betaLimits() };
+  }
+
+  async updateBetaCostProfile(principal: BetaPrincipal, body: unknown): Promise<Record<string, unknown>> {
+    const data = asObject(body);
+    const account = await this.deps.repository.getBetaAccount(principal.user_id);
+    if (!account) throw new BackendError('beta_account_not_found', 'Account beta non trovato.', { statusCode: 404 });
+    const source = asObject(data.cost_profile);
+    const now = iso(this.deps.clock.now());
+    const profile: BetaProfileRecord = {
+      ...account.profile,
+      display_name: data.display_name === undefined ? account.profile.display_name : requiredString(data.display_name, 'display_name', 2, 120).trim(),
+      cost_profile: {
+        currency: 'EUR',
+        energy_eur_per_kwh: betaNumber(source.energy_eur_per_kwh, 'energy_eur_per_kwh', 0, 10),
+        machine_hour_eur: betaNumber(source.machine_hour_eur, 'machine_hour_eur', 0, 1000),
+        labor_hour_eur: betaNumber(source.labor_hour_eur, 'labor_hour_eur', 0, 1000),
+        material_markup_percent: betaNumber(source.material_markup_percent, 'material_markup_percent', 0, 1000)
+      },
+      updated_at: now
+    };
+    const updated = await this.deps.repository.updateBetaProfile(principal.user_id, profile);
+    if (!updated) throw new BackendError('beta_account_not_found', 'Account beta non trovato.', { statusCode: 404 });
+    this.deps.metrics.increment('beta_profiles_updated_total');
+    return { profile: updated };
+  }
+
+  async logoutBeta(principal: BetaPrincipal): Promise<{ logged_out: true }> {
+    await this.deps.repository.revokeBetaSession(principal.session_id, principal.user_id, iso(this.deps.clock.now()));
+    return { logged_out: true };
   }
 
   async createPairingCode(principal: ApiPrincipal, body: unknown): Promise<{ pairing_code: string; record: PairingCodeRecord }> {
