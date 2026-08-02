@@ -15,7 +15,10 @@
     "test:profiles": "node scripts/profile-asset-selftest.mjs",
     "test:fleet": "node scripts/fleet-profile-selftest.mjs",
     "test:fleet-live": "node scripts/lab-fleet-live-selftest.mjs",
-    "test:contracts": "node --test test/contracts/job-contract.test.js"
+    "test:contracts": "node --test test/contracts/job-contract.test.js",
+    "agent:build": "npm --prefix agent run build",
+    "agent:test": "npm --prefix agent test",
+    "agent:e2e": "npm --prefix agent run test:e2e"
   },
   "engines": {
     "node": ">=20"

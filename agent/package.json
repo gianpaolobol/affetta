@@ -1,0 +1,27 @@
+{
+  "name": "@affetta/agent-windows",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Agent locale outbound-only per collegare il backend Affetta al runtime Windows del laboratorio.",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "build": "tsc -p tsconfig.json",
+    "build:offline": "tsc -p tsconfig.json --noCheck",
+    "start": "node dist/src/index.js",
+    "start:once": "node dist/src/index.js --once",
+    "diagnostics": "node dist/src/diagnostics.js",
+    "test": "npm run clean && npm run build:offline && node scripts/run-tests.mjs",
+    "test:e2e": "npm run clean && npm run build:offline && node --test dist/test/e2e.test.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}
