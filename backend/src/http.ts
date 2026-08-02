@@ -68,7 +68,7 @@ export class BackendHttpApi {
 
   private async dispatch(method: string, path: string, headers: Record<string, string>, body: unknown, correlationId: string): Promise<{ statusCode: number; headers: Record<string, string>; body: unknown }> {
     if (method === 'GET' && path === '/healthz') {
-      return { statusCode: 200, headers: {}, body: { ok: true, service: 'affetta-backend', version: '0.1.0' } };
+      return { statusCode: 200, headers: {}, body: { ok: true, service: 'affetta-backend', version: '0.1.1' } };
     }
     if (method === 'GET' && path === '/readyz') {
       const health = await this.service.health();

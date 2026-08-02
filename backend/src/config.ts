@@ -11,6 +11,7 @@ export interface BackendConfig {
   redisUrl: string | null;
   s3: {
     endpoint: string | null;
+    publicEndpoint: string | null;
     region: string;
     bucket: string;
     accessKeyId: string | null;
@@ -61,6 +62,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): BackendConfig 
     redisUrl: env.REDIS_URL || null,
     s3: {
       endpoint: env.S3_ENDPOINT || null,
+      publicEndpoint: env.S3_PUBLIC_ENDPOINT || env.S3_ENDPOINT || null,
       region: env.S3_REGION || 'eu-central-1',
       bucket: env.S3_BUCKET || 'affetta-artifacts',
       accessKeyId: env.S3_ACCESS_KEY_ID || null,

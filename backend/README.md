@@ -86,3 +86,25 @@ Il compose usa PostgreSQL 18.4, Redis 8.8.1 e uno storage S3 compatibile MinIO p
 - niente antivirus/CAD sandbox: previsto nella fase beta;
 - la verifica S3 streaming è limitata da `S3_VERIFY_MAX_BYTES`;
 - MinIO `latest` è accettabile soltanto per sviluppo: fissare tag e digest prima di ambienti condivisi.
+
+
+## P3.1 deployment locale Windows/WSL2
+
+P3.1 separa `S3_ENDPOINT`, usato dal backend dentro Docker, da
+`S3_PUBLIC_ENDPOINT`, usato per firmare URL raggiungibili da Windows. Il profilo
+predefinito pubblica backend e MinIO soltanto su `127.0.0.1`.
+
+Per preparare credenziali casuali, avviare lo stack e collaudarlo:
+
+```powershell
+Set-Location C:\AFFETTA_GITHUB_0412
+.\backend\PREPARA_E_COLLAUDA_P3_LIVE.ps1
+```
+
+Il test live verifica health/readiness, migrazione PostgreSQL, Redis, MinIO, URL
+firmato, upload, checksum, persistenza metadati e cancellazione job. Non avvia
+l'Agent operativo.
+
+Con circa 4 GiB assegnati a Docker Desktop, il Compose applica limiti prudenti
+ai singoli servizi. Per un deployment su due PC serve ancora TLS/HTTPS: non
+esporre `AFFETTA_BIND_HOST=0.0.0.0` in una rete non fidata.

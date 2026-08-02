@@ -252,3 +252,18 @@ test('revoca Agent invalida immediatamente il bearer token', async () => {
     assert.equal(heartbeat.statusCode, 401);
   } finally { await context.close(); }
 });
+
+test('configura endpoint S3 interno e pubblico separati', () => {
+  const config = loadConfig({
+    AFFETTA_BACKEND_MODE: 'production',
+    DATABASE_URL: 'postgresql://affetta:secret@postgres:5432/affetta',
+    REDIS_URL: 'redis://redis:6379',
+    S3_ENDPOINT: 'http://minio:9000',
+    S3_PUBLIC_ENDPOINT: 'http://127.0.0.1:9000',
+    S3_ACCESS_KEY_ID: 'access',
+    S3_SECRET_ACCESS_KEY: 'secret',
+    AFFETTA_BOOTSTRAP_API_KEY: 'api-key'
+  });
+  assert.equal(config.s3.endpoint, 'http://minio:9000');
+  assert.equal(config.s3.publicEndpoint, 'http://127.0.0.1:9000');
+});

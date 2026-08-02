@@ -4,6 +4,7 @@ import type { ArtifactRecord, ArtifactStorage, SignedTransfer } from '../types.j
 
 interface S3Config {
   endpoint: string | null;
+  publicEndpoint: string | null;
   region: string;
   bucket: string;
   accessKeyId: string;
@@ -22,6 +23,7 @@ export class S3ArtifactStorage implements ArtifactStorage {
   private constructor(
     private readonly config: S3Config,
     private readonly client: S3ClientLike,
+    private readonly presignClient: S3ClientLike,
     private readonly commands: {
       PutObjectCommand: new (input: Record<string, unknown>) => unknown;
       GetObjectCommand: new (input: Record<string, unknown>) => unknown;
@@ -42,13 +44,20 @@ export class S3ArtifactStorage implements ArtifactStorage {
     const presigner = await import(presignerModuleName) as {
       getSignedUrl(client: S3ClientLike, command: unknown, options: { expiresIn: number }): Promise<string>;
     };
-    const client = new s3.S3Client({
+    const clientOptions = {
       region: config.region,
-      ...(config.endpoint ? { endpoint: config.endpoint } : {}),
       forcePathStyle: config.forcePathStyle,
       credentials: { accessKeyId: config.accessKeyId, secretAccessKey: config.secretAccessKey }
+    };
+    const client = new s3.S3Client({
+      ...clientOptions,
+      ...(config.endpoint ? { endpoint: config.endpoint } : {})
     });
-    return new S3ArtifactStorage(config, client, s3, presigner.getSignedUrl);
+    const publicEndpoint = config.publicEndpoint || config.endpoint;
+    const presignClient = publicEndpoint === config.endpoint
+      ? client
+      : new s3.S3Client({ ...clientOptions, ...(publicEndpoint ? { endpoint: publicEndpoint } : {}) });
+    return new S3ArtifactStorage(config, client, presignClient, s3, presigner.getSignedUrl);
   }
 
   async health(): Promise<{ ok: boolean; detail?: string }> {
@@ -74,7 +83,7 @@ export class S3ArtifactStorage implements ArtifactStorage {
     });
     return {
       artifact_id: artifact.id,
-      url: await this.getSignedUrl(this.client, command, { expiresIn: this.config.signedUrlTtlSeconds }),
+      url: await this.getSignedUrl(this.presignClient, command, { expiresIn: this.config.signedUrlTtlSeconds }),
       method: 'PUT',
       headers: { 'content-type': artifact.media_type }
     };
@@ -84,7 +93,7 @@ export class S3ArtifactStorage implements ArtifactStorage {
     const command = new this.commands.GetObjectCommand({ Bucket: this.config.bucket, Key: artifact.storage_key });
     return {
       artifact_id: artifact.id,
-      url: await this.getSignedUrl(this.client, command, { expiresIn: this.config.signedUrlTtlSeconds }),
+      url: await this.getSignedUrl(this.presignClient, command, { expiresIn: this.config.signedUrlTtlSeconds }),
       method: 'GET'
     };
   }
@@ -133,5 +142,8 @@ export class S3ArtifactStorage implements ArtifactStorage {
     }
   }
 
-  async close(): Promise<void> { this.client.destroy(); }
+  async close(): Promise<void> {
+    this.client.destroy();
+    if (this.presignClient !== this.client) this.presignClient.destroy();
+  }
 }

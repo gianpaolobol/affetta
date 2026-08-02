@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Affetta Backend API",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Backend cloud-coordinated per job, Agent, lease e artefatti Affetta."
   },
   "servers": [

@@ -2,22 +2,27 @@ services:
   postgres:
     image: postgres:18.4-alpine
     environment:
-      POSTGRES_DB: affetta
-      POSTGRES_USER: affetta
-      POSTGRES_PASSWORD: change-me-postgres
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    command: ["postgres", "-c", "shared_buffers=96MB", "-c", "max_connections=20"]
     volumes:
       - affetta-postgres:/var/lib/postgresql
+    mem_limit: 512m
+    cpus: 1.0
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U affetta -d affetta"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 20
 
   redis:
-    image: redis:8.8.1-alpine
-    command: ["redis-server", "--appendonly", "yes"]
+    image: redis:8-alpine
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "128mb", "--maxmemory-policy", "noeviction"]
     volumes:
       - affetta-redis:/data
+    mem_limit: 256m
+    cpus: 0.5
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -28,12 +33,15 @@ services:
     image: quay.io/minio/minio:latest
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ROOT_USER: affetta-minio
-      MINIO_ROOT_PASSWORD: change-me-minio-secret
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     volumes:
       - affetta-minio:/data
     ports:
-      - "9001:9001"
+      - "${AFFETTA_BIND_HOST:-127.0.0.1}:9000:9000"
+      - "${AFFETTA_BIND_HOST:-127.0.0.1}:9001:9001"
+    mem_limit: 768m
+    cpus: 1.0
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 5s
@@ -45,27 +53,42 @@ services:
     depends_on:
       minio:
         condition: service_healthy
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      S3_BUCKET: ${S3_BUCKET}
     entrypoint: >
       /bin/sh -c "
-      mc alias set local http://minio:9000 affetta-minio change-me-minio-secret &&
-      mc mb --ignore-existing local/affetta-artifacts;
+      mc alias set local http://minio:9000 $$MINIO_ROOT_USER $$MINIO_ROOT_PASSWORD &&
+      mc mb --ignore-existing local/$$S3_BUCKET;
       "
+    mem_limit: 128m
 
   backend-migrate:
     build:
       context: ..
       dockerfile: backend/Dockerfile
     env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      S3_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
+      S3_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
     depends_on:
       postgres:
         condition: service_healthy
     command: ["node", "dist/src/migrate.js"]
+    mem_limit: 384m
+    cpus: 0.75
 
   backend:
     build:
       context: ..
       dockerfile: backend/Dockerfile
     env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      S3_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
+      S3_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
     depends_on:
       postgres:
         condition: service_healthy
@@ -76,7 +99,9 @@ services:
       backend-migrate:
         condition: service_completed_successfully
     ports:
-      - "8790:8790"
+      - "${AFFETTA_BIND_HOST:-127.0.0.1}:8790:8790"
+    mem_limit: 512m
+    cpus: 1.0
     restart: unless-stopped
 
 volumes:
