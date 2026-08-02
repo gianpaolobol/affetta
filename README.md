@@ -1,4 +1,4 @@
-# Affetta 0.5.1 — catalogo pubblico e profili interni
+# Affetta 0.5.2 — Thing-O-Matic e output X3G
 
 Affetta 0.5.1 corregge la separazione tra modelli stampante pubblici e funzioni interne di Stampa3DBologna, oltre alla rappresentazione dei piani circolari delle stampanti delta.
 
@@ -26,3 +26,15 @@ L’installer preserva `.env`, `data`, `runtime` e `node_modules` e crea `C:\AFF
 ## Stato produttivo
 
 X1C e Snapmaker U1 restano abilitate. Le nuove unità LulzBot e delta restano `production_ready=false` fino al collaudo reale del motore e alla stampa fisica.
+
+
+## Thing-O-Matic
+
+La versione 0.5.2 aggiunge la pipeline CuraEngine → GPX t6 → X3G per la Thing-O-Matic Mk6/Sailfish. I profili PLA, ABS, PETG e TPU sono utilizzabili ma sperimentali; la macchina resta esclusa dal routing produttivo automatico fino al collaudo fisico.
+
+## Stato Thing-O-Matic
+
+La generazione X3G è funzionante, ma il collaudo fisico è ancora pendente.
+La macchina resta sperimentale e non disponibile per il routing produttivo automatico.
+
+Vedi: `docs/THING_O_MATIC_PHYSICAL_VALIDATION_PENDING.md`

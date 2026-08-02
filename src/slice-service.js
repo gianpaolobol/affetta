@@ -10,9 +10,10 @@ import { CommandSlicerProvider, resolvePrinter } from './providers/command-slice
 import { publicProfile, resolvePrintProfile } from './providers/profile-resolver.js';
 import { appendDiagnostic, normalizeError } from './runtime-diagnostics.js';
 import { routeProductionJob } from './fleet-router.js';
+import { convertGcodeToX3g } from './providers/postprocessors/gpx.js';
 
 function publicJob(job) {
-  const { input_path, artifact_path, download_token, engine_internal, ...safe } = job;
+  const { input_path, artifact_path, intermediate_path, download_token, engine_internal, ...safe } = job;
   const publicPrinter = safe.printer ? {
     id: safe.printer.id,
     label: safe.printer.label,
@@ -76,7 +77,9 @@ export function createSliceJob({ tenant, modelBuffer, filename, options }) {
   ensureDir(config.artifactDir);
   const jobId = id('slice');
   const inputPath = path.join(config.uploadDir, `${jobId}-${safeFilename(filename)}`);
-  const outputPath = path.join(config.artifactDir, `${jobId}.gcode`);
+  const outputFormat = printer.output_format || 'gcode';
+  const outputPath = path.join(config.artifactDir, `${jobId}.${outputFormat}`);
+  const intermediatePath = outputFormat === 'gcode' ? outputPath : path.join(config.artifactDir, `${jobId}.intermediate.gcode`);
   fs.writeFileSync(inputPath, arranged.buffer);
   const now = new Date().toISOString();
   const job = jobStore.create({
@@ -102,6 +105,8 @@ export function createSliceJob({ tenant, modelBuffer, filename, options }) {
     engine_internal: printer.engines[0],
     input_path: inputPath,
     artifact_path: outputPath,
+    intermediate_path: intermediatePath,
+    output_format: outputFormat,
     download_token: id('dl'),
     result: null,
     error: null
@@ -175,17 +180,17 @@ async function processSliceJob(jobId) {
       const slicer = new CommandSlicerProvider();
       const sliced = await slicer.slice({
         inputPath: job.input_path,
-        outputPath: job.artifact_path,
+        outputPath: job.intermediate_path || job.artifact_path,
         printer,
         options,
-        diagnosticContext: { job_id: jobId, stage: 'slice_engine', input_path: job.input_path, output_path: job.artifact_path }
+        diagnosticContext: { job_id: jobId, stage: 'slice_engine', input_path: job.input_path, output_path: job.intermediate_path || job.artifact_path }
       });
       provider = sliced.provider;
       appliedProfile = sliced.profile;
       engineAttempts = sliced.attempts || [];
     } catch (engineError) {
-      if (!config.allowDemoGcode) throw engineError;
-      fs.writeFileSync(job.artifact_path, demoGcode({ filename: job.filename, printer, options }));
+      if (!config.allowDemoGcode || printer.postprocess?.engine) throw engineError;
+      fs.writeFileSync(job.intermediate_path || job.artifact_path, demoGcode({ filename: job.filename, printer, options }));
       provider = 'demo-flow';
       engineAttempts = engineError.attempts || [];
       isDemo = true;
@@ -193,22 +198,34 @@ async function processSliceJob(jobId) {
 
     stage = 'read_artifact';
     jobStore.update(jobId, { phase: 'validate_gcode', progress: 82, message: 'Controllo di sicurezza del G-code' });
-    const artifactStat = fs.statSync(job.artifact_path);
-    const text = fs.readFileSync(job.artifact_path, 'utf8');
-
+    const gcodePath = job.intermediate_path || job.artifact_path;
+    const text = fs.readFileSync(gcodePath, 'utf8');
     stage = 'validate_gcode';
     const stats = analyzeGcode(text, { densityGcm3: material.density_g_cm3 });
     const validation = isDemo
       ? { valid: false, errors: ['Artefatto dimostrativo non stampabile.'], warnings: [], observed: {} }
       : validateGcode(text, { buildMm: printer.build_mm, material, motionBoundsMm: printer.validation?.motion_bounds_mm });
     if (!validation.valid && !isDemo) {
-      throw Object.assign(new Error(`Validazione G-code fallita: ${validation.errors.join(' ')}`), { code: 'gcode_validation_failed' });
+      throw Object.assign(new Error(`Validazione G-code fallita: ${validation.errors.join(' ')} Dettagli validazione: ${JSON.stringify(validation.observed || {})}`), { code: 'gcode_validation_failed', observed: validation.observed || {} });
     }
-
+    let postprocessResult = null;
+    if (!isDemo && printer.postprocess?.engine === 'gpx') {
+      stage = 'postprocess_gpx';
+      jobStore.update(jobId, { phase: 'postprocess_gpx', progress: 92, message: 'Conversione del G-code in X3G con GPX' });
+      postprocessResult = await convertGcodeToX3g({
+        inputPath: gcodePath,
+        outputPath: job.artifact_path,
+        postprocess: printer.postprocess,
+        diagnosticContext: { job_id: jobId, printer_id: options.printer_id }
+      });
+    }
+    const artifactStat = fs.statSync(job.artifact_path);
     const result = {
       provider_internal: provider,
       demo_only: isDemo,
       print_ready: !isDemo && validation.valid,
+      output_format: job.output_format || printer.output_format || 'gcode',
+      postprocessor: postprocessResult ? { engine: postprocessResult.engine, machine: postprocessResult.machine } : null,
       time_seconds: stats.time_seconds,
       time_human: formatDuration(stats.time_seconds),
       filament_g: stats.filament_g,
@@ -221,7 +238,8 @@ async function processSliceJob(jobId) {
     };
 
     stage = 'mark_completed';
-    jobStore.update(jobId, { status: 'completed', phase: 'completed', progress: 100, message: isDemo ? 'Flusso dimostrativo completato' : 'G-code pronto', result });
+    const completedMessage = isDemo ? 'Flusso dimostrativo completato' : result.output_format === 'x3g' ? 'X3G pronto' : 'G-code pronto';
+    jobStore.update(jobId, { status: 'completed', phase: 'completed', progress: 100, message: completedMessage, result });
     appendDiagnostic('slice_job_completed', {
       job_id: jobId,
       printer_id: options.printer_id,
@@ -254,6 +272,13 @@ async function processSliceJob(jobId) {
         appendDiagnostic('slice_job_input_cleanup_failed', { job_id: jobId, input_path: job.input_path, error: normalizeError(error) });
       }
     }
+    if (job?.intermediate_path && job.intermediate_path !== job.artifact_path) {
+      try {
+        fs.rmSync(job.intermediate_path, { force: true });
+      } catch (error) {
+        appendDiagnostic('slice_job_intermediate_cleanup_failed', { job_id: jobId, intermediate_path: job.intermediate_path, error: normalizeError(error) });
+      }
+    }
   }
 }
 
@@ -268,5 +293,11 @@ export function getArtifact(idValue, token) {
   if (!job || job.status !== 'completed' || token !== job.download_token) return null;
   const expired = Date.now() - new Date(job.updated_at).getTime() > config.artifactTtlHours * 3600_000;
   if (expired) return null;
-  return { path: job.artifact_path, filename: `${path.parse(job.filename).name}-${job.printer.id}.gcode`, demo: Boolean(job.result?.demo_only) };
+  const extension = job.result?.output_format || job.output_format || 'gcode';
+  return {
+    path: job.artifact_path,
+    filename: `${path.parse(job.filename).name}-${job.printer.id}.${extension}`,
+    contentType: extension === 'x3g' ? 'application/octet-stream' : 'text/x-gcode; charset=utf-8',
+    demo: Boolean(job.result?.demo_only)
+  };
 }

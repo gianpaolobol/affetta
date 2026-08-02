@@ -102,6 +102,14 @@ function windowsCandidates(engine) {
       path.join(local, 'Programs', 'Snapmaker Orca', 'snapmaker-orca.exe')
     ];
   }
+  if (engine === 'gpx') {
+    return [
+      path.join(ROOT, 'runtime', 'engines', 'gpx', 'gpx.exe'),
+      path.join('C:\\AFFETTA_RUNTIME', 'engines', 'gpx', 'gpx.exe'),
+      path.join(pf, 'GPX', 'gpx.exe'),
+      path.join(pf86, 'GPX', 'gpx.exe')
+    ];
+  }
   return [];
 }
 
@@ -110,6 +118,7 @@ function posixCandidates(engine) {
   if (engine === 'cura') return [path.join(ROOT, 'runtime/engines/cura/CuraEngine'), '/usr/bin/CuraEngine', '/usr/local/bin/CuraEngine', '/opt/cura/CuraEngine'];
   if (engine === 'orca') return [path.join(ROOT, 'runtime/engines/orca/orca-slicer'), '/usr/bin/orca-slicer', '/usr/local/bin/orca-slicer'];
   if (engine === 'snapmaker_orca') return [path.join(ROOT, 'runtime/engines/snapmaker_orca/snapmaker-orca'), '/usr/bin/snapmaker-orca', '/usr/local/bin/snapmaker-orca'];
+  if (engine === 'gpx') return [path.join(ROOT, 'runtime/engines/gpx/gpx'), '/usr/bin/gpx', '/usr/local/bin/gpx'];
   return [];
 }
 
@@ -121,7 +130,14 @@ function envCommand(engine) {
       if (Array.isArray(parsed) && parsed.length) return { command: parsed[0], prefix: parsed.slice(1), custom: true };
     } catch {}
   }
-  const direct = engine === 'prusa' ? process.env.PRUSA_SLICER_BIN : engine === 'cura' ? process.env.CURA_ENGINE_BIN : engine === 'orca' ? process.env.ORCA_SLICER_BIN : engine === 'snapmaker_orca' ? process.env.SNAPMAKER_ORCA_BIN : null;
+  const directByEngine = {
+    prusa: process.env.PRUSA_SLICER_BIN,
+    cura: process.env.CURA_ENGINE_BIN,
+    orca: process.env.ORCA_SLICER_BIN,
+    snapmaker_orca: process.env.SNAPMAKER_ORCA_BIN,
+    gpx: process.env.GPX_BIN
+  };
+  const direct = directByEngine[engine] || null;
   if (direct && direct.trim()) {
     const resolvedDirect = resolveExecutable(direct);
     if (resolvedDirect) return { command: resolvedDirect, prefix: [], custom: false };
@@ -132,9 +148,10 @@ function envCommand(engine) {
   }
   if (engine === 'kiri') return null;
   const runtimeRoot = path.join(ROOT, 'runtime', 'engines', engine);
-  const runtimeNames = process.platform === 'win32'
-    ? engine === 'prusa' ? ['prusa-slicer-console.exe'] : engine === 'cura' ? ['CuraEngine.exe'] : engine === 'snapmaker_orca' ? ['snapmaker-orca.exe'] : ['orca-slicer.exe', 'OrcaSlicer.exe']
-    : engine === 'prusa' ? ['prusa-slicer'] : engine === 'cura' ? ['CuraEngine'] : engine === 'snapmaker_orca' ? ['snapmaker-orca'] : ['orca-slicer', 'OrcaSlicer'];
+  const runtimeNamesByEngine = process.platform === 'win32'
+    ? { prusa: ['prusa-slicer-console.exe'], cura: ['CuraEngine.exe'], orca: ['orca-slicer.exe', 'OrcaSlicer.exe'], snapmaker_orca: ['snapmaker-orca.exe'], gpx: ['gpx.exe'] }
+    : { prusa: ['prusa-slicer'], cura: ['CuraEngine'], orca: ['orca-slicer', 'OrcaSlicer'], snapmaker_orca: ['snapmaker-orca'], gpx: ['gpx'] };
+  const runtimeNames = runtimeNamesByEngine[engine] || [];
   const found = existing(process.platform === 'win32' ? windowsCandidates(engine) : posixCandidates(engine)) || findExecutableRecursive(runtimeRoot, runtimeNames);
   return found ? { command: found, prefix: [], custom: false } : null;
 }
@@ -243,7 +260,7 @@ function runProbe(command, args, timeoutMs = 7000) {
 }
 
 function extractVersion(output = '') {
-  return output.match(/(?:PrusaSlicer|OrcaSlicer|Snapmaker[ _-]?Orca|CuraEngine|Affetta test slicer)[^0-9]*(\d+\.\d+(?:\.\d+)?(?:[-+][\w.-]+)?)/i)?.[1] || null;
+  return output.match(/(?:PrusaSlicer|OrcaSlicer|Snapmaker[ _-]?Orca|CuraEngine|GPX|Affetta test slicer)[^0-9]*(\d+\.\d+(?:\.\d+)?(?:[-+][\w.-]+)?)/i)?.[1] || null;
 }
 
 export function getEngineInstall(engine, { refresh = false } = {}) {
@@ -262,7 +279,7 @@ export function getEngineCommand(engine) {
 export async function probeEngine(engine, { refresh = false } = {}) {
   const install = getEngineInstall(engine, { refresh });
   if (!install.command) return { engine, available: false, configured: false, detail: 'Non configurato.', resources: install.resources };
-  let probeArgs = (engine === 'orca' || engine === 'snapmaker_orca') ? ['--help'] : ['--version'];
+  let probeArgs = (engine === 'orca' || engine === 'snapmaker_orca' || engine === 'gpx') ? ['--help'] : ['--version'];
   let result = await runProbe(install.command, [...install.prefix, ...probeArgs]);
   if (!result.available && engine !== 'orca' && engine !== 'snapmaker_orca') result = await runProbe(install.command, [...install.prefix, '--help']);
   const resourcesReady = install.custom || (engine === 'cura' ? Boolean(install.resources.definitions) : (engine === 'orca' || engine === 'snapmaker_orca') ? Boolean(install.resources.profiles) : true);
@@ -279,7 +296,7 @@ export async function probeEngine(engine, { refresh = false } = {}) {
 }
 
 export async function systemCapabilities(printers, { refresh = false } = {}) {
-  const engines = ['kiri', 'prusa', 'cura', 'orca', 'snapmaker_orca'];
+  const engines = ['kiri', 'prusa', 'cura', 'orca', 'snapmaker_orca', 'gpx'];
   const results = Object.fromEntries(await Promise.all(engines.map(async (engine) => [engine, await probeEngine(engine, { refresh })])));
   const fffPrinters = Object.entries(printers).filter(([, printer]) => (printer.technology || 'fff') === 'fff');
   const manualProcesses = Object.fromEntries(Object.entries(printers)
@@ -296,9 +313,16 @@ export async function systemCapabilities(printers, { refresh = false } = {}) {
       available: Boolean(results[engine]?.available),
       resources_ready: results[engine]?.resources_ready !== false
     }));
+    const postprocessor = printer.postprocess?.engine || null;
+    const postprocessReady = !postprocessor || Boolean(results[postprocessor]?.available);
     return [id, {
-      slice_available: routes.some((route) => route.available && route.resources_ready),
+      slice_available: routes.some((route) => route.available && route.resources_ready) && postprocessReady,
       profile_status: printer.status,
+      output_format: printer.output_format || 'gcode',
+      postprocessor: postprocessor ? {
+        engine: postprocessor,
+        available: Boolean(results[postprocessor]?.available)
+      } : null,
       routes: routes.map(({ engine, available, resources_ready }) => ({ engine, available, resources_ready }))
     }];
   }));

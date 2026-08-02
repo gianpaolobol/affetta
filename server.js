@@ -249,7 +249,7 @@ function publicCatalog() {
     && item.public !== false
     && item.hidden !== true
   )));
-  const printers = pick(fffPrinters, ['label', 'build_mm', 'bed_shape', 'build_diameter_mm', 'filament_diameter_mm', 'technology', 'nozzles', 'default_nozzle', 'materials', 'status']);
+  const printers = pick(fffPrinters, ['label', 'build_mm', 'bed_shape', 'build_diameter_mm', 'filament_diameter_mm', 'technology', 'nozzles', 'default_nozzle', 'materials', 'status', 'output_format']);
   return {
     app: catalogs.app,
     materials: pick(catalogs.materials, ['label', 'technology']),
@@ -376,7 +376,7 @@ const server = http.createServer(async (req, res) => {
         const artifact = getArtifact(artifactMatchPublic[1], url.searchParams.get('token'));
         if (!artifact || !fs.existsSync(artifact.path)) return sendJson(req, res, 404, { success: false, error: { code: 'artifact_not_found', message: 'Artefatto non disponibile o scaduto.' } });
         return pipeFile(req, res, artifact.path, {
-          'Content-Type': 'text/x-gcode; charset=utf-8',
+          'Content-Type': artifact.contentType || 'application/octet-stream',
           'Content-Disposition': `attachment; filename="${artifact.filename}"`,
           'Cache-Control': 'private, no-store',
           'X-Affetta-Demo': artifact.demo ? '1' : '0',

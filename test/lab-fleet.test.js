@@ -29,10 +29,10 @@ function options(overrides={}) {
   };
 }
 
-test('solo LulzBot TAZ e Mini usano filamento 2,85 mm', () => {
+test('LulzBot e Thing-O-Matic usano filamento 2,85 mm', () => {
   for (const [id, printer] of Object.entries(catalogs.printers)) {
     if ((printer.technology || 'fff') !== 'fff') continue;
-    const expected = id.startsWith('lulzbot-taz') || id.startsWith('lulzbot-mini') ? 2.85 : 1.75;
+    const expected = id.startsWith('lulzbot-taz') || id.startsWith('lulzbot-mini') || id === 'thing-o-matic' ? 2.85 : 1.75;
     assert.equal(printer.filament_diameter_mm, expected, id);
   }
   const taz = resolvePrintProfile({ printerId:'lulzbot-taz4', nozzleMm:0.5, materialId:'pla', qualityId:'standard', strengthId:'standard' });

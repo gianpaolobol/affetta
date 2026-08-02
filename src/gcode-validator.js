@@ -46,7 +46,15 @@ export function validateGcode(text, { buildMm, material, motionBoundsMm = null }
     maxX > bounds.max[0] || maxY > bounds.max[1] || maxZ > bounds.max[2] ||
     minX < bounds.min[0] || minY < bounds.min[1] || minZ < bounds.min[2];
   if (outsideMotionEnvelope) {
-    errors.push('Sono presenti coordinate oltre l’inviluppo di movimento ammesso per la stampante selezionata.');
+    errors.push(
+      `Sono presenti coordinate oltre l'inviluppo ammesso. ` +
+      `Rilevate X=${minX}..${maxX}, ` +
+      `Y=${minY}..${maxY}, ` +
+      `Z=${minZ}..${maxZ}; ` +
+      `ammesse X=${bounds.min[0]}..${bounds.max[0]}, ` +
+      `Y=${bounds.min[1]}..${bounds.max[1]}, ` +
+      `Z=${bounds.min[2]}..${bounds.max[2]}.`
+    );
   } else if (minX < 0 || minY < 0 || minZ < 0 || maxX > buildMm[0] || maxY > buildMm[1] || maxZ > buildMm[2]) {
     warnings.push('Il G-code contiene movimenti di servizio fuori dall’area nominale di stampa, compatibili con il profilo macchina selezionato.');
   }

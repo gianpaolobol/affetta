@@ -44,26 +44,37 @@ export function resolvePrintProfile({ printerId, nozzleMm, materialId, qualityId
   const firstLayerHeight = round(clamp(Math.max(layerHeight, nozzle * 0.55), layerHeight, nozzle * 0.75), 2);
   const lineWidth = round(nozzle * (nozzle >= 0.8 ? 1.08 : 1.05), 2);
   const machine = printer.machine;
-  const volumetricLimitSpeed = material.max_volumetric_mm3_s / Math.max(0.01, lineWidth * layerHeight);
+  const materialProfile = printer.material_profiles?.[materialId] || {};
+  const materialSpeedFactor = Number(materialProfile.speed_factor ?? material.speed_factor);
+  const materialVolumetricLimit = Number(materialProfile.max_volumetric_mm3_s ?? material.max_volumetric_mm3_s);
+  const profileMaxPrintSpeed = Math.min(machine.max_print_speed, Number(materialProfile.max_print_speed_mm_s ?? machine.max_print_speed));
+  const volumetricLimitSpeed = materialVolumetricLimit / Math.max(0.01, lineWidth * layerHeight);
   const nozzleSpeedFactor = Math.sqrt(nozzle / 0.4);
-  const requestedSpeed = machine.max_print_speed * quality.speed_factor * material.speed_factor * nozzleSpeedFactor;
-  const printSpeed = round(clamp(Math.min(requestedSpeed, volumetricLimitSpeed), 12, machine.max_print_speed), 1);
+  const requestedSpeed = profileMaxPrintSpeed * quality.speed_factor * materialSpeedFactor * nozzleSpeedFactor;
+  const printSpeed = round(clamp(Math.min(requestedSpeed, volumetricLimitSpeed), 8, profileMaxPrintSpeed), 1);
   const outerWallSpeed = round(Math.max(10, printSpeed * 0.55), 1);
   const innerWallSpeed = round(Math.max(12, printSpeed * 0.82), 1);
-  const infillSpeed = round(Math.min(machine.max_print_speed, printSpeed * 1.08), 1);
-  const topSpeed = round(Math.max(10, printSpeed * 0.55), 1);
-  const firstLayerSpeed = round(Math.min(machine.first_layer_speed, Math.max(10, printSpeed * 0.42)), 1);
+  const infillSpeed = round(Math.min(profileMaxPrintSpeed, printSpeed * 1.08), 1);
+  const topSpeed = round(Math.max(8, printSpeed * 0.55), 1);
+  const requestedFirstLayerSpeed = Number(materialProfile.first_layer_speed_mm_s ?? machine.first_layer_speed);
+  const firstLayerSpeed = round(Math.min(requestedFirstLayerSpeed, Math.max(8, printSpeed * 0.42)), 1);
   const travelSpeed = round(machine.travel_speed, 1);
-  const temperature = clamp(material.nozzle_c + (nozzle >= 0.8 ? 5 : 0), 150, machine.max_hotend_c);
+  const baseNozzleTemperature = Number(materialProfile.nozzle_c ?? material.nozzle_c);
+  const temperature = clamp(baseNozzleTemperature + (nozzle >= 0.8 ? 5 : 0), 150, machine.max_hotend_c);
   const firstLayerTemperature = clamp(temperature + (materialId === 'tpu' ? 0 : 5), 150, machine.max_hotend_c);
-  const bedTemperature = clamp(material.bed_c, 0, machine.max_bed_c);
+  const bedTemperature = clamp(Number(materialProfile.bed_c ?? material.bed_c), 0, machine.max_bed_c);
   const firstLayerBedTemperature = clamp(bedTemperature + (materialId === 'pla' ? 5 : 0), 0, machine.max_bed_c);
-  const retractLength = materialId === 'tpu' ? round(Math.min(machine.retract_length, 1.2), 2) : machine.retract_length;
-  const retractSpeed = materialId === 'tpu' ? round(Math.min(machine.retract_speed, 20), 1) : machine.retract_speed;
+  const retractLength = Number(materialProfile.retract_length_mm ?? (materialId === 'tpu' ? round(Math.min(machine.retract_length, 1.2), 2) : machine.retract_length));
+  const retractSpeed = Number(materialProfile.retract_speed_mm_s ?? (materialId === 'tpu' ? round(Math.min(machine.retract_speed, 20), 1) : machine.retract_speed));
+  const fanPercent = Number(materialProfile.fan_percent ?? material.fan_percent);
+  const flowPercent = Number(materialProfile.flow_percent ?? 100);
   const warnings = [];
   const buildPlate = resolveBuildPlate(printer, materialId);
   if (material.enclosure === 'recommended' && !printer.enclosed) {
     warnings.push(`${material.label}: per ridurre deformazioni è consigliata una macchina con camera chiusa.`);
+  }
+  if (materialProfile.experimental) {
+    warnings.push(`${material.label}: profilo sperimentale e cautelativo per ${printer.label}; sorveglia il primo strato e verifica temperature ed estrusione.`);
   }
   if (printer.status !== 'validated') {
     const bundled = ['vendor-profile-bundled', 'profile-assets-verified'].includes(printer.status);
@@ -110,8 +121,9 @@ export function resolvePrintProfile({ printerId, nozzleMm, materialId, qualityId
     first_layer_temperature_c: firstLayerTemperature,
     bed_temperature_c: bedTemperature,
     first_layer_bed_temperature_c: firstLayerBedTemperature,
-    fan_percent: material.fan_percent,
-    max_volumetric_mm3_s: material.max_volumetric_mm3_s,
+    fan_percent: fanPercent,
+    flow_percent: flowPercent,
+    max_volumetric_mm3_s: materialVolumetricLimit,
     print_speed_mm_s: printSpeed,
     outer_wall_speed_mm_s: outerWallSpeed,
     inner_wall_speed_mm_s: innerWallSpeed,
@@ -123,6 +135,8 @@ export function resolvePrintProfile({ printerId, nozzleMm, materialId, qualityId
     retract_length_mm: retractLength,
     retract_speed_mm_s: retractSpeed,
     z_hop_mm: machine.z_hop,
+    output_format: printer.output_format || 'gcode',
+    postprocess: printer.postprocess || null,
     supports: {
       enabled: true,
       automatic: true,
@@ -146,6 +160,7 @@ export function publicProfile(profile) {
     build_mm: profile.build_mm,
     bed_shape: profile.bed_shape,
     build_diameter_mm: profile.build_diameter_mm,
+    output_format: profile.output_format || 'gcode',
     filament_diameter_mm: profile.filament_diameter_mm,
     nozzle_mm: profile.nozzle_mm,
     material: profile.material_label,

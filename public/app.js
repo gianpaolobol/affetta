@@ -222,7 +222,8 @@ async function syncResolvedProfile() {
       return;
     }
     const plate = p.build_plate ? ` · piatto ${p.build_plate}` : '';
-    $('auto-profile-summary').textContent = `Layer ${p.layer_height_mm} mm · ${p.infill_percent}% · ${p.walls} pareti · ${p.temperature_c}/${p.bed_temperature_c} °C · ${p.print_speed_mm_s} mm/s · retrazione ${p.retract_length_mm} mm · filamento ${p.filament_diameter_mm} mm${plate}`;
+    const format = p.output_format === 'x3g' ? ' · uscita X3G' : '';
+    $('auto-profile-summary').textContent = `Layer ${p.layer_height_mm} mm · ${p.infill_percent}% · ${p.walls} pareti · ${p.temperature_c}/${p.bed_temperature_c} °C · ${p.print_speed_mm_s} mm/s · retrazione ${p.retract_length_mm} mm · filamento ${p.filament_diameter_mm} mm${plate}${format}`;
   } catch (error) {
     if (sequence === profilePreviewSequence) $('auto-profile-summary').textContent = error.message;
   }
@@ -319,18 +320,19 @@ async function pollJob(id) {
 function renderCompleted(job, quote) {
   const result = $('result');
   const data = job.result;
-  result.innerHTML = `<h2>${data.print_ready ? 'G-code pronto' : 'Flusso di prova completato'}</h2>
+  const artifactLabel = data.output_format === 'x3g' ? 'X3G' : 'G-code';
+  result.innerHTML = `<h2>${data.print_ready ? `${artifactLabel} pronto` : 'Flusso di prova completato'}</h2>
     <p class="sub">${esc(job.printer.label)}${job.routing?.selected ? ` · unità ${esc(job.routing.selected.unit_label)}` : ''} · profilo ${esc(data.profile_status === 'validated' ? 'validato' : 'da collaudare')}</p>
     ${quoteHtml(quote)}
     <div class="metrics">
       <div class="metric"><small>Stato file</small><strong>${data.print_ready ? 'Pronto' : 'Demo'}</strong></div>
-      <div class="metric"><small>Tempo G-code</small><strong>${esc(data.time_human)}</strong></div>
-      <div class="metric"><small>Materiale G-code</small><strong>${esc(data.filament_g)} g</strong></div>
+      <div class="metric"><small>Tempo stimato</small><strong>${esc(data.time_human)}</strong></div>
+      <div class="metric"><small>Materiale stimato</small><strong>${esc(data.filament_g)} g</strong></div>
       <div class="metric"><small>Quantità richiesta</small><strong>${esc(job.selections.quantity)}</strong></div>
     </div>
     ${data.applied_profile ? `<div class="info-card"><strong>Profilo applicato automaticamente</strong><br>Layer ${esc(data.applied_profile.layer_height_mm)} mm · ${esc(data.applied_profile.infill_percent)}% riempimento · ${esc(data.applied_profile.walls)} pareti · ${esc(data.applied_profile.temperature_c)}/${esc(data.applied_profile.bed_temperature_c)} °C · ${esc(data.applied_profile.print_speed_mm_s)} mm/s${data.applied_profile.build_plate ? ` · piatto ${esc(data.applied_profile.build_plate)}` : ''}</div>` : ''}
     <div class="result-actions">
-      ${data.print_ready ? `<a class="download" href="${esc(job.artifact_url)}">Scarica il G-code</a>` : ''}
+      ${data.print_ready ? `<a class="download" href="${esc(job.artifact_url)}">Scarica ${artifactLabel}</a>` : ''}
       ${!state.user ? '<button class="button ghost" id="result-register">Registrati per i costi</button>' : '<button class="button ghost" id="result-dashboard">Modifica profilo costi</button>'}
     </div>
     ${(data.warning || data.demo_only) ? `<div class="warning">${esc(data.warning || 'Il file dimostrativo non è stampabile: configura il motore dedicato.')}</div>` : ''}`;

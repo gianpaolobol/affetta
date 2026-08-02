@@ -22,8 +22,8 @@ function findInRoots(roots, names) {
 export function buildCuraArgs({ install, inputPath, outputPath, profile, definitions, extruders, machineDef, extruderDef }) {
   const searchRoots = [...new Set([definitions, extruders].filter(Boolean))];
   const definitionSearchPath = searchRoots.join(path.delimiter);
-  const centerX = profile.origin_center ? 0 : profile.build_mm[0] / 2;
-  const centerY = profile.origin_center ? 0 : profile.build_mm[1] / 2;
+  const centerX = profile.printer_id === 'thing-o-matic' ? 0 : (profile.origin_center ? 0 : profile.build_mm[0] / 2);
+  const centerY = profile.printer_id === 'thing-o-matic' ? 0 : (profile.origin_center ? 0 : profile.build_mm[1] / 2);
 
   // CuraEngine CLI 5.x: carichiamo una definizione macchina che eredita fdmprinter,
   // selezioniamo l'estrusore e poi applichiamo un set completo di override prima della mesh.
@@ -63,7 +63,7 @@ export function buildCuraArgs({ install, inputPath, outputPath, profile, definit
     ...setting('material_print_temperature_layer_0', profile.first_layer_temperature_c),
     ...setting('material_bed_temperature', profile.bed_temperature_c),
     ...setting('material_bed_temperature_layer_0', profile.first_layer_bed_temperature_c),
-    ...setting('material_flow', 100),
+    ...setting('material_flow', profile.flow_percent ?? 100),
     ...setting('speed_print', profile.print_speed_mm_s),
     ...setting('speed_wall', profile.inner_wall_speed_mm_s),
     ...setting('speed_wall_0', profile.outer_wall_speed_mm_s),

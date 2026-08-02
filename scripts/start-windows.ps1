@@ -297,8 +297,14 @@ function Configure-EnginePaths {
 
     $CuraExe = Resolve-EngineExecutable `
         'CURA_ENGINE_BIN' `
-        @((Join-Path $Root 'runtime\engines\cura'), (Join-Path $ExternalRuntime 'cura')) `
+        @((Join-Path $Root 'runtimeenginescura'), (Join-Path $ExternalRuntime 'cura')) `
         @('CuraEngine.exe') `
+        -Optional
+
+    $GpxExe = Resolve-EngineExecutable `
+        'GPX_BIN' `
+        @((Join-Path $Root 'runtimeenginesgpx'), (Join-Path $ExternalRuntime 'gpx')) `
+        @('gpx.exe') `
         -Optional
 
     # Le variabili legacy trasformavano i motori in comandi custom e bypassavano gli adattatori reali.
@@ -306,7 +312,8 @@ function Configure-EnginePaths {
         'AFFETTA_ENGINE_COMMAND_PRUSA',
         'AFFETTA_ENGINE_COMMAND_CURA',
         'AFFETTA_ENGINE_COMMAND_ORCA',
-        'AFFETTA_ENGINE_COMMAND_SNAPMAKER_ORCA'
+        'AFFETTA_ENGINE_COMMAND_SNAPMAKER_ORCA',
+        'AFFETTA_ENGINE_COMMAND_GPX'
     )
     foreach ($name in $legacy) { Remove-Item "Env:$name" -ErrorAction SilentlyContinue }
     Remove-DotEnvKeys $legacy
@@ -316,9 +323,11 @@ function Configure-EnginePaths {
     $env:PRUSA_SLICER_BIN = $PrusaExe
     $env:ORCA_SLICER_BIN = $OrcaExe
     $env:SNAPMAKER_ORCA_BIN = $SnapmakerExe
+    if ($GpxExe) { $env:GPX_BIN = $GpxExe }
     Set-DotEnvValue 'PRUSA_SLICER_BIN' $PrusaExe
     Set-DotEnvValue 'ORCA_SLICER_BIN' $OrcaExe
     Set-DotEnvValue 'SNAPMAKER_ORCA_BIN' $SnapmakerExe
+    if ($GpxExe) { Set-DotEnvValue 'GPX_BIN' $GpxExe }
 
     if ($CuraExe) {
         $env:CURA_ENGINE_BIN = $CuraExe
@@ -347,9 +356,9 @@ try {
     $BaseUrl = "http://127.0.0.1:$Port"
     $InstanceId = Get-InstanceId $Root
     $env:AFFETTA_INSTANCE_ID = $InstanceId
-    $env:AFFETTA_BUILD_ID = 'windows-lab-fleet-0501'
+    $env:AFFETTA_BUILD_ID = 'windows-thingomatic-052'
     Set-DotEnvValue 'AFFETTA_INSTANCE_ID' $InstanceId
-    Set-DotEnvValue 'AFFETTA_BUILD_ID' 'windows-lab-fleet-0501'
+    Set-DotEnvValue 'AFFETTA_BUILD_ID' 'windows-thingomatic-052'
 
     $ExistingHealth = Test-AffettaHealth $BaseUrl
     if ($ExistingHealth -and $ExistingHealth.service -eq 'affetta') {

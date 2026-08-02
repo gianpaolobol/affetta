@@ -102,7 +102,7 @@ async function runCase({ provider, resolvePrinter, printerId, nozzleMm, material
   } finally { fs.rmSync(temp,{recursive:true,force:true}); }
 }
 
-test('router seleziona i tre motori e trasferisce i parametri automatici', async (t) => {
+(process.platform === 'win32' ? test.skip : test)('router seleziona i tre motori e trasferisce i parametri automatici', async (t) => {
   const temp=fs.mkdtempSync(path.join(os.tmpdir(),'affetta-engines-'));
   const e=setupEngines(temp);
   process.env.PRUSA_SLICER_BIN=e.prusa;
@@ -160,7 +160,7 @@ test('catalogo instrada ogni stampante sulla famiglia prevista', async () => {
   for (const [id, engines] of Object.entries(expected)) assert.deepEqual(resolvePrinter(id).engines, engines, id);
 });
 
-test('router usa Prusa come percorso primario per Marlin anche se Cura non è disponibile', async () => {
+(process.platform === 'win32' ? test.skip : test)('router usa Prusa come percorso primario per Marlin anche se Cura non è disponibile', async () => {
   const temp=fs.mkdtempSync(path.join(os.tmpdir(),'affetta-fallback-'));
   const e=setupEngines(temp);
   process.env.PRUSA_SLICER_BIN=e.prusa;

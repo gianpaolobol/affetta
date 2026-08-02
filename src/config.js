@@ -47,7 +47,7 @@ export const catalogs = Object.freeze({
 const dataDir = path.resolve(process.env.AFFETTA_DATA_DIR || path.join(ROOT, 'data'));
 
 export const config = Object.freeze({
-  version: '0.5.1',
+  version: '0.5.2',
   apiVersion: 'v1',
   instanceId: process.env.AFFETTA_INSTANCE_ID || '',
   buildId: process.env.AFFETTA_BUILD_ID || '',

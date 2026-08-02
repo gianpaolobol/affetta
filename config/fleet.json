@@ -416,7 +416,7 @@
       "id": "predator-01",
       "label": "Anycubic Predator 1",
       "printer_id": "anycubic-predator",
-      "default_nozzle_mm": 1.0,
+      "default_nozzle_mm": 1,
       "enabled": true,
       "priority": 70,
       "roles": [
@@ -581,6 +581,46 @@
       ],
       "production_ready": false,
       "calibration_status": "requires-machine-inventory"
+    },
+    {
+      "id": "thing-o-matic-01",
+      "label": "Thing-O-Matic",
+      "printer_id": "thing-o-matic",
+      "default_nozzle_mm": 0.35,
+      "enabled": true,
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration",
+      "priority": 20,
+      "roles": [
+        "legacy",
+        "small",
+        "experimental"
+      ],
+      "preferred_materials": [
+        "pla",
+        "abs",
+        "petg",
+        "tpu"
+      ],
+      "material_ids": [
+        "pla",
+        "abs",
+        "petg",
+        "tpu"
+      ],
+      "quality_ids": [
+        "draft",
+        "standard",
+        "high",
+        "ultra"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong",
+        "solid"
+      ],
+      "notes": "Mk6, Sailfish, Gen 4 ATmega 2560, piano riscaldato standard, LCD e SD. Output X3G tramite GPX t6."
     }
   ],
   "routing_rules": {

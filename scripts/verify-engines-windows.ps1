@@ -23,7 +23,7 @@ function Find-NodePath {
 }
 
 try {
-  Write-Host 'AFFETTA v0.5.1 - VERIFICA RAPIDA DEI PERCORSI DI PRODUZIONE' -ForegroundColor Cyan
+  Write-Host 'AFFETTA v0.5.2 - VERIFICA RAPIDA DEI PERCORSI DI PRODUZIONE' -ForegroundColor Cyan
   Write-Host "Cartella: $Root"
   $nodePath = Find-NodePath
   if (-not $nodePath) { throw 'Node.js non trovato.' }
@@ -47,8 +47,8 @@ try {
   try { $engineReport = $engineOutput | ConvertFrom-Json }
   catch { throw "Il nuovo engine-selftest.json non è JSON valido: $($_.Exception.Message)" }
 
-  if ([string]$engineReport.version -ne '0.5.1') {
-    throw "Self-test non aggiornato: rilevata versione $($engineReport.version), attesa 0.5.1. Verifica di aver sostituito i file in C:\AFFETTA."
+  if ([string]$engineReport.version -ne '0.5.2') {
+    throw "Self-test non aggiornato: rilevata versione $($engineReport.version), attesa 0.5.2. Verifica di aver sostituito i file in C:\AFFETTA."
   }
 
   foreach ($property in $engineReport.production_routes.PSObject.Properties) {
