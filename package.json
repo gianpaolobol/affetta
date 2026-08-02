@@ -18,7 +18,11 @@
     "test:contracts": "node --test test/contracts/job-contract.test.js",
     "agent:build": "npm --prefix agent run build",
     "agent:test": "npm --prefix agent test",
-    "agent:e2e": "npm --prefix agent run test:e2e"
+    "agent:e2e": "npm --prefix agent run test:e2e",
+    "backend:build": "npm --prefix backend run build",
+    "backend:test": "npm --prefix backend test",
+    "backend:start": "npm --prefix backend start",
+    "backend:migrate": "npm --prefix backend run migrate"
   },
   "engines": {
     "node": ">=20"

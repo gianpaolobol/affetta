@@ -1,0 +1,27 @@
+{
+  "name": "@affetta/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Backend Affetta per Agent, job, lease, coda e artefatti.",
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run clean && npm run build && node scripts/run-tests.mjs",
+    "start": "node dist/src/index.js",
+    "migrate": "node dist/src/migrate.js"
+  },
+  "engines": { "node": ">=22.16" },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1095.0",
+    "@aws-sdk/s3-request-presigner": "^3.1095.0",
+    "ajv": "^8.20.0",
+    "pg": "^8.22.0",
+    "redis": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.3"
+  },
+  "license": "UNLICENSED"
+}

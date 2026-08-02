@@ -1,0 +1,290 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Affetta Backend API",
+    "version": "0.1.0",
+    "description": "Backend cloud-coordinated per job, Agent, lease e artefatti Affetta."
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
+      },
+      "AgentBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "opaque"
+      }
+    },
+    "schemas": {
+      "StructuredError": {
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "stage",
+          "retryable",
+          "details"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "details": {
+            "type": "object"
+          },
+          "correlation_id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/healthz": {
+      "get": {
+        "summary": "Liveness",
+        "responses": {
+          "200": {
+            "description": "Backend attivo"
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "summary": "Metriche Prometheus",
+        "responses": {
+          "200": {
+            "description": "Metriche backend"
+          }
+        }
+      }
+    },
+    "/readyz": {
+      "get": {
+        "summary": "Readiness dipendenze",
+        "responses": {
+          "200": {
+            "description": "Dipendenze disponibili"
+          },
+          "503": {
+            "description": "Dipendenza non pronta"
+          }
+        }
+      }
+    },
+    "/v1/pairing-codes": {
+      "post": {
+        "summary": "Crea codice pairing",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Codice creato"
+          }
+        }
+      }
+    },
+    "/v1/agents/pair": {
+      "post": {
+        "summary": "Associa un Agent",
+        "responses": {
+          "200": {
+            "description": "Token Agent emesso"
+          }
+        }
+      }
+    },
+    "/v1/agents/{id}/heartbeat": {
+      "post": {
+        "summary": "Aggiorna capability Agent",
+        "security": [
+          {
+            "AgentBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Heartbeat registrato"
+          }
+        }
+      }
+    },
+    "/v1/agents/{id}/lease": {
+      "post": {
+        "summary": "Acquisisce un job con lease",
+        "security": [
+          {
+            "AgentBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lease o null"
+          }
+        }
+      }
+    },
+    "/v1/artifacts/prepare-upload": {
+      "post": {
+        "summary": "Prepara upload artefatto input",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "URL firmato"
+          }
+        }
+      }
+    },
+    "/v1/artifacts/{id}/upload-complete": {
+      "post": {
+        "summary": "Verifica upload e checksum",
+        "security": [
+          {
+            "ApiKey": []
+          },
+          {
+            "AgentBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artefatto verificato"
+          }
+        }
+      }
+    },
+    "/v1/jobs": {
+      "post": {
+        "summary": "Crea job idempotente",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job idempotente esistente"
+          },
+          "201": {
+            "description": "Job creato"
+          }
+        }
+      }
+    },
+    "/v1/jobs/{id}": {
+      "get": {
+        "summary": "Legge job ed eventi",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stato job"
+          }
+        }
+      }
+    },
+    "/v1/jobs/{id}/ack": {
+      "post": {
+        "summary": "Conferma lease",
+        "security": [
+          {
+            "AgentBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ACK registrato"
+          }
+        }
+      }
+    },
+    "/v1/jobs/{id}/progress": {
+      "post": {
+        "summary": "Aggiorna stato e rinnova lease",
+        "security": [
+          {
+            "AgentBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lease rinnovato"
+          }
+        }
+      }
+    },
+    "/v1/jobs/{id}/complete": {
+      "post": {
+        "summary": "Completa job idempotentemente",
+        "security": [
+          {
+            "AgentBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Completato"
+          }
+        }
+      }
+    },
+    "/v1/jobs/{id}/fail": {
+      "post": {
+        "summary": "Fallisce o ripianifica job",
+        "security": [
+          {
+            "AgentBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stato aggiornato"
+          }
+        }
+      }
+    },
+    "/v1/jobs/{id}/cancel": {
+      "post": {
+        "summary": "Richiede cancellazione",
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cancellazione registrata"
+          }
+        }
+      }
+    }
+  }
+}
