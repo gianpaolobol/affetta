@@ -108,3 +108,11 @@ l'Agent operativo.
 Con circa 4 GiB assegnati a Docker Desktop, il Compose applica limiti prudenti
 ai singoli servizi. Per un deployment su due PC serve ancora TLS/HTTPS: non
 esporre `AFFETTA_BIND_HOST=0.0.0.0` in una rete non fidata.
+
+## Correzione P3.2: migrazioni nel container
+
+Il runner delle migrazioni usa `AFFETTA_MIGRATIONS_DIR` quando definita,
+altrimenti `<working-directory>/migrations`. Nel Compose locale il percorso è
+esplicitamente `/app/backend/migrations`. Il collaudatore stampa inoltre i log
+di `backend-migrate`, `backend` e `postgres` anche quando `docker compose up`
+fallisce prima di completare.

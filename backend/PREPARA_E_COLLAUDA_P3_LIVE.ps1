@@ -153,7 +153,7 @@ AFFETTA_MAX_JSON_BYTES=2000000
     Invoke-Checked -FilePath $DockerExe -ArgumentList @('compose','--project-name',$ProjectName,'build','--pull','backend-migrate','backend')
 
     Write-Host 'Avvio PostgreSQL, Redis, MinIO e backend...' -ForegroundColor Cyan
-    Invoke-Checked -FilePath $DockerExe -ArgumentList @('compose','--project-name',$ProjectName,'up','-d','--remove-orphans')
+    Invoke-Checked -FilePath $DockerExe -ArgumentList @('compose','--project-name',$ProjectName,'up','-d','--remove-orphans','--force-recreate')
     $started = $true
 
     $ready = Wait-Ready
@@ -278,10 +278,10 @@ AFFETTA_MAX_JSON_BYTES=2000000
 }
 catch {
     Write-Host ("ERRORE COLLAUDO LIVE: {0}" -f $_.Exception.Message) -ForegroundColor Red
-    if ($started) {
-        & $DockerExe compose --project-name $ProjectName ps
-        & $DockerExe compose --project-name $ProjectName logs --no-color --tail 120 backend backend-migrate postgres redis minio minio-init
-    }
+    Write-Host 'Stato servizi Docker:' -ForegroundColor Yellow
+    & $DockerExe compose --project-name $ProjectName ps -a
+    Write-Host 'Log diagnostici backend-migrate/backend/postgres:' -ForegroundColor Yellow
+    & $DockerExe compose --project-name $ProjectName logs --no-color --tail 200 backend-migrate backend postgres
     exit 1
 }
 finally {

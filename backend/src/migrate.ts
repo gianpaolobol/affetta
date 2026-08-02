@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { loadConfig } from './config.js';
+import { resolveMigrationsDirectory } from './migration-path.js';
 
 const config = loadConfig();
 if (!config.databaseUrl) throw new Error('DATABASE_URL obbligatoria per le migrazioni.');
@@ -12,7 +12,7 @@ const imported = await import(moduleName) as { Client: new (options: Record<stri
   end(): Promise<void>;
 } };
 const client = new imported.Client({ connectionString: config.databaseUrl });
-const migrationsDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'migrations');
+const migrationsDir = resolveMigrationsDirectory();
 const files = (await fs.readdir(migrationsDir)).filter((name) => name.endsWith('.sql')).sort();
 await client.connect();
 try {

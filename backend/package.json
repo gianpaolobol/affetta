@@ -1,6 +1,6 @@
 {
   "name": "@affetta/backend",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "type": "module",
   "description": "Backend Affetta per Agent, job, lease, coda e artefatti.",
@@ -11,7 +11,9 @@
     "start": "node dist/src/index.js",
     "migrate": "node dist/src/migrate.js"
   },
-  "engines": { "node": ">=22.16" },
+  "engines": {
+    "node": ">=22.16"
+  },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1095.0",
     "@aws-sdk/s3-request-presigner": "^3.1095.0",
