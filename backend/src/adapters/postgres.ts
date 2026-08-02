@@ -3,6 +3,7 @@ import type {
   AgentCapabilitiesV1,
   BetaAccountSnapshot,
   BetaEmailVerificationRecord,
+  BetaDailyUsageRecord,
   BetaProfileRecord,
   BetaSessionRecord,
   BetaUserRecord,
@@ -37,6 +38,11 @@ function dateString(value: unknown): string | null {
   if (value === null || value === undefined) return null;
   if (value instanceof Date) return value.toISOString();
   return String(value);
+}
+
+function dateOnly(value: unknown): string {
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  return String(value).slice(0, 10);
 }
 
 function jobFromRow(row: Row): JobRecord {
@@ -364,6 +370,22 @@ export class PgBackendRepository implements BackendRepository {
     return (result.rowCount ?? 0) > 0;
   }
 
+  async countActiveAgents(organizationId: string): Promise<number> {
+    const result = await this.pool.query<Row>(
+      "SELECT COUNT(*)::int AS count FROM agents WHERE organization_id=$1 AND revoked_at IS NULL AND status<>'revoked'",
+      [organizationId]
+    );
+    return Number(result.rows[0]?.count ?? 0);
+  }
+
+  async listAgentsByOrganization(organizationId: string): Promise<AgentRecord[]> {
+    const result = await this.pool.query<Row>(
+      'SELECT * FROM agents WHERE organization_id=$1 ORDER BY paired_at DESC',
+      [organizationId]
+    );
+    return result.rows.map(agentFromRow);
+  }
+
   async createArtifact(record: ArtifactRecord): Promise<ArtifactRecord> {
     const result = await this.pool.query<Row>(`INSERT INTO artifacts
       (id, organization_id, job_id, role, type, format, storage_key, sha256, size_bytes, media_type, status,
@@ -422,6 +444,82 @@ export class PgBackendRepository implements BackendRepository {
         [record.organization_id, record.idempotency_key]);
       return { job: jobFromRow(existing.rows[0]!), created: false };
     });
+  }
+
+  async createBetaJobIdempotent(record: JobRecord, correlationId: string, usageDate: string, dailyLimit: number): Promise<{ job: JobRecord; created: boolean; usage: BetaDailyUsageRecord }> {
+    return this.tx(async (client) => {
+      await client.query(`INSERT INTO beta_daily_usage (organization_id,usage_date,jobs_created,updated_at)
+        VALUES ($1,$2,0,$3) ON CONFLICT (organization_id,usage_date) DO NOTHING`,
+      [record.organization_id, usageDate, record.created_at]);
+      const usageLock = await client.query<Row>(
+        'SELECT * FROM beta_daily_usage WHERE organization_id=$1 AND usage_date=$2 FOR UPDATE',
+        [record.organization_id, usageDate]
+      );
+      const existing = await client.query<Row>(
+        'SELECT * FROM jobs WHERE organization_id=$1 AND idempotency_key=$2 LIMIT 1',
+        [record.organization_id, record.idempotency_key]
+      );
+      const usageRow = usageLock.rows[0]!;
+      if (existing.rows[0]) {
+        return {
+          job: jobFromRow(existing.rows[0]),
+          created: false,
+          usage: {
+            organization_id: String(usageRow.organization_id), usage_date: dateOnly(usageRow.usage_date),
+            jobs_created: Number(usageRow.jobs_created), updated_at: dateString(usageRow.updated_at)!
+          }
+        };
+      }
+      const jobsCreated = Number(usageRow.jobs_created);
+      if (jobsCreated >= dailyLimit) {
+        throw new BackendError('free_daily_job_limit', 'Limite giornaliero del piano Free raggiunto.', {
+          statusCode: 429, details: { daily_limit: dailyLimit, jobs_created: jobsCreated, usage_date: usageDate }
+        });
+      }
+      const inserted = await client.query<Row>(`INSERT INTO jobs
+        (id,organization_id,request_id,idempotency_key,source,operation,request,status,stage,priority,attempts,max_attempts,
+         next_attempt_at,assigned_agent_id,lease_id,lease_expires_at,ack_at,result,error,cancel_requested_at,completed_at,
+         dead_letter_at,output_artifact_id,created_at,updated_at)
+        VALUES ($1,$2,$3,$4,$5,$6,$7::jsonb,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18::jsonb,$19::jsonb,$20,$21,$22,$23,$24,$25)
+        RETURNING *`, [record.id, record.organization_id, record.request_id, record.idempotency_key, record.source,
+        record.operation, JSON.stringify(record.request), record.status, record.stage, record.priority, record.attempts,
+        record.max_attempts, record.next_attempt_at, record.assigned_agent_id, record.lease_id, record.lease_expires_at,
+        record.ack_at, JSON.stringify(record.result), JSON.stringify(record.error), record.cancel_requested_at,
+        record.completed_at, record.dead_letter_at, record.output_artifact_id, record.created_at, record.updated_at]);
+      const usageResult = await client.query<Row>(`UPDATE beta_daily_usage SET jobs_created=jobs_created+1,updated_at=$3
+        WHERE organization_id=$1 AND usage_date=$2 RETURNING *`,
+      [record.organization_id, usageDate, record.created_at]);
+      const job = jobFromRow(inserted.rows[0]!);
+      await this.appendEvent(client, job, 'created', 'created', 0, 'Job creato.', { plan: 'free' }, correlationId, record.created_at);
+      await this.appendEvent(client, job, 'queued', 'queue', 0, 'Job inserito in coda.', { plan: 'free' }, correlationId, record.created_at);
+      const updatedUsage = usageResult.rows[0]!;
+      return {
+        job, created: true, usage: {
+          organization_id: String(updatedUsage.organization_id), usage_date: dateOnly(updatedUsage.usage_date),
+          jobs_created: Number(updatedUsage.jobs_created), updated_at: dateString(updatedUsage.updated_at)!
+        }
+      };
+    });
+  }
+
+  async getBetaDailyUsage(organizationId: string, usageDate: string): Promise<BetaDailyUsageRecord> {
+    const result = await this.pool.query<Row>(
+      'SELECT * FROM beta_daily_usage WHERE organization_id=$1 AND usage_date=$2 LIMIT 1',
+      [organizationId, usageDate]
+    );
+    const row = result.rows[0];
+    return row ? {
+      organization_id: String(row.organization_id), usage_date: dateOnly(row.usage_date),
+      jobs_created: Number(row.jobs_created), updated_at: dateString(row.updated_at)!
+    } : { organization_id: organizationId, usage_date: usageDate, jobs_created: 0, updated_at: `${usageDate}T00:00:00.000Z` };
+  }
+
+  async listJobsForOrganization(organizationId: string, limit: number): Promise<JobRecord[]> {
+    const result = await this.pool.query<Row>(
+      'SELECT * FROM jobs WHERE organization_id=$1 ORDER BY created_at DESC LIMIT $2',
+      [organizationId, limit]
+    );
+    return result.rows.map(jobFromRow);
   }
 
   async getJob(jobId: string): Promise<JobRecord | null> {

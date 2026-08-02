@@ -3,6 +3,7 @@ import type {
   AgentCapabilitiesV1,
   BetaAccountSnapshot,
   BetaEmailVerificationRecord,
+  BetaDailyUsageRecord,
   BetaProfileRecord,
   BetaSessionRecord,
   BetaUserRecord,
@@ -116,6 +117,7 @@ export class MemoryBackendRepository implements BackendRepository {
   private readonly artifacts = new Map<string, ArtifactRecord>();
   private readonly jobs = new Map<string, JobRecord>();
   private readonly events = new Map<string, JobEventRecord[]>();
+  private readonly betaDailyUsage = new Map<string, BetaDailyUsageRecord>();
 
   async health(): Promise<{ ok: boolean }> { return { ok: true }; }
   async close(): Promise<void> {}
@@ -279,6 +281,19 @@ export class MemoryBackendRepository implements BackendRepository {
     return true;
   }
 
+  async countActiveAgents(organizationId: string): Promise<number> {
+    return [...this.agents.values()].filter((agent) =>
+      agent.organization_id === organizationId && !agent.revoked_at && agent.status !== 'revoked'
+    ).length;
+  }
+
+  async listAgentsByOrganization(organizationId: string): Promise<AgentRecord[]> {
+    return [...this.agents.values()]
+      .filter((agent) => agent.organization_id === organizationId)
+      .sort((left, right) => right.paired_at.localeCompare(left.paired_at))
+      .map(copy);
+  }
+
   async createArtifact(record: ArtifactRecord): Promise<ArtifactRecord> {
     if (this.artifacts.has(record.id)) throw new BackendError('artifact_exists', 'Artefatto già esistente.', { statusCode: 409 });
     this.artifacts.set(record.id, copy(record));
@@ -324,6 +339,42 @@ export class MemoryBackendRepository implements BackendRepository {
     this.appendEvent(record, 'created', 'created', 0, 'Job creato.', {}, correlationId, record.created_at);
     this.appendEvent(record, 'queued', 'queue', 0, 'Job inserito in coda.', {}, correlationId, record.created_at);
     return { job: copy(record), created: true };
+  }
+
+  async createBetaJobIdempotent(record: JobRecord, correlationId: string, usageDate: string, dailyLimit: number): Promise<{ job: JobRecord; created: boolean; usage: BetaDailyUsageRecord }> {
+    const usageKey = `${record.organization_id}:${usageDate}`;
+    const existing = [...this.jobs.values()].find((job) =>
+      job.organization_id === record.organization_id && job.idempotency_key === record.idempotency_key
+    );
+    const current = this.betaDailyUsage.get(usageKey) ?? {
+      organization_id: record.organization_id, usage_date: usageDate, jobs_created: 0, updated_at: record.created_at
+    };
+    if (existing) return { job: copy(existing), created: false, usage: copy(current) };
+    if (current.jobs_created >= dailyLimit) {
+      throw new BackendError('free_daily_job_limit', 'Limite giornaliero del piano Free raggiunto.', {
+        statusCode: 429, details: { daily_limit: dailyLimit, jobs_created: current.jobs_created, usage_date: usageDate }
+      });
+    }
+    const usage = { ...current, jobs_created: current.jobs_created + 1, updated_at: record.created_at };
+    this.betaDailyUsage.set(usageKey, usage);
+    this.jobs.set(record.id, copy(record));
+    this.appendEvent(record, 'created', 'created', 0, 'Job creato.', { plan: 'free' }, correlationId, record.created_at);
+    this.appendEvent(record, 'queued', 'queue', 0, 'Job inserito in coda.', { plan: 'free' }, correlationId, record.created_at);
+    return { job: copy(record), created: true, usage: copy(usage) };
+  }
+
+  async getBetaDailyUsage(organizationId: string, usageDate: string): Promise<BetaDailyUsageRecord> {
+    return copy(this.betaDailyUsage.get(`${organizationId}:${usageDate}`) ?? {
+      organization_id: organizationId, usage_date: usageDate, jobs_created: 0, updated_at: `${usageDate}T00:00:00.000Z`
+    });
+  }
+
+  async listJobsForOrganization(organizationId: string, limit: number): Promise<JobRecord[]> {
+    return [...this.jobs.values()]
+      .filter((job) => job.organization_id === organizationId)
+      .sort((left, right) => right.created_at.localeCompare(left.created_at))
+      .slice(0, limit)
+      .map(copy);
   }
 
   async getJob(jobId: string): Promise<JobRecord | null> {

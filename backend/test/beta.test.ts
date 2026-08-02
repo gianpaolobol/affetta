@@ -1,9 +1,12 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 import { test } from 'node:test';
 import { createBackendRuntime } from '../src/factory.js';
 import { loadConfig } from '../src/config.js';
 import { MemoryArtifactStorage, MemoryBackendRepository, MemoryReadyQueue } from '../src/adapters/memory.js';
 import { StructuralContractValidator } from '../src/contracts.js';
+import { sha256 } from '../src/crypto.js';
 import type { Clock, IdFactory, TokenFactory } from '../src/types.js';
 import { openApiDocument } from '../src/openapi.js';
 
@@ -41,16 +44,18 @@ async function fixture(overrides: Record<string, string> = {}) {
     AFFETTA_BETA_SESSION_TTL_HOURS: '168',
     ...overrides
   });
+  const queue = new MemoryReadyQueue();
+  const storage = new MemoryArtifactStorage();
   const runtime = await createBackendRuntime(config, {
     repository,
-    queue: new MemoryReadyQueue(),
-    storage: new MemoryArtifactStorage(),
+    queue,
+    storage,
     validator: new StructuralContractValidator(),
     clock,
     ids: new SequenceIds(),
     tokens: new SequenceTokens()
   });
-  return { ...runtime, repository, clock };
+  return { ...runtime, repository, queue, storage, clock };
 }
 
 const registration = {
@@ -77,19 +82,62 @@ async function registerVerifyLogin(context: Awaited<ReturnType<typeof fixture>>)
   return (login.body as { access_token: string }).access_token;
 }
 
+
+
+function betaCapabilities(agentId: string) {
+  return {
+    schema_version: 'affetta.agent-capabilities.v1', agent_id: agentId,
+    observed_at: '2026-08-03T00:00:00.000Z', status: 'online', affetta_version: '0.5.2',
+    protocol_versions: ['affetta.job.v1', 'affetta.result.v1', 'affetta.event.v1'], active_jobs: 0,
+    disk_free_bytes: 1_000_000_000,
+    platform: { os: 'windows', arch: 'x64', node_version: 'v24.16.0', hostname_hash: 'a'.repeat(64) },
+    engines: [{ id: 'orca', available: true, version: '2.3.0' }], postprocessors: [], output_formats: ['gcode'],
+    printer_profiles: [{
+      profile_id: 'bambu-x1c', profile_version: '2.3.1', profile_sha256: 'b'.repeat(64),
+      profile_status: 'validated', output_format: 'gcode', materials: ['pla'], nozzles_mm: [0.4],
+      production_ready: true, physical_validation: 'passed', fleet_unit_id: 'x1c-01'
+    }], capability_sha256: 'c'.repeat(64)
+  };
+}
+
+async function prepareBetaInput(context: Awaited<ReturnType<typeof fixture>>, access: string, content = 'solid beta cube') {
+  const bytes = Buffer.from(content);
+  const hash = sha256(bytes);
+  const prepare = await context.api.inject({ method: 'POST', path: '/v1/beta/artifacts/prepare-upload',
+    headers: { authorization: `Bearer ${access}` }, body: {
+      filename: 'beta-cube.stl', format: 'stl', sha256: hash, size_bytes: bytes.length
+    }});
+  assert.equal(prepare.statusCode, 201);
+  const artifact = (prepare.body as { artifact: { id: string; storage_key: string; retention_until: string } }).artifact;
+  context.storage.put(artifact.storage_key, bytes);
+  const complete = await context.api.inject({ method: 'POST', path: `/v1/beta/artifacts/${artifact.id}/upload-complete`,
+    headers: { authorization: `Bearer ${access}` }, body: { sha256: hash, size_bytes: bytes.length } });
+  assert.equal(complete.statusCode, 200);
+  return { artifact, bytes, hash };
+}
+
+function betaJobBody(artifactId: string, idempotencyKey: string) {
+  return {
+    artifact_id: artifactId, idempotency_key: idempotencyKey,
+    material_id: 'pla', quality_id: 'standard', strength_id: 'standard', color_id: 'random',
+    quantity: 1, nozzle_mm: 0.4
+  };
+}
+
 test('espone pagina beta e limiti Free senza mostrare il motore come scelta base', async () => {
   const context = await fixture();
   try {
     const page = await context.api.inject({ method: 'GET', path: '/beta/' });
     assert.equal(page.statusCode, 200);
     assert.match(String(page.body), /AFFETTA <span>BETA<\/span>/);
-    assert.match(String(page.body), /Il pannello base non mostra Cura, Orca, Prusa o GPX/);
+    assert.match(String(page.body), /nasconde motore e post-processori/);
+    assert.match(String(page.body), /Nessun comando viene inviato alla stampante/);
     assert.equal(page.headers['content-type'], 'text/html; charset=utf-8');
 
     const limits = await context.api.inject({ method: 'GET', path: '/v1/beta/limits' });
     assert.deepEqual(limits.body, {
       plan: 'free', daily_jobs: 5, max_input_bytes: 50_000_000,
-      retention_hours: 24, max_agents: 1, sla: false, enforcement_stage: 'P4.2-job-workflow'
+      retention_hours: 24, max_agents: 1, sla: false, enforcement_stage: 'enforced-p4.2'
     });
   } finally { await context.close(); }
 });
@@ -232,4 +280,170 @@ test('OpenAPI pubblica gli endpoint beta e il bearer separato', () => {
   assert.ok(openApiDocument.components.securitySchemes.BetaBearer);
   assert.ok(openApiDocument.paths['/v1/beta/register']);
   assert.ok(openApiDocument.paths['/v1/beta/me/cost-profile']);
+  assert.ok(openApiDocument.paths['/v1/beta/artifacts/prepare-upload']);
+  assert.ok(openApiDocument.paths['/v1/beta/jobs']);
+  assert.ok(openApiDocument.paths['/v1/beta/jobs/{id}/download']);
+  assert.ok(openApiDocument.paths['/v1/beta/agents/pairing-code']);
+});
+
+
+test('applica dimensione massima e quota giornaliera Free senza contare i replay idempotenti', async () => {
+  const context = await fixture({ AFFETTA_BETA_FREE_DAILY_JOBS: '1', AFFETTA_BETA_FREE_MAX_INPUT_BYTES: '100' });
+  try {
+    const access = await registerVerifyLogin(context);
+    const oversized = await context.api.inject({ method: 'POST', path: '/v1/beta/artifacts/prepare-upload',
+      headers: { authorization: `Bearer ${access}` }, body: {
+        filename: 'large.stl', format: 'stl', sha256: 'a'.repeat(64), size_bytes: 101
+      }});
+    assert.equal(oversized.statusCode, 413);
+    assert.equal((oversized.body as { error: { code: string } }).error.code, 'free_input_size_limit');
+
+    const firstInput = await prepareBetaInput(context, access, 'first');
+    const first = await context.api.inject({ method: 'POST', path: '/v1/beta/jobs',
+      headers: { authorization: `Bearer ${access}` }, body: betaJobBody(firstInput.artifact.id, 'beta-idem-0001') });
+    assert.equal(first.statusCode, 201);
+    assert.deepEqual((first.body as { usage: unknown }).usage, {
+      usage_date: '2026-08-03', jobs_used: 1, jobs_remaining: 0
+    });
+
+    const replay = await context.api.inject({ method: 'POST', path: '/v1/beta/jobs',
+      headers: { authorization: `Bearer ${access}` }, body: betaJobBody(firstInput.artifact.id, 'beta-idem-0001') });
+    assert.equal(replay.statusCode, 200);
+    assert.equal(replay.headers['idempotency-replayed'], 'true');
+    assert.equal((replay.body as { usage: { jobs_used: number } }).usage.jobs_used, 1);
+
+    const secondInput = await prepareBetaInput(context, access, 'second');
+    const blocked = await context.api.inject({ method: 'POST', path: '/v1/beta/jobs',
+      headers: { authorization: `Bearer ${access}` }, body: betaJobBody(secondInput.artifact.id, 'beta-idem-0002') });
+    assert.equal(blocked.statusCode, 429);
+    assert.equal((blocked.body as { error: { code: string } }).error.code, 'free_daily_job_limit');
+  } finally { await context.close(); }
+});
+
+
+test('il job beta costruito dal backend rispetta lo schema JSON affetta.job.v1', async () => {
+  const context = await fixture();
+  try {
+    const access = await registerVerifyLogin(context);
+    const input = await prepareBetaInput(context, access, 'schema-contract');
+    const created = await context.api.inject({ method: 'POST', path: '/v1/beta/jobs',
+      headers: { authorization: `Bearer ${access}` }, body: betaJobBody(input.artifact.id, 'beta-schema-0001') });
+    assert.equal(created.statusCode, 201);
+    const jobId = (created.body as { job: { id: string } }).job.id;
+    const stored = await context.repository.getJob(jobId);
+    assert.ok(stored);
+    const commonSchema = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), '../schemas/common-v1.schema.json'), 'utf8')) as {
+      $defs: { source: { enum: string[] } }
+    };
+    assert.ok(commonSchema.$defs.source.enum.includes(stored.request.source));
+    assert.equal(stored.request.source, 'beta-web');
+    assert.equal(stored.request.routing.mode, 'automatic');
+    assert.equal(stored.request.routing.require_production_ready, true);
+    assert.equal(stored.request.print_intent.requested_output_format, 'gcode');
+  } finally { await context.close(); }
+});
+
+test('pairing beta rispetta il limite di un Agent e consente revoca dal tenant personale', async () => {
+  const context = await fixture();
+  try {
+    const access = await registerVerifyLogin(context);
+    const auth = { authorization: `Bearer ${access}` };
+    const pairing = await context.api.inject({ method: 'POST', path: '/v1/beta/agents/pairing-code', headers: auth, body: {} });
+    assert.equal(pairing.statusCode, 201);
+    const code = (pairing.body as { pairing_code: string }).pairing_code;
+    const pair = await context.api.inject({ method: 'POST', path: '/v1/agents/pair', body: {
+      pairing_code: code, installation_id: 'beta_install_01', name: 'Agent beta', hostname_hash: 'd'.repeat(64),
+      platform: { os: 'win32', arch: 'x64', node_version: 'v24.16.0' },
+      protocol_versions: ['affetta.job.v1', 'affetta.result.v1', 'affetta.event.v1']
+    }});
+    assert.equal(pair.statusCode, 200);
+    const paired = pair.body as { agent_id: string; access_token: string };
+
+    const blocked = await context.api.inject({ method: 'POST', path: '/v1/beta/agents/pairing-code', headers: auth, body: {} });
+    assert.equal(blocked.statusCode, 409);
+    assert.equal((blocked.body as { error: { code: string } }).error.code, 'free_agent_limit');
+
+    const listed = await context.api.inject({ method: 'GET', path: '/v1/beta/agents', headers: auth });
+    assert.equal((listed.body as { agents: unknown[] }).agents.length, 1);
+    assert.doesNotMatch(JSON.stringify(listed.body), /access_token|token_hash/);
+
+    const revoked = await context.api.inject({ method: 'POST', path: `/v1/beta/agents/${paired.agent_id}/revoke`, headers: auth, body: {} });
+    assert.equal(revoked.statusCode, 200);
+    const after = await context.api.inject({ method: 'POST', path: '/v1/beta/agents/pairing-code', headers: auth, body: {} });
+    assert.equal(after.statusCode, 201);
+  } finally { await context.close(); }
+});
+
+test('flusso beta completo crea job, viene lavorato da Agent e restituisce download firmato', async () => {
+  const context = await fixture();
+  try {
+    const access = await registerVerifyLogin(context);
+    const auth = { authorization: `Bearer ${access}` };
+    const pairing = await context.api.inject({ method: 'POST', path: '/v1/beta/agents/pairing-code', headers: auth, body: {} });
+    const pairingCode = (pairing.body as { pairing_code: string }).pairing_code;
+    const pair = await context.api.inject({ method: 'POST', path: '/v1/agents/pair', body: {
+      pairing_code: pairingCode, installation_id: 'beta_worker_01', name: 'Worker beta', hostname_hash: 'e'.repeat(64),
+      platform: { os: 'win32', arch: 'x64', node_version: 'v24.16.0' },
+      protocol_versions: ['affetta.job.v1', 'affetta.result.v1', 'affetta.event.v1']
+    }});
+    const agent = pair.body as { agent_id: string; access_token: string };
+    assert.equal((await context.api.inject({ method: 'POST', path: `/v1/agents/${agent.agent_id}/heartbeat`,
+      headers: { authorization: `Bearer ${agent.access_token}` }, body: betaCapabilities(agent.agent_id) })).statusCode, 200);
+
+    const input = await prepareBetaInput(context, access);
+    const created = await context.api.inject({ method: 'POST', path: '/v1/beta/jobs', headers: auth,
+      body: betaJobBody(input.artifact.id, 'beta-full-0001') });
+    assert.equal(created.statusCode, 201);
+    const jobId = (created.body as { job: { id: string } }).job.id;
+
+    const earlyDownload = await context.api.inject({ method: 'GET', path: `/v1/beta/jobs/${jobId}/download`, headers: auth });
+    assert.equal(earlyDownload.statusCode, 409);
+
+    const leased = await context.api.inject({ method: 'POST', path: `/v1/agents/${agent.agent_id}/lease`,
+      headers: { authorization: `Bearer ${agent.access_token}` }, body: { max_jobs: 1 } });
+    const lease = (leased.body as { lease: {
+      lease_id: string; request: { request_id: string; idempotency_key: string };
+      output_upload: { artifact_id: string }
+    } }).lease;
+    assert.ok(lease);
+    assert.equal((await context.api.inject({ method: 'POST', path: `/v1/jobs/${jobId}/ack`,
+      headers: { authorization: `Bearer ${agent.access_token}` }, body: { lease_id: lease.lease_id } })).statusCode, 200);
+
+    const output = await context.repository.getArtifact(lease.output_upload.artifact_id);
+    assert.ok(output);
+    assert.equal(output.retention_until, '2026-08-04T00:00:00.000Z');
+    const gcode = Buffer.from('G28\nG1 X10 Y10\n');
+    const outputHash = sha256(gcode);
+    context.storage.put(output.storage_key, gcode);
+    assert.equal((await context.api.inject({ method: 'POST', path: `/v1/artifacts/${output.id}/upload-complete`,
+      headers: { authorization: `Bearer ${agent.access_token}` }, body: {
+        job_id: jobId, lease_id: lease.lease_id, sha256: outputHash, size_bytes: gcode.length
+      }})).statusCode, 200);
+
+    const result = {
+      schema_version: 'affetta.result.v1', job_id: jobId, request_id: lease.request.request_id,
+      idempotency_key: lease.request.idempotency_key, status: 'completed', updated_at: context.clock.now().toISOString(),
+      result: {
+        printer_profile_id: 'bambu-x1c', printer_profile_version: '2.3.1', printer_profile_sha256: 'b'.repeat(64),
+        profile_status: 'validated', fleet_unit_id: 'x1c-01', engine: { id: 'orca', version: '2.3.0' },
+        output_format: 'gcode', time_seconds: 60, filament: { grams: 2, millimeters: 600 },
+        validation: { valid: true, warnings: [], observed: {} },
+        artifacts: [{ artifact_id: output.id, type: 'gcode', format: 'gcode', sha256: outputHash, size_bytes: gcode.length, media_type: 'text/x.gcode' }]
+      }
+    };
+    const completed = await context.api.inject({ method: 'POST', path: `/v1/jobs/${jobId}/complete`,
+      headers: { authorization: `Bearer ${agent.access_token}` }, body: { lease_id: lease.lease_id, result } });
+    assert.equal(completed.statusCode, 200);
+
+    const status = await context.api.inject({ method: 'GET', path: `/v1/beta/jobs/${jobId}`, headers: auth });
+    assert.equal((status.body as { job: { status: string; download_ready: boolean } }).job.status, 'completed');
+    assert.equal((status.body as { job: { download_ready: boolean } }).job.download_ready, true);
+    assert.doesNotMatch(JSON.stringify(status.body), /lease_id|assigned_agent_id/);
+
+    const download = await context.api.inject({ method: 'GET', path: `/v1/beta/jobs/${jobId}/download`, headers: auth });
+    assert.equal(download.statusCode, 200);
+    assert.equal((download.body as { sha256: string }).sha256, outputHash);
+    assert.match((download.body as { filename: string }).filename, /beta-cube\.gcode$/);
+    assert.match((download.body as { download: { url: string } }).download.url, /^https:\/\/storage\.affetta\.test\//);
+  } finally { await context.close(); }
 });

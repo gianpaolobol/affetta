@@ -1,144 +1,107 @@
-# Affetta Backend 0.2.0 — P4.1
+# Affetta Backend 0.3.0 — P4.2
 
-Backend Affetta per coordinare account beta, Agent, job, lease, coda e artefatti. Non sostituisce Affetta locale e non esegue slicing.
+Backend Affetta per account beta, Agent, job, lease, coda, artefatti e download
+verificati. Il backend non esegue slicing: coordina Affetta locale tramite
+Agent Windows.
 
 ## Architettura
 
-- PostgreSQL: fonte autorevole di tenant, Agent, job, eventi, lease e metadati artefatti;
-- Redis: coda dei job pronti e ordinamento per disponibilità/priorità;
-- S3 compatibile: binari e URL firmati;
-- Agent Windows: polling HTTPS in uscita;
-- contratti P1: `affetta.job.v1`, `affetta.result.v1`, `affetta.agent-capabilities.v1`.
+- PostgreSQL: tenant, account, quote, Agent, job, eventi, lease e metadati;
+- Redis: coda dei job pronti;
+- storage S3 compatibile: input/output e URL firmati;
+- Agent Windows: polling in uscita e collegamento ad Affetta locale;
+- contratti: `affetta.job.v1`, `affetta.result.v1`,
+  `affetta.agent-capabilities.v1`.
 
-Il lease viene confermato nel database con un aggiornamento atomico. Redis accelera la selezione ma non può, da solo, autorizzare l'esecuzione di un job.
-
-## Beta web P4.1
-
-La fondazione della beta gratuita è disponibile su:
+## Beta web locale
 
 ```text
 http://127.0.0.1:8790/beta/
 ```
 
-Comprende registrazione, verifica email tramite outbox, login, sessione bearer,
-profilo costi personale e limiti Free. Il Compose locale può esporre il token
-di verifica soltanto perché resta vincolato a `127.0.0.1`; non usare
-`AFFETTA_BETA_EXPOSE_DEV_TOKENS=true` su Internet.
+P4.2 comprende:
 
-Il collegamento browser upload → job → download e l'enforcement delle quote
-sono P4.2.
+- registrazione, verifica email, login e logout;
+- tenant personale e profilo costi;
+- pairing monouso dell’Agent personale;
+- upload browser con SHA-256 e PUT firmato;
+- creazione job idempotente con routing automatico;
+- enforcement transazionale delle quote Free;
+- polling, cancellazione e download G-code verificato;
+- nessun comando inviato alla stampante fisica.
 
-## Endpoint principali
+## Limiti Free predefiniti
 
 ```text
-GET  /beta/
-GET  /v1/beta/limits
-POST /v1/beta/register
-POST /v1/beta/verify-email
-POST /v1/beta/login
-GET  /v1/beta/me
+5 job/giorno
+50 MB/input
+24 ore retention
+1 Agent
+```
+
+Sono configurabili tramite `AFFETTA_BETA_FREE_*` e applicati dal backend.
+
+## Endpoint beta
+
+```text
+GET   /beta/
+GET   /v1/beta/limits
+POST  /v1/beta/register
+POST  /v1/beta/verify-email
+POST  /v1/beta/login
+GET   /v1/beta/me
 PATCH /v1/beta/me/cost-profile
-POST /v1/beta/logout
-POST /v1/pairing-codes
-POST /v1/agents/pair
-POST /v1/agents/{id}/heartbeat
-POST /v1/agents/{id}/lease
-POST /v1/jobs
-GET  /v1/jobs/{id}
-POST /v1/jobs/{id}/ack
-POST /v1/jobs/{id}/progress
-POST /v1/jobs/{id}/complete
-POST /v1/jobs/{id}/fail
-POST /v1/jobs/{id}/cancel
-POST /v1/artifacts/prepare-upload
-POST /v1/artifacts/{id}/upload-complete
-GET  /openapi.json
-GET  /healthz
-GET  /readyz
-GET  /metrics
+POST  /v1/beta/logout
+GET   /v1/beta/agents
+POST  /v1/beta/agents/pairing-code
+POST  /v1/beta/agents/{id}/revoke
+POST  /v1/beta/artifacts/prepare-upload
+POST  /v1/beta/artifacts/{id}/upload-complete
+GET   /v1/beta/jobs
+POST  /v1/beta/jobs
+GET   /v1/beta/jobs/{id}
+POST  /v1/beta/jobs/{id}/cancel
+GET   /v1/beta/jobs/{id}/download
 ```
 
-## Modalità memoria per sviluppo
-
-```powershell
-Set-Location backend
-Copy-Item .env.example .env
-$env:AFFETTA_BACKEND_MODE='memory'
-$env:AFFETTA_ALLOW_INSECURE_MEMORY_DEFAULTS='true'
-npm install
-npm run build
-npm test
-npm start
-```
-
-Credenziali predefinite, solo in modalità memoria esplicitamente insicura:
-
-```text
-API key:      affetta-dev-api-key-change-me
-Pairing code: AFFETTA-DEV-PAIR
-```
+Gli endpoint Agent e amministrativi P3 restano disponibili come documentato in
+`/openapi.json`.
 
 ## Stack locale Docker
 
-1. Copiare `.env.example` in `.env` e cambiare tutte le credenziali.
-2. Dalla cartella `backend`:
+Con `backend/.env` già configurato:
 
 ```powershell
-docker compose build
-docker compose up -d
+Set-Location C:\AFFETTA_GITHUB_0412\backend
+docker compose --project-name affetta-p3 build
+docker compose --project-name affetta-p3 up -d
 ```
 
-Il compose usa PostgreSQL 18.4, Redis 8.8.1 e uno storage S3 compatibile MinIO per sviluppo. Prima della beta, fissare anche un digest immutabile per le immagini MinIO.
+Backend e MinIO sono pubblicati soltanto su `127.0.0.1` per impostazione
+predefinita.
 
-## Sicurezza
-
-- API key, token Agent e token di sessione beta sono conservati come SHA-256;
-- password beta derivate con scrypt e salt casuale;
-- la tabella di verifica conserva il token come hash; l’outbox locale contiene il link di consegna a breve scadenza e non è ancora adatta a Internet;
-- pairing code a scadenza e numero massimo di utilizzi;
-- tenant isolation su tutte le entità;
-- checksum SHA-256 verificato leggendo l'oggetto S3 dopo l'upload;
-- lease con scadenza, rinnovo e controllo dell'Agent assegnato;
-- `production_ready=false` escluso quando il job lo richiede;
-- nessun path locale nei contratti pubblici;
-- body JSON limitato;
-- errori strutturati e correlation ID.
-
-## Limiti correnti
-
-- account beta disponibile; billing, recupero password, 2FA e worker SMTP non ancora inclusi;
-- niente scheduler multi-piatto/fleet score avanzato;
-- niente webhook;
-- niente antivirus/CAD sandbox: previsto nella fase beta;
-- la verifica S3 streaming è limitata da `S3_VERIFY_MAX_BYTES`;
-- MinIO `latest` è accettabile soltanto per sviluppo: fissare tag e digest prima di ambienti condivisi.
-
-
-## P3.1 deployment locale Windows/WSL2
-
-P3.1 separa `S3_ENDPOINT`, usato dal backend dentro Docker, da
-`S3_PUBLIC_ENDPOINT`, usato per firmare URL raggiungibili da Windows. Il profilo
-predefinito pubblica backend e MinIO soltanto su `127.0.0.1`.
-
-Per preparare credenziali casuali, avviare lo stack e collaudarlo:
+## Collaudo P4.2
 
 ```powershell
-Set-Location C:\AFFETTA_GITHUB_0412
-.\backend\PREPARA_E_COLLAUDA_P3_LIVE.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass `
+  -File "C:\AFFETTA_GITHUB_0412\backend\p4-2\PREPARA_E_COLLAUDA_P4_2_BETA.ps1" `
+  -RepoPath "C:\AFFETTA_GITHUB_0412"
 ```
 
-Il test live verifica health/readiness, migrazione PostgreSQL, Redis, MinIO, URL
-firmato, upload, checksum, persistenza metadati e cancellazione job. Non avvia
-l'Agent operativo.
+Il collaudo usa un account temporaneo e un Agent temporaneo, verifica il file
+scaricato con SHA-256 e revoca l’Agent. Non stampa nulla.
 
-Con circa 4 GiB assegnati a Docker Desktop, il Compose applica limiti prudenti
-ai singoli servizi. Per un deployment su due PC serve ancora TLS/HTTPS: non
-esporre `AFFETTA_BIND_HOST=0.0.0.0` in una rete non fidata.
+## Sicurezza e stato
 
-## Correzione P3.2: migrazioni nel container
+- password derivate con scrypt;
+- token email, sessione, API e Agent memorizzati come hash;
+- isolamento per organizzazione su tutte le risorse;
+- quote aggiornate atomicamente con la creazione del job;
+- verifica S3 di checksum e dimensione;
+- solo profili `production_ready` quando richiesto;
+- CORS MinIO limitato all’origine beta locale configurata;
+- `AFFETTA_BETA_EXPOSE_DEV_TOKENS=true` è ammesso solo su loopback.
 
-Il runner delle migrazioni usa `AFFETTA_MIGRATIONS_DIR` quando definita,
-altrimenti `<working-directory>/migrations`. Nel Compose locale il percorso è
-esplicitamente `/app/backend/migrations`. Il collaudatore stampa inoltre i log
-di `backend-migrate`, `backend` e `postgres` anche quando `docker compose up`
-fallisce prima di completare.
+La beta non è ancora pronta per Internet: mancano HTTPS pubblico, SMTP reale,
+reset password/2FA, rate limiting distribuito, protezioni antiabuso,
+antivirus/sandbox CAD e hardening operativo dello storage.

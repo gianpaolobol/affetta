@@ -20,6 +20,7 @@ import type {
   Clock,
   ContractValidator,
   IdFactory,
+  JobEventRecord,
   JobRecord,
   JobRequestV1,
   JobResultV1,
@@ -50,6 +51,7 @@ export class SystemClock implements Clock {
 function iso(date: Date): string { return date.toISOString(); }
 function plusSeconds(date: Date, seconds: number): string { return new Date(date.getTime() + seconds * 1000).toISOString(); }
 function plusHours(date: Date, hours: number): string { return new Date(date.getTime() + hours * 3_600_000).toISOString(); }
+function utcDate(date: Date): string { return date.toISOString().slice(0, 10); }
 
 const DEFAULT_BETA_COST_PROFILE: BetaCostProfile = {
   currency: 'EUR', energy_eur_per_kwh: 0.30, machine_hour_eur: 1.50,
@@ -88,6 +90,69 @@ function requiredInteger(value: unknown, name: string, min: number, max: number)
     throw new BackendError('invalid_request', `${name} non valido.`, { statusCode: 422, details: { field: name } });
   }
   return Number(value);
+}
+
+
+function requiredSlug(value: unknown, name: string): string {
+  const slug = requiredString(value, name, 1, 96).toLowerCase();
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+    throw new BackendError('invalid_request', `${name} non valido.`, { statusCode: 422, details: { field: name } });
+  }
+  return slug;
+}
+
+function requiredSha256(value: unknown, name = 'sha256'): string {
+  const hash = requiredString(value, name, 64, 64).toLowerCase();
+  if (!/^[0-9a-f]{64}$/.test(hash)) {
+    throw new BackendError('invalid_request', `${name} non valido.`, { statusCode: 422, details: { field: name } });
+  }
+  return hash;
+}
+
+function safeBetaAgent(agent: AgentRecord): Record<string, unknown> {
+  return {
+    id: agent.id, name: agent.name, status: agent.status, paired_at: agent.paired_at,
+    last_seen_at: agent.last_seen_at, revoked_at: agent.revoked_at,
+    capability_sha256: agent.capability_sha256,
+    output_formats: agent.capabilities?.output_formats ?? [],
+    production_profiles: agent.capabilities?.printer_profiles.filter((profile) => profile.production_ready).length ?? 0
+  };
+}
+
+function safeBetaJob(job: JobRecord, events: JobEventRecord[]): Record<string, unknown> {
+  const lastEvent = events.at(-1) ?? null;
+  const terminal = ['completed', 'failed', 'cancelled', 'expired'].includes(job.status);
+  const result = job.result?.result;
+  return {
+    id: job.id,
+    status: job.status,
+    stage: job.stage,
+    progress_percent: job.status === 'completed' ? 100 : lastEvent?.progress_percent ?? 0,
+    message: lastEvent?.message ?? 'Job creato.',
+    terminal,
+    download_ready: job.status === 'completed' && Boolean(job.output_artifact_id),
+    input: {
+      filename: job.request.input.filename,
+      format: job.request.input.format,
+      size_bytes: job.request.input.size_bytes
+    },
+    print_intent: job.request.print_intent,
+    result: result ? {
+      output_format: result.output_format,
+      time_seconds: result.time_seconds,
+      filament: result.filament ?? null,
+      validation: result.validation,
+      artifact: result.artifacts[0] ?? null
+    } : null,
+    error: job.error ? { code: job.error.code, message: job.error.message, retryable: job.error.retryable } : null,
+    created_at: job.created_at,
+    updated_at: job.updated_at,
+    completed_at: job.completed_at,
+    events: events.map((event) => ({
+      sequence: event.sequence, status: event.status, stage: event.stage,
+      progress_percent: event.progress_percent, message: event.message, created_at: event.created_at
+    }))
+  };
 }
 
 function asObject(value: unknown): Record<string, unknown> {
@@ -145,7 +210,7 @@ export class BackendService {
       this.deps.repository.health(), this.deps.queue.health(), this.deps.storage.health()
     ]);
     const ok = database.ok && queue.ok && storage.ok;
-    return { ok, service: 'affetta-backend', version: '0.2.0', database, queue, storage };
+    return { ok, service: 'affetta-backend', version: '0.3.0', database, queue, storage };
   }
 
   async authenticateApiKey(rawKey: string | undefined): Promise<ApiPrincipal> {
@@ -186,7 +251,7 @@ export class BackendService {
       max_input_bytes: this.deps.config.beta.freeMaxInputBytes,
       retention_hours: this.deps.config.beta.freeRetentionHours,
       max_agents: this.deps.config.beta.freeMaxAgents,
-      sla: false, enforcement_stage: 'P4.2-job-workflow'
+      sla: false, enforcement_stage: 'enforced-p4.2'
     };
   }
 
@@ -294,7 +359,19 @@ export class BackendService {
     if (!account || account.organization.id !== principal.organization_id) {
       throw new BackendError('beta_account_not_found', 'Account beta non trovato.', { statusCode: 404 });
     }
-    return { account: safeBetaAccount(account), limits: this.betaLimits() };
+    const now = this.deps.clock.now();
+    const [usage, agents] = await Promise.all([
+      this.deps.repository.getBetaDailyUsage(principal.organization_id, utcDate(now)),
+      this.deps.repository.listAgentsByOrganization(principal.organization_id)
+    ]);
+    return {
+      account: safeBetaAccount(account), limits: this.betaLimits(),
+      usage: {
+        usage_date: usage.usage_date, jobs_used: usage.jobs_created,
+        jobs_remaining: Math.max(0, this.deps.config.beta.freeDailyJobs - usage.jobs_created)
+      },
+      agents: agents.map(safeBetaAgent)
+    };
   }
 
   async updateBetaCostProfile(principal: BetaPrincipal, body: unknown): Promise<Record<string, unknown>> {
@@ -324,6 +401,39 @@ export class BackendService {
   async logoutBeta(principal: BetaPrincipal): Promise<{ logged_out: true }> {
     await this.deps.repository.revokeBetaSession(principal.session_id, principal.user_id, iso(this.deps.clock.now()));
     return { logged_out: true };
+  }
+
+
+  async listBetaAgents(principal: BetaPrincipal): Promise<{ agents: Record<string, unknown>[]; limit: number }> {
+    const agents = await this.deps.repository.listAgentsByOrganization(principal.organization_id);
+    return { agents: agents.map(safeBetaAgent), limit: this.deps.config.beta.freeMaxAgents };
+  }
+
+  async createBetaPairingCode(principal: BetaPrincipal, body: unknown): Promise<{ pairing_code: string; expires_at: string }> {
+    const active = await this.deps.repository.countActiveAgents(principal.organization_id);
+    if (active >= this.deps.config.beta.freeMaxAgents) {
+      throw new BackendError('free_agent_limit', 'Il piano Free consente un solo Agent associato.', {
+        statusCode: 409, details: { active_agents: active, max_agents: this.deps.config.beta.freeMaxAgents }
+      });
+    }
+    const data = asObject(body ?? {});
+    const now = this.deps.clock.now();
+    const code = this.deps.tokens.create(18);
+    const ttlSeconds = data.ttl_seconds === undefined ? 1800 : requiredInteger(data.ttl_seconds, 'ttl_seconds', 60, 3600);
+    const record: PairingCodeRecord = {
+      id: this.deps.ids.create('pair'), organization_id: principal.organization_id, code_hash: sha256(code),
+      name: `beta:${principal.user_id}:${typeof data.name === 'string' ? data.name.slice(0, 80) : 'browser'}`,
+      expires_at: plusSeconds(now, ttlSeconds), max_uses: 1, used_count: 0, revoked_at: null, created_at: iso(now)
+    };
+    await this.deps.repository.createPairingCode(record);
+    this.deps.metrics.increment('beta_pairing_codes_total');
+    return { pairing_code: code, expires_at: record.expires_at };
+  }
+
+  async revokeBetaAgent(principal: BetaPrincipal, agentId: string): Promise<{ revoked: true }> {
+    const revoked = await this.deps.repository.revokeAgent(agentId, principal.organization_id, iso(this.deps.clock.now()));
+    if (!revoked) throw new BackendError('agent_not_found', 'Agent non trovato.', { statusCode: 404 });
+    return { revoked: true };
   }
 
   async createPairingCode(principal: ApiPrincipal, body: unknown): Promise<{ pairing_code: string; record: PairingCodeRecord }> {
@@ -357,6 +467,12 @@ export class BackendService {
     const now = this.deps.clock.now();
     const pairing = await this.deps.repository.consumePairingCode(sha256(pairingCode), iso(now));
     if (!pairing) throw new BackendError('invalid_pairing_code', 'Codice di pairing non valido, scaduto o già consumato.', { statusCode: 401 });
+    if (pairing.name.startsWith('beta:')) {
+      const active = await this.deps.repository.countActiveAgents(pairing.organization_id);
+      if (active >= this.deps.config.beta.freeMaxAgents) {
+        throw new BackendError('free_agent_limit', 'Il piano Free consente un solo Agent associato.', { statusCode: 409 });
+      }
+    }
     const token = this.deps.tokens.create(32);
     const record: AgentRecord = {
       id: this.deps.ids.create('agt'),
@@ -437,7 +553,7 @@ export class BackendService {
       if (!job || job.assigned_agent_id !== principal.agent_id || job.lease_id !== leaseId || artifact.job_id !== jobId) {
         throw new BackendError('invalid_lease', 'Lease non valido per l’artefatto.', { statusCode: 409 });
       }
-    } else {
+    } else if (principal.kind === 'api_key') {
       this.requireScope(principal, 'artifacts:write');
     }
     const expected = {
@@ -454,6 +570,163 @@ export class BackendService {
     const verified = await this.deps.repository.markArtifactVerified(artifact.id, expected.sha256, expected.size_bytes, iso(this.deps.clock.now()));
     if (!verified) throw new BackendError('artifact_not_found', 'Artefatto non trovato.', { statusCode: 404 });
     return { artifact: verified };
+  }
+
+
+  async prepareBetaArtifactUpload(principal: BetaPrincipal, body: unknown): Promise<{ artifact: ArtifactRecord; upload: Awaited<ReturnType<ArtifactStorage['prepareUpload']>> }> {
+    const data = asObject(body);
+    const now = this.deps.clock.now();
+    const sizeBytes = requiredInteger(data.size_bytes, 'size_bytes', 1, 5_000_000_000);
+    if (sizeBytes > this.deps.config.beta.freeMaxInputBytes) {
+      throw new BackendError('free_input_size_limit', 'Il modello supera il limite del piano Free.', {
+        statusCode: 413, details: { size_bytes: sizeBytes, max_input_bytes: this.deps.config.beta.freeMaxInputBytes }
+      });
+    }
+    const format = requiredString(data.format, 'format', 3, 8).toLowerCase();
+    const allowedFormats = ['stl', 'obj', 'amf', '3mf', 'step'];
+    if (!allowedFormats.includes(format)) {
+      throw new BackendError('unsupported_input_format', 'Formato modello non supportato dalla beta.', {
+        statusCode: 422, details: { format, allowed_formats: allowedFormats }
+      });
+    }
+    const filename = requiredString(data.filename, 'filename', 1, 240).replace(/[^A-Za-z0-9._-]/g, '_');
+    const id = this.deps.ids.create('art');
+    const mediaTypes: Record<string, string> = {
+      stl: 'model/stl', obj: 'model/obj', amf: 'application/amf+xml', '3mf': 'model/3mf', step: 'model/step'
+    };
+    const artifact: ArtifactRecord = {
+      id, organization_id: principal.organization_id, job_id: null, role: 'input', type: 'model', format,
+      storage_key: `${principal.organization_id}/beta/uploads/${id}/${filename}`,
+      sha256: requiredSha256(data.sha256), size_bytes: sizeBytes,
+      media_type: mediaTypes[format] ?? 'application/octet-stream', status: 'pending',
+      retention_until: plusHours(now, this.deps.config.beta.freeRetentionHours), created_at: iso(now), verified_at: null
+    };
+    await this.deps.repository.createArtifact(artifact);
+    this.deps.metrics.increment('beta_artifacts_prepared_total');
+    return { artifact, upload: await this.deps.storage.prepareUpload(artifact) };
+  }
+
+  async completeBetaArtifactUpload(principal: BetaPrincipal, artifactId: string, body: unknown): Promise<{ artifact: ArtifactRecord }> {
+    const result = await this.completeArtifactUpload(principal, artifactId, body);
+    if (result.artifact.role !== 'input') {
+      throw new BackendError('invalid_beta_artifact_role', 'Artefatto beta non valido.', { statusCode: 422 });
+    }
+    this.deps.metrics.increment('beta_artifacts_verified_total');
+    return result;
+  }
+
+  async createBetaJob(principal: BetaPrincipal, body: unknown, correlationId: string): Promise<{ job: Record<string, unknown>; created: boolean; usage: Record<string, unknown> }> {
+    const data = asObject(body);
+    const artifactId = requiredString(data.artifact_id, 'artifact_id', 10, 144);
+    const artifact = await this.deps.repository.getArtifact(artifactId);
+    if (!artifact || artifact.organization_id !== principal.organization_id || artifact.role !== 'input' || artifact.status !== 'verified') {
+      throw new BackendError('input_artifact_not_verified', 'Modello assente o non verificato.', { statusCode: 409 });
+    }
+    if ((artifact.size_bytes ?? 0) > this.deps.config.beta.freeMaxInputBytes) {
+      throw new BackendError('free_input_size_limit', 'Il modello supera il limite del piano Free.', {
+        statusCode: 413, details: { max_input_bytes: this.deps.config.beta.freeMaxInputBytes }
+      });
+    }
+    const now = this.deps.clock.now();
+    const filename = artifact.storage_key.split('/').at(-1) ?? `model.${artifact.format}`;
+    const idempotencyKey = requiredString(data.idempotency_key, 'idempotency_key', 8, 128);
+    if (!/^[A-Za-z0-9][A-Za-z0-9._:-]{7,127}$/.test(idempotencyKey)) {
+      throw new BackendError('invalid_request', 'idempotency_key non valida.', { statusCode: 422 });
+    }
+    const nozzle = data.nozzle_mm === undefined ? undefined : betaNumber(data.nozzle_mm, 'nozzle_mm', 0.1, 3);
+    const request: JobRequestV1 = {
+      schema_version: 'affetta.job.v1', request_id: this.deps.ids.create('req'), idempotency_key: idempotencyKey,
+      source: 'beta-web', operation: 'slice', created_at: iso(now),
+      input: {
+        artifact_id: artifact.id, filename, format: artifact.format as JobRequestV1['input']['format'],
+        sha256: artifact.sha256!, size_bytes: artifact.size_bytes!, units: 'millimeter'
+      },
+      print_intent: {
+        material_id: requiredSlug(data.material_id, 'material_id'),
+        quality_id: requiredSlug(data.quality_id, 'quality_id'),
+        strength_id: requiredSlug(data.strength_id, 'strength_id'),
+        color_id: requiredSlug(data.color_id, 'color_id'),
+        quantity: data.quantity === undefined ? 1 : requiredInteger(data.quantity, 'quantity', 1, 100),
+        ...(nozzle === undefined ? {} : { nozzle_mm: nozzle }),
+        requested_output_format: 'gcode'
+      },
+      routing: { mode: 'automatic', require_production_ready: true },
+      extensions: {
+        'affetta.beta.plan': 'free', 'affetta.beta.user-id': principal.user_id,
+        'affetta.beta.no-physical-print': true
+      }
+    };
+    this.deps.validator.validateJobRequest(request);
+    const job: JobRecord = {
+      id: this.deps.ids.create('job'), organization_id: principal.organization_id,
+      request_id: request.request_id, idempotency_key: request.idempotency_key,
+      source: request.source, operation: request.operation, request,
+      status: 'queued', stage: 'queue', priority: 0, attempts: 0, max_attempts: this.deps.config.maxAttempts,
+      next_attempt_at: iso(now), assigned_agent_id: null, lease_id: null, lease_expires_at: null, ack_at: null,
+      result: null, error: null, cancel_requested_at: null, completed_at: null, dead_letter_at: null,
+      output_artifact_id: null, created_at: iso(now), updated_at: iso(now)
+    };
+    const result = await this.deps.repository.createBetaJobIdempotent(
+      job, correlationId, utcDate(now), this.deps.config.beta.freeDailyJobs
+    );
+    if (result.created) {
+      await this.deps.queue.notifyReady(result.job);
+      this.deps.metrics.increment('beta_jobs_created_total');
+      this.deps.metrics.increment('jobs_created_total');
+      this.deps.metrics.increment('jobs_queued_total');
+    } else {
+      this.deps.metrics.increment('jobs_idempotent_replays_total');
+    }
+    const events = await this.deps.repository.listJobEvents(result.job.id);
+    return {
+      job: safeBetaJob(result.job, events), created: result.created,
+      usage: {
+        usage_date: result.usage.usage_date, jobs_used: result.usage.jobs_created,
+        jobs_remaining: Math.max(0, this.deps.config.beta.freeDailyJobs - result.usage.jobs_created)
+      }
+    };
+  }
+
+  async listBetaJobs(principal: BetaPrincipal): Promise<{ jobs: Record<string, unknown>[] }> {
+    const jobs = await this.deps.repository.listJobsForOrganization(principal.organization_id, 20);
+    return { jobs: await Promise.all(jobs.map(async (job) => safeBetaJob(job, await this.deps.repository.listJobEvents(job.id)))) };
+  }
+
+  async getBetaJob(principal: BetaPrincipal, jobId: string): Promise<{ job: Record<string, unknown> }> {
+    const job = await this.deps.repository.getJob(jobId);
+    if (!job || job.organization_id !== principal.organization_id) {
+      throw new BackendError('job_not_found', 'Job non trovato.', { statusCode: 404 });
+    }
+    return { job: safeBetaJob(job, await this.deps.repository.listJobEvents(job.id)) };
+  }
+
+  async cancelBetaJob(principal: BetaPrincipal, jobId: string, correlationId: string): Promise<{ job: Record<string, unknown> }> {
+    const job = await this.deps.repository.requestCancellation(jobId, principal.organization_id, iso(this.deps.clock.now()), correlationId);
+    if (!job) throw new BackendError('job_not_found', 'Job non trovato.', { statusCode: 404 });
+    if (job.status === 'cancelled') await this.deps.queue.remove(job.id);
+    return { job: safeBetaJob(job, await this.deps.repository.listJobEvents(job.id)) };
+  }
+
+  async betaJobDownload(principal: BetaPrincipal, jobId: string): Promise<{ download: Awaited<ReturnType<ArtifactStorage['prepareDownload']>>; filename: string; sha256: string; size_bytes: number; expires_at: string }> {
+    const job = await this.deps.repository.getJob(jobId);
+    if (!job || job.organization_id !== principal.organization_id) {
+      throw new BackendError('job_not_found', 'Job non trovato.', { statusCode: 404 });
+    }
+    if (job.status !== 'completed' || !job.output_artifact_id) {
+      throw new BackendError('job_not_completed', 'Il risultato non è ancora disponibile.', { statusCode: 409 });
+    }
+    const artifact = await this.deps.repository.getArtifact(job.output_artifact_id);
+    if (!artifact || artifact.status !== 'verified' || !artifact.sha256 || !artifact.size_bytes) {
+      throw new BackendError('output_artifact_not_verified', 'Risultato non verificato.', { statusCode: 409 });
+    }
+    if (new Date(artifact.retention_until) <= this.deps.clock.now()) {
+      throw new BackendError('artifact_expired', 'Il risultato non è più disponibile.', { statusCode: 410 });
+    }
+    return {
+      download: await this.deps.storage.prepareDownload(artifact),
+      filename: `${job.request.input.filename.replace(/\.[^.]+$/, '')}.${artifact.format}`,
+      sha256: artifact.sha256, size_bytes: artifact.size_bytes, expires_at: artifact.retention_until
+    };
   }
 
   async createJob(principal: ApiPrincipal, body: unknown, correlationId: string): Promise<{ job: JobRecord; created: boolean }> {
@@ -559,7 +832,7 @@ export class BackendService {
         size_bytes: null,
         media_type: outputFormat === 'x3g' ? 'application/octet-stream' : 'text/x.gcode',
         status: 'pending',
-        retention_until: plusHours(now, this.deps.config.retentionHours),
+        retention_until: plusHours(now, claimed.source === 'beta-web' ? this.deps.config.beta.freeRetentionHours : this.deps.config.retentionHours),
         created_at: iso(now),
         verified_at: null
       });

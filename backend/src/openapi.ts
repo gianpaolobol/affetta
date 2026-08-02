@@ -2,8 +2,8 @@ export const openApiDocument = {
   openapi: '3.1.0',
   info: {
     title: 'Affetta Backend API',
-    version: '0.2.0',
-    description: 'Backend Affetta per beta web, account, Agent, job, lease e artefatti.'
+    version: '0.3.0',
+    description: 'Backend Affetta per beta web gratuita, upload modelli, quote Free, Agent, job e download risultati.'
   },
   servers: [{ url: '/' }],
   components: {
@@ -31,6 +31,18 @@ export const openApiDocument = {
     '/v1/beta/me': { get: { summary: 'Legge account beta', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Account e limiti' } } } },
     '/v1/beta/me/cost-profile': { patch: { summary: 'Aggiorna profilo costi', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Profilo aggiornato' } } } },
     '/v1/beta/logout': { post: { summary: 'Revoca sessione beta', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Sessione revocata' } } } },
+    '/v1/beta/agents': { get: { summary: 'Elenca Agent del tenant beta', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Agent associati' } } } },
+    '/v1/beta/agents/pairing-code': { post: { summary: 'Crea pairing monouso entro il limite Free', security: [{ BetaBearer: [] }], responses: { '201': { description: 'Codice creato' }, '409': { description: 'Limite Agent raggiunto' } } } },
+    '/v1/beta/agents/{id}/revoke': { post: { summary: 'Revoca Agent del tenant beta', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Agent revocato' } } } },
+    '/v1/beta/artifacts/prepare-upload': { post: { summary: 'Prepara upload firmato del modello entro 50 MB', security: [{ BetaBearer: [] }], responses: { '201': { description: 'Upload firmato' }, '413': { description: 'Limite file superato' } } } },
+    '/v1/beta/artifacts/{id}/upload-complete': { post: { summary: 'Verifica checksum del modello beta', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Modello verificato' } } } },
+    '/v1/beta/jobs': {
+      get: { summary: 'Elenca gli ultimi job beta', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Elenco job' } } },
+      post: { summary: 'Crea job automatico con quota Free atomica', security: [{ BetaBearer: [] }], responses: { '201': { description: 'Job creato' }, '200': { description: 'Replay idempotente' }, '429': { description: 'Quota giornaliera raggiunta' } } }
+    },
+    '/v1/beta/jobs/{id}': { get: { summary: 'Legge stato ed eventi sanitizzati del job beta', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Stato job' } } } },
+    '/v1/beta/jobs/{id}/cancel': { post: { summary: 'Cancella job beta', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Cancellazione registrata' } } } },
+    '/v1/beta/jobs/{id}/download': { get: { summary: 'Ottiene download firmato del G-code verificato', security: [{ BetaBearer: [] }], responses: { '200': { description: 'Download firmato' }, '409': { description: 'Risultato non pronto' }, '410': { description: 'Artefatto scaduto' } } } },
     '/healthz': { get: { summary: 'Liveness', responses: { '200': { description: 'Backend attivo' } } } },
     '/metrics': { get: { summary: 'Metriche Prometheus', responses: { '200': { description: 'Metriche backend' } } } },
     '/readyz': { get: { summary: 'Readiness dipendenze', responses: { '200': { description: 'Dipendenze disponibili' }, '503': { description: 'Dipendenza non pronta' } } } },

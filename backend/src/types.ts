@@ -193,6 +193,14 @@ export interface BetaAccountSnapshot {
   profile: BetaProfileRecord;
 }
 
+
+export interface BetaDailyUsageRecord {
+  organization_id: string;
+  usage_date: string;
+  jobs_created: number;
+  updated_at: string;
+}
+
 export interface OrganizationRecord {
   id: string;
   name: string;
@@ -333,7 +341,7 @@ export interface AgentPrincipal {
   agent_id: string;
 }
 
-export type Principal = ApiPrincipal | AgentPrincipal;
+export type Principal = ApiPrincipal | AgentPrincipal | BetaPrincipal;
 
 export interface ContractValidator {
   validateJobRequest(value: unknown): asserts value is JobRequestV1;
@@ -374,6 +382,8 @@ export interface BackendRepository {
   getAgent(agentId: string): Promise<AgentRecord | null>;
   updateAgentHeartbeat(agentId: string, capabilities: AgentCapabilitiesV1, now: string): Promise<AgentRecord | null>;
   revokeAgent(agentId: string, organizationId: string, now: string): Promise<boolean>;
+  countActiveAgents(organizationId: string): Promise<number>;
+  listAgentsByOrganization(organizationId: string): Promise<AgentRecord[]>;
 
   createArtifact(record: ArtifactRecord): Promise<ArtifactRecord>;
   getArtifact(artifactId: string): Promise<ArtifactRecord | null>;
@@ -381,6 +391,9 @@ export interface BackendRepository {
   ensureOutputArtifact(record: ArtifactRecord): Promise<ArtifactRecord>;
 
   createJobIdempotent(record: JobRecord, correlationId: string): Promise<{ job: JobRecord; created: boolean }>;
+  createBetaJobIdempotent(record: JobRecord, correlationId: string, usageDate: string, dailyLimit: number): Promise<{ job: JobRecord; created: boolean; usage: BetaDailyUsageRecord }>;
+  getBetaDailyUsage(organizationId: string, usageDate: string): Promise<BetaDailyUsageRecord>;
+  listJobsForOrganization(organizationId: string, limit: number): Promise<JobRecord[]>;
   getJob(jobId: string): Promise<JobRecord | null>;
   listJobEvents(jobId: string): Promise<JobEventRecord[]>;
   requestCancellation(jobId: string, organizationId: string, now: string, correlationId: string): Promise<JobRecord | null>;

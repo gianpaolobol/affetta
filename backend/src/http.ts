@@ -69,7 +69,7 @@ export class BackendHttpApi {
 
   private async dispatch(method: string, path: string, headers: Record<string, string>, body: unknown, correlationId: string): Promise<{ statusCode: number; headers: Record<string, string>; body: unknown }> {
     if (method === 'GET' && path === '/healthz') {
-      return { statusCode: 200, headers: {}, body: { ok: true, service: 'affetta-backend', version: '0.2.0' } };
+      return { statusCode: 200, headers: {}, body: { ok: true, service: 'affetta-backend', version: '0.3.0' } };
     }
     if (method === 'GET' && path === '/readyz') {
       const health = await this.service.health();
@@ -110,6 +110,53 @@ export class BackendHttpApi {
     if (method === 'POST' && path === '/v1/beta/logout') {
       const principal = await this.betaPrincipal(headers);
       return { statusCode: 200, headers: {}, body: await this.service.logoutBeta(principal) };
+    }
+
+    if (method === 'GET' && path === '/v1/beta/agents') {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 200, headers: {}, body: await this.service.listBetaAgents(principal) };
+    }
+    if (method === 'POST' && path === '/v1/beta/agents/pairing-code') {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 201, headers: {}, body: await this.service.createBetaPairingCode(principal, body) };
+    }
+    const betaAgentRevoke = matchPath(path, /^\/v1\/beta\/agents\/([^/]+)\/revoke$/);
+    if (method === 'POST' && betaAgentRevoke) {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 200, headers: {}, body: await this.service.revokeBetaAgent(principal, betaAgentRevoke[0]!) };
+    }
+    if (method === 'POST' && path === '/v1/beta/artifacts/prepare-upload') {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 201, headers: {}, body: await this.service.prepareBetaArtifactUpload(principal, body) };
+    }
+    const betaArtifactComplete = matchPath(path, /^\/v1\/beta\/artifacts\/([^/]+)\/upload-complete$/);
+    if (method === 'POST' && betaArtifactComplete) {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 200, headers: {}, body: await this.service.completeBetaArtifactUpload(principal, betaArtifactComplete[0]!, body) };
+    }
+    if (method === 'GET' && path === '/v1/beta/jobs') {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 200, headers: {}, body: await this.service.listBetaJobs(principal) };
+    }
+    if (method === 'POST' && path === '/v1/beta/jobs') {
+      const principal = await this.betaPrincipal(headers);
+      const result = await this.service.createBetaJob(principal, body, correlationId);
+      return { statusCode: result.created ? 201 : 200, headers: { 'idempotency-replayed': result.created ? 'false' : 'true' }, body: result };
+    }
+    const betaJobDownload = matchPath(path, /^\/v1\/beta\/jobs\/([^/]+)\/download$/);
+    if (method === 'GET' && betaJobDownload) {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 200, headers: {}, body: await this.service.betaJobDownload(principal, betaJobDownload[0]!) };
+    }
+    const betaJobCancel = matchPath(path, /^\/v1\/beta\/jobs\/([^/]+)\/cancel$/);
+    if (method === 'POST' && betaJobCancel) {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 200, headers: {}, body: await this.service.cancelBetaJob(principal, betaJobCancel[0]!, correlationId) };
+    }
+    const betaJob = matchPath(path, /^\/v1\/beta\/jobs\/([^/]+)$/);
+    if (method === 'GET' && betaJob) {
+      const principal = await this.betaPrincipal(headers);
+      return { statusCode: 200, headers: {}, body: await this.service.getBetaJob(principal, betaJob[0]!) };
     }
 
     if (method === 'POST' && path === '/v1/pairing-codes') {

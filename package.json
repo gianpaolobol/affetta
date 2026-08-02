@@ -3,7 +3,7 @@
   "version": "0.5.2",
   "private": true,
   "type": "module",
-  "description": "Affetta — slicer FDM standalone con viewer 3D, account verificati, profili costi personali e API provider-agnostic.",
+  "description": "Affetta — slicer FDM standalone con beta web gratuita, Agent locale, quote Free e download G-code verificati.",
   "scripts": {
     "init": "node scripts/init.mjs",
     "start": "node bootstrap.js",
@@ -25,7 +25,8 @@
     "backend:migrate": "npm --prefix backend run migrate",
     "agent:p3.3:test": "npm --prefix agent run test:p3.3",
     "agent:p3.3:live": "npm --prefix agent run live:p3.3",
-    "backend:p4.1:live": "npm --prefix backend run live:p4.1"
+    "backend:p4.1:live": "npm --prefix backend run live:p4.1",
+    "backend:p4.2:live": "npm --prefix backend run live:p4.2"
   },
   "engines": {
     "node": ">=20"

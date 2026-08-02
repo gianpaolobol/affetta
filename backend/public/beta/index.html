@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Affetta Beta gratuita: profilo personale e preparazione del flusso di slicing online.">
+  <meta name="description" content="Affetta Beta gratuita: carica un modello, genera il job e scarica il G-code verificato.">
   <title>Affetta Beta</title>
   <link rel="stylesheet" href="/beta/styles.css">
 </head>
@@ -14,9 +14,9 @@
   </header>
   <main>
     <section class="hero">
-      <p class="eyebrow">SLICING SEMPLICE · MOTORI NASCOSTI · RISULTATI TRACCIABILI</p>
-      <h1>Dal modello al file stampabile,<br>senza scegliere lo slicer.</h1>
-      <p class="lead">La prima fondazione della beta gratuita gestisce account verificati, sessioni sicure, profilo costi e limiti Free. Il collegamento upload → job arriva nel task P4.2.</p>
+      <p class="eyebrow">MODELLO → JOB → AGENT → G-CODE VERIFICATO</p>
+      <h1>Carica il modello.<br>Affetta sceglie il percorso.</h1>
+      <p class="lead">La beta gratuita nasconde motore e post-processori, usa soltanto profili production-ready e non invia nulla alla stampante fisica.</p>
       <div id="limits" class="limit-grid" aria-live="polite"></div>
     </section>
 
@@ -48,35 +48,60 @@
     </section>
 
     <section id="workspace" class="hidden">
-      <div class="section-head"><div><p class="kicker">SPAZIO PERSONALE</p><h2 id="welcome">Account</h2></div><span class="badge">FREE</span></div>
+      <div class="section-head">
+        <div><p class="kicker">SPAZIO PERSONALE</p><h2 id="welcome">Account</h2></div>
+        <div class="workspace-badges"><span class="badge">FREE</span><span id="usage-badge" class="badge muted">0/5 JOB</span></div>
+      </div>
+
       <div class="grid workspace-grid">
         <section class="card upload-card">
-          <h3>Prepara il modello</h3>
+          <div class="card-head"><div><p class="kicker">NUOVO JOB</p><h3>Genera il file stampabile</h3></div><span id="upload-step" class="step">Pronto</span></div>
           <label id="dropzone" class="dropzone">
             <input id="file" type="file" accept=".stl,.obj,.amf,.3mf,.step" hidden>
             <strong>Trascina qui il modello</strong><span>oppure seleziona un file</span>
           </label>
           <div id="file-info" class="file-info">Nessun file selezionato.</div>
           <div class="selectors">
-            <label>Materiale<select><option>PLA</option><option>PETG</option><option>ABS</option><option>ASA</option><option>TPU</option></select></label>
-            <label>Qualità<select><option>Standard</option><option>Dettaglio</option><option>Rapida</option></select></label>
-            <label>Resistenza<select><option>Normale</option><option>Forte</option><option>Leggera</option></select></label>
-            <label>Colore<select><option>Casuale</option><option>Nero</option><option>Bianco</option></select></label>
+            <label>Materiale<select id="material"><option value="pla">PLA</option><option value="petg">PETG</option><option value="abs">ABS</option><option value="asa">ASA</option><option value="tpu">TPU</option></select></label>
+            <label>Qualità<select id="quality"><option value="standard">Standard</option><option value="detail">Dettaglio</option><option value="draft">Rapida</option></select></label>
+            <label>Resistenza<select id="strength"><option value="standard">Normale</option><option value="strong">Forte</option><option value="light">Leggera</option></select></label>
+            <label>Colore<select id="color"><option value="random">Casuale</option><option value="black">Nero</option><option value="white">Bianco</option></select></label>
+            <label>Ugello<select id="nozzle"><option value="0.4">0,4 mm</option><option value="0.6">0,6 mm</option><option value="0.8">0,8 mm</option><option value="1">1,0 mm</option></select></label>
+            <label>Quantità<input id="quantity" type="number" value="1" min="1" max="100"></label>
           </div>
-          <button type="button" disabled title="Disponibile nel task P4.2">Genera artefatto — P4.2</button>
-          <p class="note">Il pannello base non mostra Cura, Orca, Prusa o GPX.</p>
+          <button id="submit-job" type="button" disabled>Carica e genera G-code</button>
+          <div id="active-job" class="active-job hidden" aria-live="polite"></div>
+          <p class="note">Routing automatico, solo G-code production-ready. Nessun comando viene inviato alla stampante.</p>
         </section>
 
-        <form id="profile-form" class="card">
-          <h3>Profilo costi personale</h3>
-          <label>Nome visualizzato<input name="display_name" required></label>
-          <label>Energia €/kWh<input name="energy_eur_per_kwh" type="number" min="0" max="10" step="0.01" required></label>
-          <label>Macchina €/h<input name="machine_hour_eur" type="number" min="0" max="1000" step="0.01" required></label>
-          <label>Lavoro €/h<input name="labor_hour_eur" type="number" min="0" max="1000" step="0.01" required></label>
-          <label>Ricarico materiale %<input name="material_markup_percent" type="number" min="0" max="1000" step="0.1" required></label>
-          <button type="submit">Salva profilo</button>
-        </form>
+        <div class="stack">
+          <section class="card agent-card">
+            <p class="kicker">AGENT WINDOWS</p><h3>Collega il computer di slicing</h3>
+            <div id="agent-list" class="agent-list"><p class="note">Nessun Agent associato.</p></div>
+            <button id="pair-agent" type="button">Genera codice di pairing</button>
+            <div id="pairing-panel" class="pairing-panel hidden">
+              <span>Codice monouso</span><code id="pairing-code"></code>
+              <small id="pairing-expiry"></small>
+              <p>Inseriscilo nell’Agent Windows. Il piano Free consente un solo Agent.</p>
+            </div>
+          </section>
+
+          <form id="profile-form" class="card">
+            <p class="kicker">COSTI</p><h3>Profilo personale</h3>
+            <label>Nome visualizzato<input name="display_name" required></label>
+            <label>Energia €/kWh<input name="energy_eur_per_kwh" type="number" min="0" max="10" step="0.01" required></label>
+            <label>Macchina €/h<input name="machine_hour_eur" type="number" min="0" max="1000" step="0.01" required></label>
+            <label>Lavoro €/h<input name="labor_hour_eur" type="number" min="0" max="1000" step="0.01" required></label>
+            <label>Ricarico materiale %<input name="material_markup_percent" type="number" min="0" max="1000" step="0.1" required></label>
+            <button type="submit">Salva profilo</button>
+          </form>
+        </div>
       </div>
+
+      <section class="jobs-section">
+        <div class="section-head compact-head"><div><p class="kicker">CRONOLOGIA</p><h2>Job recenti</h2></div><button id="refresh-jobs" class="ghost" type="button">Aggiorna</button></div>
+        <div id="jobs" class="jobs-grid"><p class="note">Nessun job.</p></div>
+      </section>
     </section>
 
     <div id="notice" class="notice hidden" role="status"></div>
