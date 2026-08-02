@@ -26,3 +26,7 @@ Affetta riceve il file validato e restituisce il preventivo. Non deve conoscere 
 ## Sicurezza del trasferimento file
 
 Il chiamante deve inviare i byte del modello. Affetta non accetta URL arbitrari per evitare SSRF. Se il modello è remoto, Stampa3DBologna o Reborn devono scaricarlo soltanto dopo i propri controlli di host e autorizzazione e poi trasmettere il contenuto Base64.
+
+## Regola v0.5.1
+
+Per Stampa3DBologna il valore consigliato sarà `printer_id=auto-lab`. Il sito non deve scegliere stampante, motore o ugello. Affetta restituirà l’unità fisica selezionata e conserverà il routing nel job. Fino al completamento della calibrazione, solo le unità con `production_ready=true` possono essere assegnate automaticamente.

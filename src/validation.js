@@ -38,10 +38,16 @@ export function validateSliceOptions(body) {
   const quote = validateQuoteOptions(body);
   if (quote.color_id === 'custom' && !quote.custom_color) throw Object.assign(new Error('Specifica il colore desiderato.'), { statusCode: 400, code: 'custom_color_required' });
   const printerId = body.printer_id || 'generic-reprap-marlin';
+  if (printerId === 'auto' || printerId === 'auto-lab') {
+    return { ...quote, printer_id: 'auto-lab', nozzle_mm: null, routing_mode: 'laboratory-auto' };
+  }
   const printer = catalogs.printers[printerId];
   if (!printer) throw Object.assign(new Error('printer_id non valido.'), { statusCode: 400, code: 'invalid_printer' });
+  if ((printer.technology || 'fff') !== 'fff') {
+    throw Object.assign(new Error('La Phrozen Sonic Mini 4K usa un flusso resina CTB separato: il profilo è censito, ma il slicing automatico richiede ancora CHITUBOX.'), { statusCode: 409, code: 'manual_resin_slicer_required' });
+  }
   if (printer.materials && !printer.materials.includes(quote.material_id)) throw Object.assign(new Error('Materiale non compatibile con il profilo stampante selezionato.'), { statusCode: 400, code: 'material_not_supported' });
   const nozzle = Number(body.nozzle_mm || printer.default_nozzle || 0.4);
   if (!printer.nozzles.includes(nozzle)) throw Object.assign(new Error('Diametro ugello non previsto dal profilo selezionato.'), { statusCode: 400, code: 'invalid_nozzle' });
-  return { ...quote, printer_id: printerId, nozzle_mm: nozzle };
+  return { ...quote, printer_id: printerId, nozzle_mm: nozzle, routing_mode: 'manual-printer' };
 }

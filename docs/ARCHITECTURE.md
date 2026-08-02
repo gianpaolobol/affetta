@@ -1,4 +1,4 @@
-# Architettura Affetta v0.4.2
+# Architettura Affetta v0.5.1
 
 ```text
 Web app standalone ───────────────┐
@@ -9,6 +9,10 @@ Service/app esterne (futuro) ─────┘        ├── autenticazione 
                                            ├── cataloghi normalizzati
                                            ├── viewer STL locale
                                            ├── Estimate Router
+                                           ├── Lab Fleet Router
+                                           │       ├── unità fisiche e disponibilità
+                                           │       ├── ruoli/materiali dedicati
+                                           │       └── readiness di calibrazione
                                            └── Slice Router
                                                    ├── PrusaSlicer
                                                    ├── CuraEngine
@@ -35,3 +39,7 @@ Service/app esterne (futuro) ─────┘        ├── autenticazione 
 - `src/providers/`: adattatori dei motori.
 - `public/`: SPA e viewer.
 - `integration/`: client PHP/JS per le integrazioni.
+
+## Router del parco macchine
+
+`config/fleet.json` descrive le unità fisiche. `src/fleet-router.js` seleziona soltanto unità abilitate e fisicamente validate, controllando tecnologia, materiale assegnato, qualità, resistenza, quantità, ingombro, altezza e ruolo produttivo. Il modello stampante resta separato dall’unità per consentire ugelli e dedicazioni differenti su macchine uguali.

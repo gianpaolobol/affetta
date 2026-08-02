@@ -3,7 +3,7 @@ import { clamp, round } from '../utils.js';
 export class GeometryEstimateProvider {
   constructor() { this.id = 'geometry-fallback'; }
 
-  async estimate({ analysis, material, quality, strength }) {
+  async estimate({ analysis, material, quality, strength, filamentDiameterMm = 1.75 }) {
     const volume = Math.max(analysis.volume_mm3, 1);
     const area = Math.max(analysis.surface_area_mm2, 1);
     const wallThickness = Math.max(0.8, strength.walls * 0.42);
@@ -24,7 +24,7 @@ export class GeometryEstimateProvider {
       estimate_quality: 'development_fallback',
       time_seconds: round(timeSeconds, 1),
       filament_g: round(filamentG, 2),
-      filament_length_mm: round((extrusionVolume / (Math.PI * (1.75 / 2) ** 2)), 1),
+      filament_length_mm: round((extrusionVolume / (Math.PI * (Number(filamentDiameterMm || 1.75) / 2) ** 2)), 1),
       layers,
       warnings: ['Stima geometrica di emergenza: attivare Kiri:Moto per preventivi produttivi.']
     };

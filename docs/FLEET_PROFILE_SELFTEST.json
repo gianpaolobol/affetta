@@ -1,0 +1,4501 @@
+{
+  "success": true,
+  "version": "0.5.1",
+  "fleet_id": "stampa3dbologna-lab",
+  "generated_at": "2026-07-31T23:30:52.344Z",
+  "profiles_checked": 327,
+  "errors": [],
+  "results": [
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-01",
+      "printer_id": "lulzbot-taz4",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-02",
+      "printer_id": "lulzbot-taz5",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-02",
+      "printer_id": "lulzbot-taz5",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-02",
+      "printer_id": "lulzbot-taz5",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-02",
+      "printer_id": "lulzbot-taz5",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-02",
+      "printer_id": "lulzbot-taz5",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-02",
+      "printer_id": "lulzbot-taz5",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.56,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.56,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.56,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.4,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.4,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.4,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.56,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.56,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.56,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.4,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.4,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "taz-03",
+      "printer_id": "lulzbot-taz6",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.8,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.4,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-01",
+      "printer_id": "lulzbot-mini",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.25,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "mini-02",
+      "printer_id": "lulzbot-mini",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.5,
+      "filament_diameter_mm": 2.85,
+      "layer_height_mm": 0.15,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "ultra",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "ultra",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "ultra",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "ultra",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "ultra",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-01",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "ultra",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-02",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-2040-03",
+      "printer_id": "deltawasp-2040",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "abs",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "abs",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "abs",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "abs",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "asa",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "asa",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "asa",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "asa",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-01",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "abs",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "abs",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "abs",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "abs",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "abs",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "abs",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "asa",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "asa",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "asa",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "asa",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "asa",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "asa",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.49,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "wasp-turbo-02",
+      "printer_id": "deltawasp-2040-turbo",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.7,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.35,
+      "engine_candidates": [
+        "prusa",
+        "cura"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "pla",
+      "quality_id": "ultra",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "pla",
+      "quality_id": "ultra",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "pla",
+      "quality_id": "ultra",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "petg",
+      "quality_id": "ultra",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "petg",
+      "quality_id": "ultra",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "petg",
+      "quality_id": "ultra",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "tpu",
+      "quality_id": "ultra",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "tpu",
+      "quality_id": "ultra",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "snapmaker-u1-01",
+      "printer_id": "snapmaker-u1",
+      "material_id": "tpu",
+      "quality_id": "ultra",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "snapmaker_orca",
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "ultra",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "ultra",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "ultra",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "pla",
+      "quality_id": "ultra",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "ultra",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "ultra",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "ultra",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "petg",
+      "quality_id": "ultra",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "high",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "ultra",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "ultra",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "ultra",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "abs",
+      "quality_id": "ultra",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "high",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "ultra",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "ultra",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "ultra",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "asa",
+      "quality_id": "ultra",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "ultra",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "ultra",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "ultra",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "x1c-01",
+      "printer_id": "bambu-x1c",
+      "material_id": "tpu",
+      "quality_id": "ultra",
+      "strength_id": "solid",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.08,
+      "engine_candidates": [
+        "orca"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.7,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.7,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.7,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.5,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.5,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.5,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.7,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.7,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "solid",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.7,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.5,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.5,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-01",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "solid",
+      "nozzle_mm": 1,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.5,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.42,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.42,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.42,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.3,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.3,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.3,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.18,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.18,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.18,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.42,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.42,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.42,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.3,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.3,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.3,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.18,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.18,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.18,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.42,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.42,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.42,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.3,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.3,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.3,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.18,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.18,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "predator-02",
+      "printer_id": "anycubic-predator",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.6,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.18,
+      "engine_candidates": [
+        "cura",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "pla",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "pla",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "pla",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "petg",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "petg",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "petg",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "tpu",
+      "quality_id": "draft",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.28,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "tpu",
+      "quality_id": "standard",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.2,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "light",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "standard",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "v400-01",
+      "printer_id": "flsun-v400",
+      "material_id": "tpu",
+      "quality_id": "high",
+      "strength_id": "strong",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "layer_height_mm": 0.12,
+      "engine_candidates": [
+        "orca",
+        "prusa"
+      ]
+    },
+    {
+      "unit_id": "phrozen-mini4k-01",
+      "printer_id": "phrozen-sonic-mini-4k",
+      "technology": "msla",
+      "mode": "manual",
+      "slicer": "CHITUBOX"
+    }
+  ]
+}

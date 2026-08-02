@@ -14,5 +14,6 @@ test('PowerShell engine scripts resolve executable paths safely', () => {
 
 test('verifier runs profile and engine self-tests', () => {
   assert.match(verify, /profile-asset-selftest\.mjs/);
+  assert.match(verify, /fleet-profile-selftest\.mjs/);
   assert.match(verify, /engine-selftest\.mjs/);
 });

@@ -1,5 +1,4 @@
-AFFETTA 0.4.12 — LEGGERE PRIMA DI APPLICARE
+La versione 0.5.1 preserva runtime, node_modules, data e .env.
 
-Il pacchetto deve essere eseguito da una cartella di staging diversa da C:\AFFETTA.
-Non cancellare o sostituire manualmente runtime, data, node_modules o .env.
-Eseguire APPLICA_AFFETTA_0412.cmd: backup e aggiornamento sono automatici.
+Esegui APPLICA_AFFETTA_0501.cmd soltanto da una cartella di staging diversa da C:\AFFETTA.
+Non copiare manualmente il pacchetto sopra l’installazione operativa.

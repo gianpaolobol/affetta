@@ -7,51 +7,31 @@ data/uploads/*
 vendor/
 .DS_Store
 
-
-# Segreti e configurazione locale
-.env
-.env.*
-!.env.example
-
-# Dipendenze
 node_modules/
-
-# Motori e programmi installati localmente
-runtime/
-
-# Dati generati e dati degli utenti
-data/jobs/
-data/uploads/
-data/output/
-data/tmp/
-data/*.log
-data/*.json
-
-# Log
+runtime/*
+!runtime/.gitkeep
+data/engine-process/*
+!data/engine-process/.gitkeep
+data/mail-outbox/*
+!data/mail-outbox/.gitkeep
 *.log
-server.stdout.log
-server.stderr.log
-startup.log
-
-# G-code e file di produzione
-*.gcode
-*.gco
-*.bgcode
-*.3mf
-*.ctb
-
-# File temporanei
 *.tmp
-*.temp
-*.bak
-*.old
-*.zip
+*.bak-*
 
-# Sistema operativo
-Thumbs.db
-Desktop.ini
-.DS_Store
-
-# IDE
-.vscode/
-.idea/
+# Runtime esterni e copie locali
+/runtime/
+/runtime__/
+/runtime_*/
+/node_modules/
+/data/
+/temp/
+/tmp/
+/.env
+/.env.*
+*.gcode
+*.x3g
+*.stl
+*.3mf
+*.obj
+*.pid
+/FULL_DIFF_*.patch

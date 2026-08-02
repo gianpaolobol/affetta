@@ -1,10 +1,11 @@
-AFFETTA 0.4.12 — INSTALLAZIONE RAPIDA
+AFFETTA 0.5.1
 
-1. NON estrarre direttamente sopra C:\AFFETTA.
-2. Estrarre in C:\AFFETTA_UPDATE_0412 o altra cartella di staging.
-3. Eseguire APPLICA_AFFETTA_0412.cmd.
-4. Avviare C:\AFFETTA\AVVIA_AFFETTA.cmd.
-5. Eseguire C:\AFFETTA\COLLAUDO_FORENSE_AFFETTA.cmd.
-6. Eseguire il collaudatore matrice Affetta v0.2.
+1. Estrai lo ZIP in C:\AFFETTA_UPDATE_0501 o altra cartella diversa da C:\AFFETTA.
+2. Esegui APPLICA_AFFETTA_0501.cmd dalla cartella estratta.
+3. Verifica la creazione di C:\AFFETTA_BACKUP_PRE_0501_<data_ora>.
+4. Avvia C:\AFFETTA\AVVIA_AFFETTA.cmd.
+5. Esegui COLLAUDO_FORENSE_AFFETTA.cmd.
+6. Esegui COLLAUDA_PROFILI_LABORATORIO.cmd.
+7. Esegui COLLAUDA_MOTORI_PARCO_MACCHINE.cmd.
 
-Rollback: C:\AFFETTA\ROLLBACK_AFFETTA_0412.cmd
+.env, data, runtime e node_modules vengono preservati.

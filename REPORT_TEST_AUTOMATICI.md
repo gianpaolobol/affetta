@@ -1,13 +1,18 @@
-# Report test automatici — Affetta 0.4.12
+# Report test automatici — Affetta 0.5.1
 
-- Test Node: 56/56 superati.
-- Suite dichiarate: 50.
-- Smoke test: superato.
-- Combinazioni profilo Orca verificate staticamente: 640/640.
-- Tutte le combinazioni profilo globali del catalogo: superate.
-- Errore motore simulato: HTTP 422 JSON e server ancora attivo.
-- Quantità 999 simulata: HTTP 422 `quantity_does_not_fit` e server ancora attivo.
-- Parser tempo: verificati `1h 2m 3s`, `HH:MM:SS`, `MM:SS` e tag in secondi.
-- Parser materiale: verificati metadati in millimetri e grammi con reset `G92 E0`.
+## Superati
 
-Questi test non sostituiscono la nuova matrice Windows reale con OrcaSlicer, PrusaSlicer e Snapmaker Orca installati sul PC.
+- suite Node: **68 test superati su 68**;
+- smoke test HTTP/applicativo: superato;
+- matrice statica parco macchine: **327 profili**, 0 errori;
+- profili interni presenti e assenti dalla lista pubblica;
+- catalogo LulzBot: TAZ 4, TAZ 5, TAZ 6, Mini e Mini 2 distinti;
+- unità del laboratorio collegate a TAZ 4, TAZ 5, TAZ 6 e Mini prima generazione;
+- viewer delta WebGL e Canvas: segmenti ritagliati nel diametro circolare;
+- geometrie verificate: Predator Ø370, V400 Ø300, WASP/PRO Ø200;
+- Prusa i3 autocostruita senza dicitura “profilo base”;
+- installer/rollback Windows 0.5.1.
+
+## Non verificabile nel pacchetto
+
+`npm run test:profiles` richiede i preset Orca/Snapmaker presenti in `C:\AFFETTA\runtime`, esclusi dal pacchetto. Nel contenitore di test risultano quindi `profiles_missing`; il collaudo deve essere ripetuto sul PC Windows dopo l’aggiornamento.

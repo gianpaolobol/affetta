@@ -23,17 +23,22 @@ function Find-NodePath {
 }
 
 try {
-  Write-Host 'AFFETTA v0.4.12 - VERIFICA RAPIDA DEI PERCORSI DI PRODUZIONE' -ForegroundColor Cyan
+  Write-Host 'AFFETTA v0.5.1 - VERIFICA RAPIDA DEI PERCORSI DI PRODUZIONE' -ForegroundColor Cyan
   Write-Host "Cartella: $Root"
   $nodePath = Find-NodePath
   if (-not $nodePath) { throw 'Node.js non trovato.' }
 
-  Write-Host '1/2 - Controllo preset (salvato nel file, senza stampa a video)...' -ForegroundColor Cyan
+  Write-Host '1/3 - Controllo preset Orca (salvato nel file, senza stampa a video)...' -ForegroundColor Cyan
   $profileOutput = & $nodePath (Join-Path $Root 'scripts\profile-asset-selftest.mjs') 2>&1 | Out-String
   [IO.File]::WriteAllText((Join-Path $Data 'profile-selftest.json'), $profileOutput, $Utf8NoBom)
   if ($LASTEXITCODE -ne 0) { throw 'Verifica preset non superata.' }
 
-  Write-Host '2/2 - Slicing reale: Prusa/Marlin, Bambu e Snapmaker...' -ForegroundColor Cyan
+  Write-Host '2/3 - Controllo matrice profili del laboratorio...' -ForegroundColor Cyan
+  $fleetOutput = & $nodePath (Join-Path $Root 'scripts\fleet-profile-selftest.mjs') 2>&1 | Out-String
+  [IO.File]::WriteAllText((Join-Path $Data 'fleet-profile-selftest-console.json'), $fleetOutput.Trim(), $Utf8NoBom)
+  if ($LASTEXITCODE -ne 0) { throw 'Matrice profili laboratorio non superata.' }
+
+  Write-Host '3/3 - Slicing reale: Prusa/Marlin, Bambu e Snapmaker...' -ForegroundColor Cyan
   $engineOutput = & $nodePath (Join-Path $Root 'scripts\engine-selftest.mjs') | Out-String
   $engineExit = $LASTEXITCODE
   $engineFile = Join-Path $Data 'engine-selftest.json'
@@ -42,8 +47,8 @@ try {
   try { $engineReport = $engineOutput | ConvertFrom-Json }
   catch { throw "Il nuovo engine-selftest.json non è JSON valido: $($_.Exception.Message)" }
 
-  if ([string]$engineReport.version -ne '0.4.12') {
-    throw "Self-test non aggiornato: rilevata versione $($engineReport.version), attesa 0.4.12. Verifica di aver sostituito i file in C:\AFFETTA."
+  if ([string]$engineReport.version -ne '0.5.1') {
+    throw "Self-test non aggiornato: rilevata versione $($engineReport.version), attesa 0.5.1. Verifica di aver sostituito i file in C:\AFFETTA."
   }
 
   foreach ($property in $engineReport.production_routes.PSObject.Properties) {

@@ -373,12 +373,12 @@ try {
         custom_color: null,
         quantity: 1,
         source: 'standalone-runtime-selftest',
-        metadata: { test: 'live-production-0412', cycle, route: route.id }
+        metadata: { test: 'live-production-0501', cycle, route: route.id }
       };
       try {
         const created = await requestJson(`${baseUrl}/api/v1/affetta-jobs`, {
           method: 'POST',
-          headers: { 'content-type': 'application/json', 'x-affetta-client': 'selftest-0412' },
+          headers: { 'content-type': 'application/json', 'x-affetta-client': 'selftest-0501' },
           body: JSON.stringify(body)
         }, 'create_job', run, 30_000);
         run.job_id = created.data.job.id;

@@ -29,6 +29,9 @@ export function resolvePrintProfile({ printerId, nozzleMm, materialId, qualityId
   const quality = catalogs.qualities[qualityId];
   const strength = catalogs.strengths[strengthId];
   if (!printer || !material || !quality || !strength) throw new Error('Impossibile comporre il profilo di stampa.');
+  if ((printer.technology || 'fff') !== 'fff' || (material.technology || 'fff') !== 'fff') {
+    throw Object.assign(new Error('Questo profilo usa un processo resina/manuale e non può produrre G-code FDM.'), { code: 'non_fff_profile', statusCode: 409 });
+  }
   if (!printer.nozzles.includes(nozzleMm)) throw new Error('Ugello non compatibile con la stampante selezionata.');
   if (printer.materials && !printer.materials.includes(materialId)) {
     throw Object.assign(new Error(`${material.label} non è abilitato per ${printer.label}.`), { code: 'material_not_supported', statusCode: 400 });
@@ -59,8 +62,8 @@ export function resolvePrintProfile({ printerId, nozzleMm, materialId, qualityId
   const retractSpeed = materialId === 'tpu' ? round(Math.min(machine.retract_speed, 20), 1) : machine.retract_speed;
   const warnings = [];
   const buildPlate = resolveBuildPlate(printer, materialId);
-  if (material.enclosure === 'recommended' && ['creality-ender3', 'anycubic-i3-mega', 'generic-reprap-marlin'].includes(printerId)) {
-    warnings.push(`${material.label}: per ridurre deformazioni è consigliata una camera chiusa.`);
+  if (material.enclosure === 'recommended' && !printer.enclosed) {
+    warnings.push(`${material.label}: per ridurre deformazioni è consigliata una macchina con camera chiusa.`);
   }
   if (printer.status !== 'validated') {
     const bundled = ['vendor-profile-bundled', 'profile-assets-verified'].includes(printer.status);
@@ -82,11 +85,14 @@ export function resolvePrintProfile({ printerId, nozzleMm, materialId, qualityId
     printer_label: printer.label,
     engines: [...printer.engines],
     build_mm: printer.build_mm,
+    bed_shape: printer.bed_shape || 'rectangular',
+    build_diameter_mm: printer.build_diameter_mm || null,
+    technology: printer.technology || 'fff',
     firmware: printer.firmware,
     gcode_flavor: gcodeFlavor(printer.firmware),
     origin_center: Boolean(printer.origin_center),
     nozzle_mm: nozzle,
-    filament_diameter_mm: 1.75,
+    filament_diameter_mm: Number(printer.filament_diameter_mm || 1.75),
     material_id: materialId,
     material_label: material.label,
     density_g_cm3: material.density_g_cm3,
@@ -138,6 +144,9 @@ export function publicProfile(profile) {
     printer_id: profile.printer_id,
     printer_label: profile.printer_label,
     build_mm: profile.build_mm,
+    bed_shape: profile.bed_shape,
+    build_diameter_mm: profile.build_diameter_mm,
+    filament_diameter_mm: profile.filament_diameter_mm,
     nozzle_mm: profile.nozzle_mm,
     material: profile.material_label,
     layer_height_mm: profile.layer_height_mm,

@@ -177,16 +177,29 @@ function arrayBufferToBase64(buffer) {
 }
 
 function syncPrinter() {
-  const printer = state.catalog.printers[$('printer').value];
+  const printerId = $('printer').value;
+  const printer = state.catalog.printers[printerId];
   const previous = Number($('nozzle').value);
-  $('nozzle').innerHTML = printer.nozzles.map((value) => `<option value="${value}" ${value === (printer.default_nozzle || previous) ? 'selected' : ''}>${value} mm</option>`).join('');
+  const automatic = printerId === 'auto-lab';
+  $('nozzle').disabled = automatic;
+  $('nozzle').innerHTML = automatic
+    ? '<option value="0.4">Scelto automaticamente</option>'
+    : printer.nozzles.map((value) => `<option value="${value}" ${value === (printer.default_nozzle || previous) ? 'selected' : ''}>${value} mm</option>`).join('');
   const supported = new Set(printer.materials || Object.keys(state.catalog.materials));
   const currentMaterial = $('material').value;
-  $('material').innerHTML = Object.entries(state.catalog.materials).filter(([id]) => supported.has(id)).map(([id,item]) => `<option value="${esc(id)}">${esc(item.label)}</option>`).join('');
+  $('material').innerHTML = Object.entries(state.catalog.materials)
+    .filter(([id, item]) => supported.has(id) && (item.technology || 'fff') === 'fff')
+    .map(([id,item]) => `<option value="${esc(id)}">${esc(item.label)}</option>`).join('');
   if (supported.has(currentMaterial)) $('material').value = currentMaterial;
-  const available = Boolean(state.capabilities?.slicing?.printers?.[$('printer').value]?.slice_available);
-  $('printer-note').textContent = `${printer.build_mm.join(' × ')} mm · ${available ? 'motore pronto' : 'motore da installare/configurare'}`;
-  state.viewer?.setPrinter(printer.build_mm);
+  const available = Boolean(state.capabilities?.slicing?.printers?.[printerId]?.slice_available);
+  $('printer-note').textContent = automatic
+    ? `Router del laboratorio · sceglie unità fisica, ugello e motore dopo l’analisi`
+    : `${printer.build_mm.join(' × ')} mm · filamento ${printer.filament_diameter_mm || '—'} mm · ${available ? 'motore pronto' : 'motore da installare/configurare'}`;
+  state.viewer?.setPrinter({
+    build_mm: printer.build_mm,
+    bed_shape: printer.bed_shape,
+    build_diameter_mm: printer.build_diameter_mm
+  });
   syncResolvedProfile();
 }
 
@@ -204,8 +217,12 @@ async function syncResolvedProfile() {
     const data = await api(`/api/v1/profile-preview?${params}`);
     if (sequence !== profilePreviewSequence) return;
     const p = data.profile;
+    if (p.routing_pending_model) {
+      $('auto-profile-summary').textContent = 'Affetta analizzerà dimensioni, quantità, materiale, qualità, resistenza e colore per scegliere il reparto più adatto.';
+      return;
+    }
     const plate = p.build_plate ? ` · piatto ${p.build_plate}` : '';
-    $('auto-profile-summary').textContent = `Layer ${p.layer_height_mm} mm · ${p.infill_percent}% · ${p.walls} pareti · ${p.temperature_c}/${p.bed_temperature_c} °C · ${p.print_speed_mm_s} mm/s · retrazione ${p.retract_length_mm} mm${plate}`;
+    $('auto-profile-summary').textContent = `Layer ${p.layer_height_mm} mm · ${p.infill_percent}% · ${p.walls} pareti · ${p.temperature_c}/${p.bed_temperature_c} °C · ${p.print_speed_mm_s} mm/s · retrazione ${p.retract_length_mm} mm · filamento ${p.filament_diameter_mm} mm${plate}`;
   } catch (error) {
     if (sequence === profilePreviewSequence) $('auto-profile-summary').textContent = error.message;
   }
@@ -225,7 +242,7 @@ async function submitAffetta(event) {
     filename: state.file.name,
     file_base64: state.base64,
     printer_id: $('printer').value,
-    nozzle_mm: Number($('nozzle').value),
+    nozzle_mm: $('printer').value === 'auto-lab' ? null : Number($('nozzle').value),
     material_id: $('material').value,
     color_id: $('color').value,
     custom_color: $('color').value === 'custom' ? $('custom-color').value.trim() : null,
@@ -262,7 +279,8 @@ function quoteHtml(quote) {
 
 function renderProgress(job, quote) {
   const result = $('result');
-  result.innerHTML = `<h2>Affetta sta preparando il G-code</h2><p class="sub">${esc(job.printer.label)} · ${esc(job.selections.quantity)} ${job.selections.quantity === 1 ? 'pezzo' : 'pezzi'}</p>
+  const routed = job.routing?.selected ? ` · ${esc(job.routing.selected.unit_label)}` : '';
+  result.innerHTML = `<h2>Affetta sta preparando il G-code</h2><p class="sub">${esc(job.printer.label)}${routed} · ${esc(job.selections.quantity)} ${job.selections.quantity === 1 ? 'pezzo' : 'pezzi'}</p>
     ${quoteHtml(quote)}
     <div class="progress-track"><div id="progress-bar" class="progress-bar" style="width:${job.progress}%"></div></div>
     <p id="job-message">${esc(job.message)}</p>`;
@@ -302,7 +320,7 @@ function renderCompleted(job, quote) {
   const result = $('result');
   const data = job.result;
   result.innerHTML = `<h2>${data.print_ready ? 'G-code pronto' : 'Flusso di prova completato'}</h2>
-    <p class="sub">${esc(job.printer.label)} · profilo ${esc(data.profile_status === 'validated' ? 'validato' : 'da collaudare')}</p>
+    <p class="sub">${esc(job.printer.label)}${job.routing?.selected ? ` · unità ${esc(job.routing.selected.unit_label)}` : ''} · profilo ${esc(data.profile_status === 'validated' ? 'validato' : 'da collaudare')}</p>
     ${quoteHtml(quote)}
     <div class="metrics">
       <div class="metric"><small>Stato file</small><strong>${data.print_ready ? 'Pronto' : 'Demo'}</strong></div>

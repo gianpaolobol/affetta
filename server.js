@@ -12,6 +12,7 @@ import { decodeModelPayload, validateQuoteOptions, validateSliceOptions } from '
 import { id } from './src/utils.js';
 import { getPricingProfile, loginUser, logoutSession, registerUser, sessionUser, updatePricingProfile, verifyEmailToken } from './src/auth-service.js';
 import { appendDiagnostic, normalizeError } from './src/runtime-diagnostics.js';
+import { publicFleet, routeProductionJob } from './src/fleet-router.js';
 
 const mime = {
   '.html': 'text/html; charset=utf-8',
@@ -242,13 +243,20 @@ async function readJson(req) {
 
 function publicCatalog() {
   const pick = (obj, fields) => Object.fromEntries(Object.entries(obj).map(([idValue, value]) => [idValue, Object.fromEntries(fields.filter((field) => value[field] != null).map((field) => [field, value[field]]))]));
+  const fffPrinters = Object.fromEntries(Object.entries(catalogs.printers).filter(([, item]) => (
+    (item.technology || 'fff') === 'fff'
+    && item.visibility !== 'internal'
+    && item.public !== false
+    && item.hidden !== true
+  )));
+  const printers = pick(fffPrinters, ['label', 'build_mm', 'bed_shape', 'build_diameter_mm', 'filament_diameter_mm', 'technology', 'nozzles', 'default_nozzle', 'materials', 'status']);
   return {
     app: catalogs.app,
-    materials: pick(catalogs.materials, ['label']),
+    materials: pick(catalogs.materials, ['label', 'technology']),
     qualities: pick(catalogs.qualities, ['label', 'layer_ratio']),
     strengths: pick(catalogs.strengths, ['label', 'infill_percent', 'walls']),
     colors: pick(catalogs.colors, ['label', 'description']),
-    printers: pick(catalogs.printers, ['label', 'build_mm', 'nozzles', 'default_nozzle', 'materials', 'status'])
+    printers
   };
 }
 
@@ -262,6 +270,10 @@ async function capabilities({ admin = false } = {}) {
     slice_available: item.slice_available,
     profile_status: item.profile_status
   }]));
+  printers['auto-lab'] = {
+    slice_available: capabilityCache.slicing.ready_printers > 0,
+    profile_status: 'laboratory-router'
+  };
   return {
     estimate: { ready: capabilityCache.estimate.ready },
     slicing: {
@@ -326,9 +338,24 @@ const server = http.createServer(async (req, res) => {
       }, { 'X-Request-Id': requestId });
     }
     if (req.method === 'GET' && pathname === '/api/v1/catalog') return sendJson(req, res, 200, { success: true, api_version: config.apiVersion, ...publicCatalog() });
+    if (req.method === 'GET' && pathname === '/api/v1/fleet') return sendJson(req, res, 200, { success: true, api_version: config.apiVersion, fleet: publicFleet() });
     if (req.method === 'GET' && pathname === '/api/v1/capabilities') return sendJson(req, res, 200, { success: true, api_version: config.apiVersion, ...(await capabilities()) });
     if (req.method === 'GET' && pathname === '/api/v1/profile-preview') {
       const printerId = url.searchParams.get('printer_id');
+      if (printerId === 'auto-lab') {
+        const routingProfile = catalogs.internalProfiles['laboratory-auto'];
+        return sendJson(req, res, 200, {
+          success: true,
+          api_version: config.apiVersion,
+          profile: {
+            printer_id: 'auto-lab',
+            printer_label: routingProfile.label,
+            routing_pending_model: true,
+            warnings: ['La stampante, l’ugello e il motore saranno selezionati dopo l’analisi del modello e della quantità.']
+          },
+          slice_available: (await capabilities()).slicing.ready_printers > 0
+        });
+      }
       const printer = catalogs.printers[printerId];
       const nozzleMm = Number(url.searchParams.get('nozzle_mm') || printer?.default_nozzle || 0.4);
       const profile = resolvePrintProfile({
@@ -400,6 +427,14 @@ const server = http.createServer(async (req, res) => {
         return sendJson(req, res, 200, { success: true, version: config.version, ...(await capabilities({ admin: true })) });
       }
 
+      if (req.method === 'POST' && pathname === '/api/v1/route') {
+        const body = await readJson(req);
+        const { filename, buffer } = decodeModelPayload(body);
+        const options = validateQuoteOptions(body);
+        const routing = routeProductionJob({ modelBuffer: buffer, options });
+        return sendJson(req, res, 200, { success: true, api_version: config.apiVersion, filename, routing }, { 'X-Request-Id': requestId });
+      }
+
       if (req.method === 'POST' && pathname === '/api/v1/affetta-jobs') {
         const body = await readJson(req);
         const { filename, buffer } = decodeModelPayload(body);
@@ -407,10 +442,11 @@ const server = http.createServer(async (req, res) => {
         const jobTenant = tenant === 'admin' ? 'public' : tenant;
         const job = createSliceJob({ tenant: jobTenant, modelBuffer: buffer, filename, options });
         let quote = null;
+        const quoteOptions = job.selections || options;
         if (auth?.user?.email_verified_at) {
-          quote = await createUserQuote({ userId: auth.user.id, pricingProfile: getPricingProfile(auth.user.id), modelBuffer: buffer, filename, options });
+          quote = await createUserQuote({ userId: auth.user.id, pricingProfile: getPricingProfile(auth.user.id), modelBuffer: buffer, filename, options: quoteOptions });
         } else if (tenant !== 'public') {
-          quote = await createQuote({ tenant: jobTenant, modelBuffer: buffer, filename, options });
+          quote = await createQuote({ tenant: jobTenant, modelBuffer: buffer, filename, options: quoteOptions });
         }
         return sendJson(req, res, 202, {
           success: true,

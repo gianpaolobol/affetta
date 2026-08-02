@@ -1,4 +1,4 @@
-/* Affetta STL Viewer v0.4.12
+/* Affetta STL Viewer v0.5.1
  * Viewer WebGL interattivo con fallback Canvas 2D interattivo.
  * Il caricamento del file non viene mai bloccato dall'assenza di WebGL.
  */
@@ -19,6 +19,67 @@ const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 
 function finiteVertex(vertex) {
   return vertex.every((value) => Number.isFinite(value) && Math.abs(value) < 1e9);
+}
+
+function normalizePrinterBed(input, fallbackBuild = [220, 220, 250]) {
+  if (Array.isArray(input)) {
+    return {
+      build: input.length >= 3 ? input.map(Number) : fallbackBuild,
+      bedShape: 'rectangular',
+      buildDiameter: null
+    };
+  }
+  const build = Array.isArray(input?.build_mm) && input.build_mm.length >= 3
+    ? input.build_mm.map(Number)
+    : fallbackBuild;
+  const bedShape = input?.bed_shape === 'circular' ? 'circular' : 'rectangular';
+  const buildDiameter = bedShape === 'circular'
+    ? Number(input?.build_diameter_mm || Math.min(build[0], build[1]))
+    : null;
+  return { build, bedShape, buildDiameter };
+}
+
+export function buildPlateSegments(input) {
+  const { build, bedShape, buildDiameter } = normalizePrinterBed(input);
+  const [width, depth] = build;
+  const step = Math.max(width, depth) > 400 ? 20 : 10;
+  const segments = [];
+
+  if (bedShape === 'circular') {
+    const radius = buildDiameter / 2;
+    for (let x = -radius; x <= radius + 0.01; x += step) {
+      const span = Math.sqrt(Math.max(0, radius * radius - x * x));
+      segments.push([[x, -span, 0], [x, span, 0]]);
+    }
+    for (let y = -radius; y <= radius + 0.01; y += step) {
+      const span = Math.sqrt(Math.max(0, radius * radius - y * y));
+      segments.push([[-span, y, 0], [span, y, 0]]);
+    }
+    const perimeterSteps = Math.max(72, Math.ceil(buildDiameter / 4));
+    for (let index = 0; index < perimeterSteps; index += 1) {
+      const a = index / perimeterSteps * Math.PI * 2;
+      const b = (index + 1) / perimeterSteps * Math.PI * 2;
+      segments.push([
+        [Math.cos(a) * radius, Math.sin(a) * radius, 0],
+        [Math.cos(b) * radius, Math.sin(b) * radius, 0]
+      ]);
+    }
+    return segments;
+  }
+
+  for (let x = -width / 2; x <= width / 2 + 0.01; x += step) {
+    segments.push([[x, -depth / 2, 0], [x, depth / 2, 0]]);
+  }
+  for (let y = -depth / 2; y <= depth / 2 + 0.01; y += step) {
+    segments.push([[-width / 2, y, 0], [width / 2, y, 0]]);
+  }
+  segments.push(
+    [[-width / 2, -depth / 2, 0], [width / 2, -depth / 2, 0]],
+    [[width / 2, -depth / 2, 0], [width / 2, depth / 2, 0]],
+    [[width / 2, depth / 2, 0], [-width / 2, depth / 2, 0]],
+    [[-width / 2, depth / 2, 0], [-width / 2, -depth / 2, 0]]
+  );
+  return segments;
 }
 
 export function parseStl(buffer) {
@@ -227,6 +288,8 @@ class WebGLViewer {
     if (!this.gl) throw new Error('WebGL non disponibile.');
 
     this.build = [220, 220, 250];
+    this.bedShape = 'rectangular';
+    this.buildDiameter = null;
     this.color = '#e7472f';
     this.mesh = null;
     this.bounds = null;
@@ -263,21 +326,12 @@ class WebGLViewer {
 
   rebuildGrid() {
     const gl = this.gl;
-    const [width, depth] = this.build;
-    const step = Math.max(width, depth) > 400 ? 20 : 10;
-    const vertices = [];
-    for (let x = -width / 2; x <= width / 2 + 0.01; x += step) {
-      vertices.push(x, -depth / 2, 0, x, depth / 2, 0);
-    }
-    for (let y = -depth / 2; y <= depth / 2 + 0.01; y += step) {
-      vertices.push(-width / 2, y, 0, width / 2, y, 0);
-    }
-    vertices.push(
-      -width / 2, -depth / 2, 0, width / 2, -depth / 2, 0,
-      width / 2, -depth / 2, 0, width / 2, depth / 2, 0,
-      width / 2, depth / 2, 0, -width / 2, depth / 2, 0,
-      -width / 2, depth / 2, 0, -width / 2, -depth / 2, 0
-    );
+    const segments = buildPlateSegments({
+      build_mm: this.build,
+      bed_shape: this.bedShape,
+      build_diameter_mm: this.buildDiameter
+    });
+    const vertices = segments.flat(2);
     this.gridCount = vertices.length / 3;
     gl.bindBuffer(gl.ARRAY_BUFFER, this.gridBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
@@ -321,8 +375,11 @@ class WebGLViewer {
     this.draw();
   }
 
-  setPrinter(build) {
-    if (Array.isArray(build) && build.length >= 3) this.build = build.map(Number);
+  setPrinter(printer) {
+    const geometry = normalizePrinterBed(printer, this.build);
+    this.build = geometry.build;
+    this.bedShape = geometry.bedShape;
+    this.buildDiameter = geometry.buildDiameter;
     this.rebuildGrid();
     if (!this.mesh) this.distance = Math.max(this.build[0], this.build[1]) * 1.55;
     this.draw();
@@ -438,6 +495,8 @@ class CanvasFallbackViewer {
     container.replaceChildren(this.canvas);
     this.context = this.canvas.getContext('2d');
     this.build = [220, 220, 250];
+    this.bedShape = 'rectangular';
+    this.buildDiameter = null;
     this.color = '#e7472f';
     this.parsed = null;
     this.bounds = null;
@@ -487,8 +546,11 @@ class CanvasFallbackViewer {
     this.draw();
   }
 
-  setPrinter(build) {
-    if (Array.isArray(build) && build.length >= 3) this.build = build.map(Number);
+  setPrinter(printer) {
+    const geometry = normalizePrinterBed(printer, this.build);
+    this.build = geometry.build;
+    this.bedShape = geometry.bedShape;
+    this.buildDiameter = geometry.buildDiameter;
     this.draw();
   }
 
@@ -538,7 +600,9 @@ class CanvasFallbackViewer {
     context.fillStyle = '#15171a';
     context.fillRect(0, 0, width, height);
 
-    const maximumBuild = Math.max(this.build[0], this.build[1]);
+    const maximumBuild = this.bedShape === 'circular'
+      ? Number(this.buildDiameter || Math.min(this.build[0], this.build[1]))
+      : Math.max(this.build[0], this.build[1]);
     const baseScale = Math.min(width, height) * 0.58 / maximumBuild;
     const centerX = width / 2;
     const centerY = height * 0.7;
@@ -546,15 +610,14 @@ class CanvasFallbackViewer {
     context.save();
     context.strokeStyle = '#353b42';
     context.lineWidth = 1;
-    const step = maximumBuild > 400 ? 20 : 10;
-    for (let x = -this.build[0] / 2; x <= this.build[0] / 2; x += step) {
-      const a = this.project([x, -this.build[1] / 2, 0], baseScale, centerX, centerY);
-      const b = this.project([x, this.build[1] / 2, 0], baseScale, centerX, centerY);
-      context.beginPath(); context.moveTo(a[0], a[1]); context.lineTo(b[0], b[1]); context.stroke();
-    }
-    for (let y = -this.build[1] / 2; y <= this.build[1] / 2; y += step) {
-      const a = this.project([-this.build[0] / 2, y, 0], baseScale, centerX, centerY);
-      const b = this.project([this.build[0] / 2, y, 0], baseScale, centerX, centerY);
+    const segments = buildPlateSegments({
+      build_mm: this.build,
+      bed_shape: this.bedShape,
+      build_diameter_mm: this.buildDiameter
+    });
+    for (const [start, end] of segments) {
+      const a = this.project(start, baseScale, centerX, centerY);
+      const b = this.project(end, baseScale, centerX, centerY);
       context.beginPath(); context.moveTo(a[0], a[1]); context.lineTo(b[0], b[1]); context.stroke();
     }
     context.restore();

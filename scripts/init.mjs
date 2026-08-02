@@ -15,7 +15,7 @@ const token = () => crypto.randomBytes(24).toString('hex');
 const admin = token();
 const stampa = token();
 const reborn = token();
-const content = `# Affetta standalone v0.4.12 — configurazione locale
+const content = `# Affetta standalone v0.5.1 — configurazione locale
 AFFETTA_PORT=8787
 AFFETTA_HOST=127.0.0.1
 AFFETTA_PUBLIC_MODE=true
@@ -66,7 +66,7 @@ for (const [file, initial] of Object.entries(stores)) {
   const target = path.join(root, 'data', file);
   if (!fs.existsSync(target)) fs.writeFileSync(target, `${JSON.stringify(initial, null, 2)}\n`);
 }
-console.log('Configurazione Affetta v0.4.12 creata in .env');
+console.log('Configurazione Affetta v0.5.1 creata in .env');
 console.log(`Token amministratore: ${admin}`);
 console.log('Modalità email locale attiva: le conferme saranno salvate in data/mail-outbox.');
 console.log('Le chiavi partner sono predisposte per le integrazioni future con Stampa3DBologna e Reborn.');

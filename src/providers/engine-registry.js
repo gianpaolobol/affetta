@@ -281,7 +281,16 @@ export async function probeEngine(engine, { refresh = false } = {}) {
 export async function systemCapabilities(printers, { refresh = false } = {}) {
   const engines = ['kiri', 'prusa', 'cura', 'orca', 'snapmaker_orca'];
   const results = Object.fromEntries(await Promise.all(engines.map(async (engine) => [engine, await probeEngine(engine, { refresh })])));
-  const printerCapabilities = Object.fromEntries(Object.entries(printers).map(([id, printer]) => {
+  const fffPrinters = Object.entries(printers).filter(([, printer]) => (printer.technology || 'fff') === 'fff');
+  const manualProcesses = Object.fromEntries(Object.entries(printers)
+    .filter(([, printer]) => (printer.technology || 'fff') !== 'fff')
+    .map(([id, printer]) => [id, {
+      technology: printer.technology,
+      profile_status: printer.status,
+      slicer: printer.resin?.slicer || printer.engines?.[0] || null,
+      output_format: printer.output_format || printer.resin?.output_format || null
+    }]));
+  const printerCapabilities = Object.fromEntries(fffPrinters.map(([id, printer]) => {
     const routes = printer.engines.map((engine) => ({
       engine,
       available: Boolean(results[engine]?.available),
@@ -304,6 +313,7 @@ export async function systemCapabilities(printers, { refresh = false } = {}) {
       total_printers: Object.keys(printerCapabilities).length,
       printers: printerCapabilities
     },
+    manual_processes: manualProcesses,
     engines: results
   };
 }

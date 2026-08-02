@@ -12,15 +12,16 @@ if ($Source.TrimEnd('\\') -ieq $TargetFull) {
 }
 if (-not (Test-Path $TargetFull)) { throw "Installazione Affetta non trovata: $TargetFull" }
 if (-not (Test-Path (Join-Path $TargetFull 'VERSION'))) { throw "La cartella non sembra un’installazione Affetta: $TargetFull" }
-if ((Get-Content (Join-Path $Source 'VERSION') -Raw).Trim() -ne '0.4.12') { throw 'Pacchetto aggiornamento non valido: VERSION diversa da 0.4.12.' }
+if ((Get-Content (Join-Path $Source 'VERSION') -Raw).Trim() -ne '0.5.1') { throw 'Pacchetto aggiornamento non valido: VERSION diversa da 0.5.1.' }
 
 $timestamp = Get-Date -Format 'yyyyMMdd_HHmmss'
 $parent = Split-Path -Parent $TargetFull
-$Backup = Join-Path $parent "AFFETTA_BACKUP_PRE_0412_$timestamp"
+$Backup = Join-Path $parent "AFFETTA_BACKUP_PRE_0501_$timestamp"
 $replaceDirs = @('config','docs','integration','public','samples','scripts','src','test','tools')
 $protectedNames = @('.env','data','runtime','node_modules')
 $obsoleteFiles = @(
-    'APPLICA_AFFETTA_0411.cmd','ROLLBACK_AFFETTA_0411.cmd',
+    'APPLICA_AFFETTA_0411.cmd','ROLLBACK_AFFETTA_0411.cmd','APPLICA_AFFETTA_0412.cmd','ROLLBACK_AFFETTA_0412.cmd',
+    'APPLICA_AFFETTA_0500.cmd','ROLLBACK_AFFETTA_0500.cmd',
     'APPLICA_CORREZIONE_DEFINITIVA_047.cmd','APPLICA_CORREZIONE_SNAPMAKER_048.cmd',
     'APPLICA_HOTFIX_044_E_VERIFICA.cmd','APPLICA_HOTFIX_045_E_VERIFICA.cmd','APPLICA_HOTFIX_046_E_VERIFICA.cmd',
     'LEGGIMI_049R1.txt','LEGGIMI_049R2.txt','LEGGIMI_CORREZIONE_047.txt','LEGGIMI_CORREZIONE_048.txt',
@@ -51,7 +52,7 @@ foreach ($item in Get-ChildItem -LiteralPath $Source -Force -File) {
     $installedTopFiles += $item.Name
 }
 $manifest = [ordered]@{
-    version = '0.4.12'
+    version = '0.5.1'
     applied_at = (Get-Date).ToString('o')
     source = $Source
     target = $TargetFull
@@ -81,11 +82,11 @@ $dataDir = Join-Path $TargetFull 'data'
 New-Item -ItemType Directory -Force -Path $dataDir | Out-Null
 $pointer = Join-Path $dataDir 'last-update-backup.txt'
 Set-Content -LiteralPath $pointer -Value $Backup -Encoding UTF8
-$manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $dataDir 'update-0412-manifest.json') -Encoding UTF8
+$manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $dataDir 'update-0501-manifest.json') -Encoding UTF8
 
 $installedVersion = (Get-Content (Join-Path $TargetFull 'VERSION') -Raw).Trim()
-if ($installedVersion -ne '0.4.12') { throw "Verifica finale fallita: VERSION=$installedVersion" }
+if ($installedVersion -ne '0.5.1') { throw "Verifica finale fallita: VERSION=$installedVersion" }
 Write-Host ''
-Write-Host 'AGGIORNAMENTO AFFETTA 0.4.12 APPLICATO.' -ForegroundColor Green
+Write-Host 'AGGIORNAMENTO AFFETTA 0.5.1 APPLICATO.' -ForegroundColor Green
 Write-Host "Backup rollback: $Backup"
-Write-Host 'Ora esegui AVVIA_AFFETTA.cmd e poi COLLAUDO_FORENSE_AFFETTA.cmd.'
+Write-Host 'Ora esegui AVVIA_AFFETTA.cmd e poi COLLAUDO_FORENSE_AFFETTA.cmd e COLLAUDA_PROFILI_LABORATORIO.cmd.'

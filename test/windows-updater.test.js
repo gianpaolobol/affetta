@@ -9,9 +9,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 test('aggiornamento Windows preserva configurazione, dati, runtime e dipendenze', () => {
   const script = fs.readFileSync(path.join(root, 'scripts', 'apply-update-windows.ps1'), 'utf8');
   for (const name of ['.env', 'data', 'runtime', 'node_modules']) assert.match(script, new RegExp(name.replace('.', '\\.')));
-  assert.match(script, /AFFETTA_BACKUP_PRE_0412/);
+  assert.match(script, /AFFETTA_BACKUP_PRE_0501/);
   assert.match(script, /last-update-backup\.txt/);
-  assert.match(script, /VERSION diversa da 0\.4\.12/);
+  assert.match(script, /VERSION diversa da 0\.5\.1/);
 });
 
 test('rollback usa il backup registrato e non elimina runtime o data', () => {

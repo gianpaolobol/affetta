@@ -40,7 +40,7 @@ export function buildCuraArgs({ install, inputPath, outputPath, profile, definit
     ...setting('machine_width', profile.build_mm[0]),
     ...setting('machine_depth', profile.build_mm[1]),
     ...setting('machine_height', profile.build_mm[2]),
-    ...setting('machine_shape', 'rectangular'),
+    ...setting('machine_shape', profile.bed_shape === 'circular' ? 'elliptic' : 'rectangular'),
     ...setting('machine_center_is_zero', profile.origin_center ? 'true' : 'false'),
     ...setting('machine_extruder_count', 1),
     ...setting('machine_heated_bed', profile.bed_temperature_c > 0 ? 'true' : 'false'),

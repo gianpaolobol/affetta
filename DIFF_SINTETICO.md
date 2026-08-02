@@ -1,28 +1,12 @@
-# Diff sintetico — Affetta 0.4.11 → 0.4.12
+# Diff sintetico 0.5.0 → 0.5.1
 
-## Profilazione Orca
-
-- aggiunto `bed_type_by_material` per X1C;
-- aggiunto `curr_bed_type` nel processo Orca;
-- aggiunti support type e dimensioni supporti coerenti;
-- preservate le temperature vendor non nulle.
-
-## API
-
-- `model_too_large`, `quantity_does_not_fit` e `arrangement_too_complex`: HTTP 422.
-
-## Statistiche
-
-- parser durata completo;
-- metadati filamento preferiti ai comandi E;
-- origine della stima esposta nel risultato.
-
-## Interfaccia
-
-- visualizzazione del piatto selezionato automaticamente.
-
-## Test
-
-- 56/56 superati;
-- 640/640 combinazioni Orca validate staticamente;
-- test HTTP quantità e stabilità server.
+- separati i profili di servizio interni dal catalogo pubblico delle stampanti;
+- nascosti `Profilo automatico laboratorio` e `Profilo stima rapida Kiri:Moto`;
+- configurazione Kiri:Moto spostata in `config/internal-profiles.json`;
+- rimosso `auto-lab` dalla lista pubblica, mantenendolo come valore API interno;
+- corretta la visualizzazione circolare dei piani delta in WebGL e Canvas;
+- aggiunti profili LulzBot TAZ 4, TAZ 5 e Mini prima generazione;
+- collegate le unità reali del laboratorio ai modelli LulzBot corretti;
+- rimossi i profili legacy con etichette “laboratorio”;
+- rinominata Prusa i3 autocostruita;
+- aggiunti test di regressione e installer 0.5.1.

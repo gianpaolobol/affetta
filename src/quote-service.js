@@ -20,11 +20,13 @@ async function estimateInput({ modelBuffer, filename, options }) {
   const strength = catalogs.strengths[options.strength_id];
   const color = catalogs.colors[options.color_id];
   const analysis = analyzeStl(modelBuffer);
-  const estimate = await estimator.estimate({ modelBuffer, filename, analysis, material, quality, strength });
-  return { material, quality, strength, color, analysis, estimate };
+  const printer = catalogs.printers[options.printer_id] || null;
+  const filamentDiameterMm = Number(printer?.filament_diameter_mm || 1.75);
+  const estimate = await estimator.estimate({ modelBuffer, filename, analysis, material, quality, strength, filamentDiameterMm, printer, options });
+  return { material, quality, strength, color, analysis, estimate, printer, filamentDiameterMm };
 }
 
-function baseQuote({ tenant, modelBuffer, filename, options, material, quality, strength, color, analysis, estimate }) {
+function baseQuote({ tenant, modelBuffer, filename, options, material, quality, strength, color, analysis, estimate, printer, filamentDiameterMm }) {
   const createdAt = new Date().toISOString();
   return {
     success: true,
@@ -45,7 +47,8 @@ function baseQuote({ tenant, modelBuffer, filename, options, material, quality, 
         label: options.color_id === 'custom' && options.custom_color ? options.custom_color : color.label,
         custom: options.color_id === 'custom' ? options.custom_color : null
       },
-      quantity: options.quantity
+      quantity: options.quantity,
+      printer: printer ? { id: options.printer_id, label: printer.label, filament_diameter_mm: filamentDiameterMm, nozzle_mm: options.nozzle_mm || null } : null
     },
     estimate: {
       ...(config.exposeEngineNames ? { provider: estimate.provider } : {}),

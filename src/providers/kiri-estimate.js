@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
-import { config } from '../config.js';
+import { catalogs, config } from '../config.js';
 import { analyzeGcode } from '../gcode.js';
 import { splitCommand } from '../utils.js';
 
@@ -37,9 +37,12 @@ export class KiriEstimateProvider {
       const processPath = path.join(tmp, 'process.json');
       const controllerPath = path.join(tmp, 'controller.json');
       fs.writeFileSync(modelPath, modelBuffer);
+      const quickProfile = catalogs.internalProfiles['kiri-quick-estimate'];
+      const device = quickProfile.device;
+      const processDefaults = quickProfile.process;
       fs.writeFileSync(devicePath, JSON.stringify({
-        bedWidth: 300, bedDepth: 300, bedHeight: 2.5, maxHeight: 300,
-        nozzleSize: 0.4, filamentSize: 1.75, originCenter: false,
+        bedWidth: device.build_mm[0], bedDepth: device.build_mm[1], bedHeight: 2.5, maxHeight: device.build_mm[2],
+        nozzleSize: device.nozzle_mm, filamentSize: device.filament_diameter_mm, originCenter: Boolean(device.origin_center),
         extrudeAbs: true,
         gcodePre: ['G90', 'M82', `M104 S${material.nozzle_c}`, `M140 S${material.bed_c}`, 'G28', 'G92 E0'],
         gcodePost: ['M104 S0', 'M140 S0', 'M107', 'M84']
@@ -52,11 +55,11 @@ export class KiriEstimateProvider {
         sliceTopLayers: quality.top_layers,
         sliceBottomLayers: quality.bottom_layers,
         outputFeedrate: quality.speed_mm_s,
-        outputSeekrate: Math.max(80, quality.speed_mm_s * 2.2),
+        outputSeekrate: Math.max(80, quality.speed_mm_s * Number(processDefaults.travel_speed_factor || 2.2)),
         outputTemp: material.nozzle_c,
         outputBedTemp: material.bed_c,
-        sliceSupportEnable: true,
-        sliceSupportDensity: 0.15
+        sliceSupportEnable: processDefaults.supports_enabled !== false,
+        sliceSupportDensity: Number(processDefaults.support_density || 0.15)
       }, null, 2));
       fs.writeFileSync(controllerPath, JSON.stringify({ threaded: true }, null, 2));
 
@@ -73,7 +76,13 @@ export class KiriEstimateProvider {
       if (!fs.existsSync(outputPath)) throw new Error('Kiri:Moto non ha prodotto il G-code di stima.');
       const gcode = fs.readFileSync(outputPath, 'utf8');
       const stats = analyzeGcode(gcode, { densityGcm3: material.density_g_cm3 });
-      return { provider: this.id, estimate_quality: 'slicer', ...stats, warnings: [] };
+      return {
+        provider: this.id,
+        estimate_profile: { id: 'kiri-quick-estimate', label: quickProfile.label },
+        estimate_quality: 'slicer',
+        ...stats,
+        warnings: []
+      };
     } finally {
       fs.rmSync(tmp, { recursive: true, force: true });
     }

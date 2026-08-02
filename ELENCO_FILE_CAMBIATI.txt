@@ -1,58 +1,52 @@
-AFFETTA 0.4.12 — ELENCO FILE CAMBIATI
-
-Modificati: 33
-M .env.example
-M APPLICAZIONE_E_ROLLBACK.md
-M DIFF_SINTETICO.md
-M FILE_MODIFICATI.md
-M HANDOFF_EXECUTION_REPORT.md
-M INSTALLAZIONE_RAPIDA.txt
-M README.md
-M README_PRIMA_DI_AVVIARE.txt
-M REPORT_TEST_AUTOMATICI.md
-M REPORT_WINDOWS_REALE_PENDENTE.md
-M VERSION
-M config/app.json
-M config/printers.json
-M package.json
-M public/app.js
-M public/index.html
-M public/viewer.js
-M scripts/apply-update-windows.ps1
-M scripts/init.mjs
-M scripts/live-production-selftest.mjs
-M scripts/rollback-update-windows.ps1
-M scripts/start-windows.ps1
-M scripts/verify-engines-windows.ps1
-M src/config.js
-M src/gcode.js
-M src/providers/engines/orca.js
-M src/providers/profile-resolver.js
-M src/stl.js
-M test/engine-routing.test.js
-M test/forensic-runtime.test.js
-M test/gcode.test.js
-M test/stl.test.js
-M test/windows-updater.test.js
-
-Aggiunti: 6
-A APPLICA_AFFETTA_0412.cmd
-A REPORT_MATRICE_0411_ANALISI.md
-A ROLLBACK_AFFETTA_0412.cmd
-A docs/CHANGELOG_V0.4.12.md
-A docs/ROOT_CAUSE_MATRIX_V0.4.12.md
-A test/orca-matrix-regressions.test.js
-
-Rimossi: 12
-D APPLICA_AFFETTA_0411.cmd
-D ELENCO_FILE_CAMBIATI.txt
-D FULL_DIFF_STATO_REALE_0.4.9_TO_0.4.11.patch
-D MANIFEST_SHA256.txt
-D REPORT_FIXTURE_ERRORE_MOTORE.json
-D REPORT_FIXTURE_ORCA_5X.json
-D REPORT_FIXTURE_SEQUENZE_3X.json
-D REPORT_FIXTURE_SERVER_STDERR.log
-D REPORT_FIXTURE_SERVER_STDOUT.log
-D ROLLBACK_AFFETTA_0411.cmd
-D docs/CHANGELOG_V0.4.11.md
-D docs/ROOT_CAUSE_ANALYSIS_V0.4.11.md
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/.env.example and /mnt/data/work0501/.env.example differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/APPLICAZIONE_E_ROLLBACK.md and /mnt/data/work0501/APPLICAZIONE_E_ROLLBACK.md differ
+Only in /mnt/data/work0500/affetta-v0.5.0-lab-fleet: APPLICA_AFFETTA_0500.cmd
+Only in /mnt/data/work0501: APPLICA_AFFETTA_0501.cmd
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/COLLAUDA_PROFILI_LABORATORIO.cmd and /mnt/data/work0501/COLLAUDA_PROFILI_LABORATORIO.cmd differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/DIFF_SINTETICO.md and /mnt/data/work0501/DIFF_SINTETICO.md differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/FILE_MODIFICATI.md and /mnt/data/work0501/FILE_MODIFICATI.md differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/HANDOFF_EXECUTION_REPORT.md and /mnt/data/work0501/HANDOFF_EXECUTION_REPORT.md differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/INSTALLAZIONE_RAPIDA.txt and /mnt/data/work0501/INSTALLAZIONE_RAPIDA.txt differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/README.md and /mnt/data/work0501/README.md differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/README_PRIMA_DI_AVVIARE.txt and /mnt/data/work0501/README_PRIMA_DI_AVVIARE.txt differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/REPORT_TEST_AUTOMATICI.md and /mnt/data/work0501/REPORT_TEST_AUTOMATICI.md differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/REPORT_WINDOWS_REALE_PENDENTE.md and /mnt/data/work0501/REPORT_WINDOWS_REALE_PENDENTE.md differ
+Only in /mnt/data/work0500/affetta-v0.5.0-lab-fleet: ROLLBACK_AFFETTA_0500.cmd
+Only in /mnt/data/work0501: ROLLBACK_AFFETTA_0501.cmd
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/VERSION and /mnt/data/work0501/VERSION differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/config/app.json and /mnt/data/work0501/config/app.json differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/config/fleet.json and /mnt/data/work0501/config/fleet.json differ
+Only in /mnt/data/work0501/config: internal-profiles.json
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/config/printers.json and /mnt/data/work0501/config/printers.json differ
+Only in /mnt/data/work0501/config/profiles/cura: lulzbot-mini.def.json
+Only in /mnt/data/work0501/config/profiles/cura: lulzbot-taz4.def.json
+Only in /mnt/data/work0501/config/profiles/cura: lulzbot-taz5.def.json
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/docs/API.md and /mnt/data/work0501/docs/API.md differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/docs/ARCHITECTURE.md and /mnt/data/work0501/docs/ARCHITECTURE.md differ
+Only in /mnt/data/work0501/docs: CHANGELOG_V0.5.1.md
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/docs/FLEET_PROFILE_SELFTEST.json and /mnt/data/work0501/docs/FLEET_PROFILE_SELFTEST.json differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/docs/INTEGRATION.md and /mnt/data/work0501/docs/INTEGRATION.md differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/docs/MATRICE_PARCO_MACCHINE.csv and /mnt/data/work0501/docs/MATRICE_PARCO_MACCHINE.csv differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/docs/PARCO_MACCHINE_E_RUOLI.md and /mnt/data/work0501/docs/PARCO_MACCHINE_E_RUOLI.md differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/docs/PROCESSO_INTEGRAZIONE_STAMPA3DBOLOGNA_REBORN.md and /mnt/data/work0501/docs/PROCESSO_INTEGRAZIONE_STAMPA3DBOLOGNA_REBORN.md differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/docs/PROFILI_E_CALIBRAZIONE.md and /mnt/data/work0501/docs/PROFILI_E_CALIBRAZIONE.md differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/package.json and /mnt/data/work0501/package.json differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/public/app.js and /mnt/data/work0501/public/app.js differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/public/index.html and /mnt/data/work0501/public/index.html differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/public/viewer.js and /mnt/data/work0501/public/viewer.js differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/scripts/apply-update-windows.ps1 and /mnt/data/work0501/scripts/apply-update-windows.ps1 differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/scripts/init.mjs and /mnt/data/work0501/scripts/init.mjs differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/scripts/live-production-selftest.mjs and /mnt/data/work0501/scripts/live-production-selftest.mjs differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/scripts/rollback-update-windows.ps1 and /mnt/data/work0501/scripts/rollback-update-windows.ps1 differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/scripts/start-windows.ps1 and /mnt/data/work0501/scripts/start-windows.ps1 differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/scripts/verify-engines-windows.ps1 and /mnt/data/work0501/scripts/verify-engines-windows.ps1 differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/server.js and /mnt/data/work0501/server.js differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/src/config.js and /mnt/data/work0501/src/config.js differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/src/openapi.js and /mnt/data/work0501/src/openapi.js differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/src/providers/kiri-estimate.js and /mnt/data/work0501/src/providers/kiri-estimate.js differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/src/slice-service.js and /mnt/data/work0501/src/slice-service.js differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/test/engine-routing.test.js and /mnt/data/work0501/test/engine-routing.test.js differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/test/lab-fleet.test.js and /mnt/data/work0501/test/lab-fleet.test.js differ
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/test/ui-api.test.js and /mnt/data/work0501/test/ui-api.test.js differ
+Only in /mnt/data/work0501/test: viewer-bed.test.js
+Files /mnt/data/work0500/affetta-v0.5.0-lab-fleet/test/windows-updater.test.js and /mnt/data/work0501/test/windows-updater.test.js differ

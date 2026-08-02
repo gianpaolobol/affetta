@@ -39,13 +39,15 @@ export const catalogs = Object.freeze({
   strengths: readJson('config/strengths.json'),
   colors: readJson('config/colors.json'),
   pricing: readJson('config/pricing.json'),
-  printers: readJson('config/printers.json')
+  printers: readJson('config/printers.json'),
+  fleet: readJson('config/fleet.json'),
+  internalProfiles: readJson('config/internal-profiles.json')
 });
 
 const dataDir = path.resolve(process.env.AFFETTA_DATA_DIR || path.join(ROOT, 'data'));
 
 export const config = Object.freeze({
-  version: '0.4.12',
+  version: '0.5.1',
   apiVersion: 'v1',
   instanceId: process.env.AFFETTA_INSTANCE_ID || '',
   buildId: process.env.AFFETTA_BUILD_ID || '',

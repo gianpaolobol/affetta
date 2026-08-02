@@ -1,0 +1,35 @@
+{
+  "laboratory-auto": {
+    "label": "Profilo automatico laboratorio",
+    "type": "routing",
+    "visibility": "internal",
+    "public": false,
+    "printer_id": "auto-lab",
+    "routing_mode": "laboratory-auto",
+    "description": "Seleziona automaticamente unità fisica, ugello, profilo e motore del parco produttivo."
+  },
+  "kiri-quick-estimate": {
+    "label": "Profilo stima rapida Kiri:Moto",
+    "type": "estimate",
+    "visibility": "internal",
+    "public": false,
+    "engine": "kiri-moto",
+    "description": "Profilo tecnico non stampabile usato soltanto per la stima commerciale preliminare.",
+    "device": {
+      "build_mm": [
+        370,
+        370,
+        455
+      ],
+      "bed_shape": "rectangular",
+      "nozzle_mm": 0.4,
+      "filament_diameter_mm": 1.75,
+      "origin_center": false
+    },
+    "process": {
+      "supports_enabled": true,
+      "support_density": 0.15,
+      "travel_speed_factor": 2.2
+    }
+  }
+}

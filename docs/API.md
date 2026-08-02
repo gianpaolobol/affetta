@@ -55,3 +55,11 @@ Restano disponibili:
 - `GET /api/v1/slice-jobs/{id}/artifact?token=...`
 - `POST /api/v1/quotes`
 - `GET /api/v1/quotes/{id}`
+
+## Routing del laboratorio (v0.5.1)
+
+- `GET /api/v1/fleet` — elenco delle unità fisiche, ruoli, materiali e stato di calibrazione.
+- `POST /api/v1/route` — analizza il modello e seleziona una unità `production_ready=true`.
+- `printer_id: "auto-lab"` — applica lo stesso routing durante la creazione del job.
+
+Con `auto-lab`, `nozzle_mm` può essere `null`: l’ugello viene ricavato dall’unità fisica selezionata. Le macchine non validate restano visibili nel catalogo locale ma non vengono assegnate automaticamente.

@@ -24,6 +24,19 @@ test('viewer è locale e non dipende da CDN', () => {
   assert.doesNotMatch(html, /https?:\/\//);
   assert.match(viewer, /pointerdown/);
   assert.match(viewer, /wheel/);
+  assert.match(viewer, /bedShape === 'circular'/);
+  assert.match(viewer, /buildPlateSegments/);
+});
+
+test('lista stampanti non espone i profili interni e passa la geometria del piano al viewer', () => {
+  const app = fs.readFileSync(new URL('../public/app.js', import.meta.url), 'utf8');
+  const server = fs.readFileSync(new URL('../server.js', import.meta.url), 'utf8');
+  const catalogBody = server.slice(server.indexOf('function publicCatalog()'), server.indexOf('async function capabilities'));
+  assert.doesNotMatch(app, /printers\['auto-lab'\].*value = 'auto-lab'/);
+  assert.match(app, /bed_shape: printer\.bed_shape/);
+  assert.match(app, /build_diameter_mm: printer\.build_diameter_mm/);
+  assert.match(catalogBody, /item\.visibility !== 'internal'/);
+  assert.doesNotMatch(catalogBody, /printers\['auto-lab'\] =/);
 });
 
 test('OpenAPI mantiene il contratto unificato e gli endpoint futuri', () => {

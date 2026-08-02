@@ -48,7 +48,10 @@
       "extruders": [
         "fdmextruder.def.json"
       ]
-    }
+    },
+    "technology": "fff",
+    "filament_diameter_mm": 1.75,
+    "bed_shape": "rectangular"
   },
   "prusa-mk3s": {
     "label": "Original Prusa i3 MK3S+",
@@ -90,7 +93,10 @@
       "max_bed_c": 120,
       "start_gcode": "G90\nM83\nM104 S[first_layer_temperature]\nM140 S[first_layer_bed_temperature]\nG28 W\nG80\nM190 S[first_layer_bed_temperature]\nM109 S[first_layer_temperature]\nG92 E0",
       "end_gcode": "M104 S0\nM140 S0\nM107\nG1 X0 Y200 F3000\nM84"
-    }
+    },
+    "technology": "fff",
+    "filament_diameter_mm": 1.75,
+    "bed_shape": "rectangular"
   },
   "prusa-mk4": {
     "label": "Original Prusa MK4",
@@ -132,14 +138,157 @@
       "max_bed_c": 120,
       "start_gcode": "G90\nM83\nM104 S[first_layer_temperature]\nM140 S[first_layer_bed_temperature]\nG28\nM190 S[first_layer_bed_temperature]\nM109 S[first_layer_temperature]\nG29\nG92 E0",
       "end_gcode": "M104 S0\nM140 S0\nM107\nG1 X0 Y200 F4000\nM84"
+    },
+    "technology": "fff",
+    "filament_diameter_mm": 1.75,
+    "bed_shape": "rectangular"
+  },
+  "lulzbot-taz4": {
+    "label": "LulzBot TAZ 4",
+    "manufacturer": "LulzBot",
+    "technology": "fff",
+    "engines": [
+      "cura",
+      "prusa"
+    ],
+    "build_mm": [
+      298,
+      275,
+      250
+    ],
+    "bed_shape": "rectangular",
+    "filament_diameter_mm": 2.85,
+    "nozzles": [
+      0.35,
+      0.5,
+      0.8
+    ],
+    "default_nozzle": 0.35,
+    "firmware": "marlin",
+    "origin_center": false,
+    "materials": [
+      "pla",
+      "petg",
+      "abs",
+      "asa",
+      "tpu"
+    ],
+    "status": "model-profile-unvalidated",
+    "machine": {
+      "max_print_speed": 80,
+      "travel_speed": 175,
+      "max_acceleration": 500,
+      "first_layer_speed": 20,
+      "retract_length": 1.0,
+      "retract_speed": 25,
+      "z_hop": 0.5,
+      "max_hotend_c": 290,
+      "max_bed_c": 120,
+      "start_gcode": "G90\nM82\nM140 S[first_layer_bed_temperature]\nM104 S[first_layer_temperature]\nG28\nM190 S[first_layer_bed_temperature]\nM109 S[first_layer_temperature]\nG92 E0",
+      "end_gcode": "M104 S0\nM140 S0\nM107\nG91\nG1 E-2 F1200\nG1 Z10 F600\nG90\nG1 X0 Y275 F5000\nM84"
+    },
+    "cura": {
+      "definitions": [
+        "lulzbot_taz4.def.json",
+        "lulzbot_taz_4.def.json",
+        "fdmprinter.def.json"
+      ],
+      "extruders": [
+        "lulzbot_taz4_extruder_0.def.json",
+        "fdmextruder.def.json"
+      ]
+    },
+    "validation": {
+      "motion_bounds_mm": {
+        "min": [
+          -5,
+          -5,
+          -2
+        ],
+        "max": [
+          303,
+          280,
+          255
+        ]
+      }
+    }
+  },
+  "lulzbot-taz5": {
+    "label": "LulzBot TAZ 5",
+    "manufacturer": "LulzBot",
+    "technology": "fff",
+    "engines": [
+      "cura",
+      "prusa"
+    ],
+    "build_mm": [
+      298,
+      275,
+      250
+    ],
+    "bed_shape": "rectangular",
+    "filament_diameter_mm": 2.85,
+    "nozzles": [
+      0.35,
+      0.5,
+      0.8
+    ],
+    "default_nozzle": 0.35,
+    "firmware": "marlin",
+    "origin_center": false,
+    "materials": [
+      "pla",
+      "petg",
+      "abs",
+      "asa",
+      "tpu"
+    ],
+    "status": "model-profile-unvalidated",
+    "machine": {
+      "max_print_speed": 80,
+      "travel_speed": 175,
+      "max_acceleration": 500,
+      "first_layer_speed": 20,
+      "retract_length": 1.0,
+      "retract_speed": 25,
+      "z_hop": 0.5,
+      "max_hotend_c": 290,
+      "max_bed_c": 120,
+      "start_gcode": "G90\nM82\nM140 S[first_layer_bed_temperature]\nM104 S[first_layer_temperature]\nG28\nM190 S[first_layer_bed_temperature]\nM109 S[first_layer_temperature]\nG92 E0",
+      "end_gcode": "M104 S0\nM140 S0\nM107\nG91\nG1 E-2 F1200\nG1 Z10 F600\nG90\nG1 X0 Y275 F5000\nM84"
+    },
+    "cura": {
+      "definitions": [
+        "lulzbot_taz5.def.json",
+        "lulzbot_taz_5.def.json",
+        "fdmprinter.def.json"
+      ],
+      "extruders": [
+        "lulzbot_taz5_extruder_0.def.json",
+        "fdmextruder.def.json"
+      ]
+    },
+    "validation": {
+      "motion_bounds_mm": {
+        "min": [
+          -5,
+          -5,
+          -2
+        ],
+        "max": [
+          303,
+          280,
+          255
+        ]
+      }
     }
   },
   "lulzbot-taz6": {
     "label": "LulzBot TAZ 6",
     "manufacturer": "LulzBot",
     "engines": [
-      "prusa",
-      "cura"
+      "cura",
+      "prusa"
     ],
     "build_mm": [
       280,
@@ -161,7 +310,7 @@
       "asa",
       "tpu"
     ],
-    "status": "engine-tested",
+    "status": "model-profile-unvalidated",
     "machine": {
       "max_print_speed": 85,
       "travel_speed": 175,
@@ -178,12 +327,82 @@
     "cura": {
       "definitions": [
         "lulzbot_taz6.def.json",
-        "lulzbot_taz_6.def.json"
+        "lulzbot_taz_6.def.json",
+        "fdmprinter.def.json"
       ],
       "extruders": [
         "lulzbot_taz6_extruder_0.def.json",
         "fdmextruder.def.json"
       ]
+    },
+    "technology": "fff",
+    "filament_diameter_mm": 2.85,
+    "bed_shape": "rectangular"
+  },
+  "lulzbot-mini": {
+    "label": "LulzBot Mini",
+    "manufacturer": "LulzBot",
+    "technology": "fff",
+    "engines": [
+      "cura",
+      "prusa"
+    ],
+    "build_mm": [
+      152,
+      152,
+      158
+    ],
+    "bed_shape": "rectangular",
+    "filament_diameter_mm": 2.85,
+    "nozzles": [
+      0.5
+    ],
+    "default_nozzle": 0.5,
+    "firmware": "marlin",
+    "origin_center": false,
+    "materials": [
+      "pla",
+      "petg",
+      "abs",
+      "tpu"
+    ],
+    "status": "model-profile-unvalidated",
+    "machine": {
+      "max_print_speed": 70,
+      "travel_speed": 150,
+      "max_acceleration": 500,
+      "first_layer_speed": 18,
+      "retract_length": 1.0,
+      "retract_speed": 25,
+      "z_hop": 0.5,
+      "max_hotend_c": 300,
+      "max_bed_c": 120,
+      "start_gcode": "G90\nM82\nM140 S[first_layer_bed_temperature]\nM104 S[first_layer_temperature]\nG28\nG29\nM190 S[first_layer_bed_temperature]\nM109 S[first_layer_temperature]\nG92 E0",
+      "end_gcode": "M104 S0\nM140 S0\nM107\nG91\nG1 E-2 F1200\nG1 Z10 F600\nG90\nG1 X0 Y152 F3500\nM84"
+    },
+    "cura": {
+      "definitions": [
+        "lulzbot_mini.def.json",
+        "fdmprinter.def.json"
+      ],
+      "extruders": [
+        "lulzbot_mini_extruder_0.def.json",
+        "fdmextruder.def.json"
+      ]
+    },
+    "validation": {
+      "motion_bounds_mm": {
+        "min": [
+          -5,
+          -5,
+          -2
+        ],
+        "max": [
+          160,
+          160,
+          165
+        ]
+      }
     }
   },
   "lulzbot-mini2": {
@@ -234,7 +453,10 @@
         "lulzbot_mini_2_extruder_0.def.json",
         "fdmextruder.def.json"
       ]
-    }
+    },
+    "technology": "fff",
+    "filament_diameter_mm": 2.85,
+    "bed_shape": "rectangular"
   },
   "creality-ender3": {
     "label": "Creality Ender-3 / Pro / V2",
@@ -286,7 +508,10 @@
         "creality_base_extruder_0.def.json",
         "fdmextruder.def.json"
       ]
-    }
+    },
+    "technology": "fff",
+    "filament_diameter_mm": 1.75,
+    "bed_shape": "rectangular"
   },
   "anycubic-i3-mega": {
     "label": "Anycubic i3 Mega",
@@ -338,7 +563,10 @@
         "anycubic_i3_mega_extruder_0.def.json",
         "fdmextruder.def.json"
       ]
-    }
+    },
+    "technology": "fff",
+    "filament_diameter_mm": 1.75,
+    "bed_shape": "rectangular"
   },
   "voron-24": {
     "label": "Voron 2.4 / Klipper",
@@ -390,7 +618,10 @@
         "0.20mm"
       ],
       "min_version": "2.3.2"
-    }
+    },
+    "technology": "fff",
+    "filament_diameter_mm": 1.75,
+    "bed_shape": "rectangular"
   },
   "bambu-x1c": {
     "label": "Bambu Lab X1 Carbon",
@@ -461,7 +692,18 @@
           260
         ]
       }
-    }
+    },
+    "technology": "fff",
+    "filament_diameter_mm": 1.75,
+    "bed_shape": "rectangular",
+    "production_roles": [
+      "engineering",
+      "detail",
+      "fast",
+      "enclosed",
+      "color-defined"
+    ],
+    "enclosed": true
   },
   "snapmaker-u1": {
     "label": "Snapmaker U1",
@@ -512,6 +754,488 @@
         "0.20mm"
       ],
       "min_version": "2.3.2"
+    },
+    "technology": "fff",
+    "filament_diameter_mm": 1.75,
+    "bed_shape": "rectangular",
+    "production_roles": [
+      "multicolor",
+      "multimaterial",
+      "detail",
+      "general",
+      "color-defined"
+    ]
+  },
+  "deltawasp-2040": {
+    "label": "Delta WASP 2040",
+    "manufacturer": "WASP",
+    "technology": "fff",
+    "engines": [
+      "prusa",
+      "cura"
+    ],
+    "build_mm": [
+      200,
+      200,
+      400
+    ],
+    "build_diameter_mm": 200,
+    "bed_shape": "circular",
+    "filament_diameter_mm": 1.75,
+    "nozzles": [
+      0.4,
+      0.7,
+      1.2
+    ],
+    "default_nozzle": 0.4,
+    "firmware": "marlin",
+    "origin_center": true,
+    "materials": [
+      "pla",
+      "petg",
+      "abs",
+      "asa",
+      "tpu"
+    ],
+    "preferred_materials": [
+      "pla",
+      "petg"
+    ],
+    "status": "lab-baseline-unvalidated",
+    "production_roles": [
+      "tall",
+      "general",
+      "detail"
+    ],
+    "machine": {
+      "max_print_speed": 120,
+      "travel_speed": 200,
+      "max_acceleration": 1800,
+      "first_layer_speed": 18,
+      "retract_length": 4.0,
+      "retract_speed": 35,
+      "z_hop": 0.4,
+      "max_hotend_c": 280,
+      "max_bed_c": 110,
+      "start_gcode": "G90\nM82\nM140 S[first_layer_bed_temperature]\nM104 S[first_layer_temperature]\nG28\nM190 S[first_layer_bed_temperature]\nM109 S[first_layer_temperature]\nG92 E0",
+      "end_gcode": "M104 S0\nM140 S0\nM107\nG91\nG1 E-3 F1800\nG1 Z10 F600\nG90\nG28\nM84"
+    },
+    "validation": {
+      "motion_bounds_mm": {
+        "min": [
+          -102,
+          -102,
+          -2
+        ],
+        "max": [
+          102,
+          102,
+          405
+        ]
+      }
+    }
+  },
+  "deltawasp-2040-pro": {
+    "label": "Delta WASP 2040 PRO",
+    "manufacturer": "WASP",
+    "technology": "fff",
+    "engines": [
+      "prusa",
+      "cura"
+    ],
+    "build_mm": [
+      200,
+      200,
+      400
+    ],
+    "build_diameter_mm": 200,
+    "bed_shape": "circular",
+    "filament_diameter_mm": 1.75,
+    "nozzles": [
+      0.4
+    ],
+    "default_nozzle": 0.4,
+    "firmware": "marlin",
+    "origin_center": true,
+    "materials": [
+      "pla",
+      "petg",
+      "abs",
+      "asa"
+    ],
+    "preferred_materials": [
+      "pla",
+      "petg",
+      "abs"
+    ],
+    "status": "model-profile-unvalidated",
+    "production_roles": [
+      "tall",
+      "general",
+      "detail",
+      "engineering"
+    ],
+    "machine": {
+      "max_print_speed": 180,
+      "travel_speed": 300,
+      "max_acceleration": 1800,
+      "first_layer_speed": 18,
+      "retract_length": 4.0,
+      "retract_speed": 35,
+      "z_hop": 0.4,
+      "max_hotend_c": 280,
+      "max_bed_c": 110,
+      "start_gcode": "G90\nM82\nM140 S[first_layer_bed_temperature]\nM104 S[first_layer_temperature]\nG28\nM190 S[first_layer_bed_temperature]\nM109 S[first_layer_temperature]\nG92 E0",
+      "end_gcode": "M104 S0\nM140 S0\nM107\nG91\nG1 E-3 F1800\nG1 Z10 F600\nG90\nG28\nM84"
+    },
+    "validation": {
+      "motion_bounds_mm": {
+        "min": [
+          -102,
+          -102,
+          -2
+        ],
+        "max": [
+          102,
+          102,
+          405
+        ]
+      }
+    }
+  },
+  "deltawasp-2040-turbo": {
+    "label": "Delta WASP 2040 Turbo/Turbo2",
+    "manufacturer": "WASP",
+    "technology": "fff",
+    "engines": [
+      "prusa",
+      "cura"
+    ],
+    "build_mm": [
+      200,
+      200,
+      400
+    ],
+    "build_diameter_mm": 200,
+    "bed_shape": "circular",
+    "filament_diameter_mm": 1.75,
+    "nozzles": [
+      0.4,
+      0.7,
+      1.2
+    ],
+    "default_nozzle": 0.4,
+    "firmware": "marlin",
+    "origin_center": true,
+    "materials": [
+      "pla",
+      "petg",
+      "abs",
+      "asa",
+      "tpu"
+    ],
+    "preferred_materials": [
+      "abs",
+      "asa",
+      "petg",
+      "pla"
+    ],
+    "status": "lab-baseline-unvalidated",
+    "production_roles": [
+      "engineering",
+      "tall",
+      "fast",
+      "enclosed"
+    ],
+    "enclosed": true,
+    "machine": {
+      "max_print_speed": 220,
+      "travel_speed": 500,
+      "max_acceleration": 6000,
+      "first_layer_speed": 22,
+      "retract_length": 3.5,
+      "retract_speed": 40,
+      "z_hop": 0.4,
+      "max_hotend_c": 300,
+      "max_bed_c": 120,
+      "start_gcode": "G90\nM82\nM140 S[first_layer_bed_temperature]\nM104 S[first_layer_temperature]\nG28\nM190 S[first_layer_bed_temperature]\nM109 S[first_layer_temperature]\nG92 E0",
+      "end_gcode": "M104 S0\nM140 S0\nM107\nG91\nG1 E-3 F1800\nG1 Z10 F600\nG90\nG28\nM84"
+    },
+    "validation": {
+      "motion_bounds_mm": {
+        "min": [
+          -102,
+          -102,
+          -2
+        ],
+        "max": [
+          102,
+          102,
+          405
+        ]
+      }
+    }
+  },
+  "anycubic-predator": {
+    "label": "Anycubic Predator",
+    "manufacturer": "Anycubic",
+    "technology": "fff",
+    "engines": [
+      "cura",
+      "prusa"
+    ],
+    "build_mm": [
+      370,
+      370,
+      455
+    ],
+    "build_diameter_mm": 370,
+    "bed_shape": "circular",
+    "filament_diameter_mm": 1.75,
+    "nozzles": [
+      0.4,
+      0.6,
+      0.8,
+      1.0
+    ],
+    "default_nozzle": 0.6,
+    "firmware": "marlin",
+    "origin_center": true,
+    "materials": [
+      "pla",
+      "petg",
+      "tpu"
+    ],
+    "preferred_materials": [
+      "pla",
+      "petg"
+    ],
+    "status": "lab-baseline-unvalidated",
+    "production_roles": [
+      "large",
+      "tall",
+      "coarse",
+      "batch"
+    ],
+    "machine": {
+      "max_print_speed": 100,
+      "travel_speed": 150,
+      "max_acceleration": 1000,
+      "first_layer_speed": 18,
+      "retract_length": 4.0,
+      "retract_speed": 35,
+      "z_hop": 0.4,
+      "max_hotend_c": 250,
+      "max_bed_c": 100,
+      "start_gcode": "G90\nM82\nM140 S[first_layer_bed_temperature]\nM104 S[first_layer_temperature]\nG28\nM190 S[first_layer_bed_temperature]\nM109 S[first_layer_temperature]\nG92 E0",
+      "end_gcode": "M104 S0\nM140 S0\nM107\nG91\nG1 E-4 F1800\nG1 Z10 F600\nG90\nG28\nM84"
+    },
+    "validation": {
+      "motion_bounds_mm": {
+        "min": [
+          -187,
+          -187,
+          -2
+        ],
+        "max": [
+          187,
+          187,
+          460
+        ]
+      }
+    }
+  },
+  "flsun-v400": {
+    "label": "FLSUN V400",
+    "manufacturer": "FLSUN",
+    "technology": "fff",
+    "engines": [
+      "orca",
+      "prusa"
+    ],
+    "build_mm": [
+      300,
+      300,
+      410
+    ],
+    "build_diameter_mm": 300,
+    "bed_shape": "circular",
+    "filament_diameter_mm": 1.75,
+    "nozzles": [
+      0.4,
+      0.6,
+      0.8
+    ],
+    "default_nozzle": 0.4,
+    "firmware": "klipper",
+    "origin_center": true,
+    "materials": [
+      "pla",
+      "petg",
+      "tpu"
+    ],
+    "preferred_materials": [
+      "pla",
+      "petg"
+    ],
+    "status": "lab-baseline-unvalidated",
+    "production_roles": [
+      "fast",
+      "tall",
+      "detail",
+      "general"
+    ],
+    "machine": {
+      "max_print_speed": 300,
+      "travel_speed": 400,
+      "max_acceleration": 8000,
+      "first_layer_speed": 30,
+      "retract_length": 0.8,
+      "retract_speed": 40,
+      "z_hop": 0.4,
+      "max_hotend_c": 300,
+      "max_bed_c": 110,
+      "start_gcode": "START_PRINT BED_TEMP=[first_layer_bed_temperature] EXTRUDER_TEMP=[first_layer_temperature]",
+      "end_gcode": "END_PRINT"
+    },
+    "orca": {
+      "machine_patterns": [
+        "FLSUN V400",
+        "Flsun V400",
+        "V400 0.4 nozzle"
+      ],
+      "process_patterns": [
+        "0.20mm",
+        "Standard",
+        "Normal"
+      ],
+      "min_version": "2.3.2"
+    },
+    "validation": {
+      "motion_bounds_mm": {
+        "min": [
+          -152,
+          -152,
+          -2
+        ],
+        "max": [
+          152,
+          152,
+          415
+        ]
+      }
+    }
+  },
+  "prusa-i3-custom": {
+    "label": "Prusa i3 autocostruita",
+    "manufacturer": "RepRap",
+    "technology": "fff",
+    "engines": [
+      "prusa",
+      "cura"
+    ],
+    "build_mm": [
+      200,
+      200,
+      200
+    ],
+    "bed_shape": "rectangular",
+    "filament_diameter_mm": 1.75,
+    "nozzles": [
+      0.4,
+      0.6
+    ],
+    "default_nozzle": 0.4,
+    "firmware": "marlin",
+    "origin_center": false,
+    "materials": [
+      "pla",
+      "petg",
+      "tpu"
+    ],
+    "preferred_materials": [
+      "pla",
+      "petg"
+    ],
+    "status": "requires-machine-dimensions",
+    "production_roles": [
+      "overflow",
+      "small",
+      "general"
+    ],
+    "machine": {
+      "max_print_speed": 60,
+      "travel_speed": 120,
+      "max_acceleration": 600,
+      "first_layer_speed": 18,
+      "retract_length": 1.2,
+      "retract_speed": 30,
+      "z_hop": 0.2,
+      "max_hotend_c": 260,
+      "max_bed_c": 100,
+      "start_gcode": "G90\nM82\nM140 S[first_layer_bed_temperature]\nM104 S[first_layer_temperature]\nG28\nM190 S[first_layer_bed_temperature]\nM109 S[first_layer_temperature]\nG92 E0",
+      "end_gcode": "M104 S0\nM140 S0\nM107\nG91\nG1 E-2 F1500\nG1 Z10 F600\nG90\nM84"
+    },
+    "cura": {
+      "definitions": [
+        "fdmprinter.def.json"
+      ],
+      "extruders": [
+        "fdmextruder.def.json"
+      ]
+    },
+    "validation": {
+      "motion_bounds_mm": {
+        "min": [
+          -5,
+          -5,
+          -2
+        ],
+        "max": [
+          205,
+          205,
+          205
+        ]
+      }
+    }
+  },
+  "phrozen-sonic-mini-4k": {
+    "label": "Phrozen Sonic Mini 4K",
+    "manufacturer": "Phrozen",
+    "technology": "msla",
+    "engines": [
+      "chitubox-manual"
+    ],
+    "build_mm": [
+      134,
+      75,
+      130
+    ],
+    "bed_shape": "rectangular",
+    "output_format": "ctb",
+    "nozzles": [],
+    "default_nozzle": null,
+    "materials": [
+      "resin-standard",
+      "resin-tough"
+    ],
+    "preferred_materials": [
+      "resin-standard",
+      "resin-tough"
+    ],
+    "status": "manual-resin-slicer",
+    "production_roles": [
+      "resin",
+      "miniature",
+      "very-high-detail",
+      "small"
+    ],
+    "resin": {
+      "xy_resolution_um": 35,
+      "slicer": "CHITUBOX",
+      "minimum_supported_version": "1.6.5",
+      "output_format": "CTB",
+      "default_layer_height_mm": 0.05
     }
   }
 }

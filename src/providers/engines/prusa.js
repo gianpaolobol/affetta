@@ -10,6 +10,13 @@ function encodeIni(value) {
 
 function bedShape(profile) {
   const [x, y] = profile.build_mm;
+  if (profile.bed_shape === 'circular') {
+    const radius = Number(profile.build_diameter_mm || Math.min(x, y)) / 2;
+    return Array.from({ length: 32 }, (_, index) => {
+      const angle = (Math.PI * 2 * index) / 32;
+      return `${(Math.cos(angle) * radius).toFixed(3)}x${(Math.sin(angle) * radius).toFixed(3)}`;
+    }).join(',');
+  }
   if (profile.origin_center) return `${-x / 2}x${-y / 2},${x / 2}x${-y / 2},${x / 2}x${y / 2},${-x / 2}x${y / 2}`;
   return `0x0,${x}x0,${x}x${y},0x${y}`;
 }

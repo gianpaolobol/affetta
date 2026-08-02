@@ -1,0 +1,606 @@
+{
+  "id": "stampa3dbologna-lab",
+  "label": "Laboratorio Stampa3DBologna",
+  "routing_version": "2026-08-01.2",
+  "units": [
+    {
+      "id": "taz-01",
+      "label": "LulzBot TAZ 4",
+      "printer_id": "lulzbot-taz4",
+      "default_nozzle_mm": 0.5,
+      "enabled": true,
+      "priority": 55,
+      "roles": [
+        "general",
+        "batch"
+      ],
+      "preferred_materials": [
+        "pla",
+        "petg"
+      ],
+      "quality_ids": [
+        "draft",
+        "standard",
+        "high"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong"
+      ],
+      "material_ids": [
+        "pla",
+        "petg"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "taz-02",
+      "label": "LulzBot TAZ 5",
+      "printer_id": "lulzbot-taz5",
+      "default_nozzle_mm": 0.5,
+      "enabled": true,
+      "priority": 48,
+      "roles": [
+        "flexible",
+        "general"
+      ],
+      "preferred_materials": [
+        "tpu",
+        "petg",
+        "pla"
+      ],
+      "quality_ids": [
+        "standard",
+        "high"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong"
+      ],
+      "material_ids": [
+        "tpu"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "taz-03",
+      "label": "LulzBot TAZ 6",
+      "printer_id": "lulzbot-taz6",
+      "default_nozzle_mm": 0.8,
+      "enabled": true,
+      "priority": 45,
+      "roles": [
+        "large",
+        "coarse",
+        "batch",
+        "strong"
+      ],
+      "preferred_materials": [
+        "pla",
+        "petg"
+      ],
+      "quality_ids": [
+        "draft",
+        "standard"
+      ],
+      "strength_ids": [
+        "standard",
+        "strong",
+        "solid"
+      ],
+      "material_ids": [
+        "pla",
+        "petg"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "mini-01",
+      "label": "LulzBot Mini A",
+      "printer_id": "lulzbot-mini",
+      "default_nozzle_mm": 0.5,
+      "enabled": true,
+      "priority": 60,
+      "roles": [
+        "small",
+        "short-job",
+        "detail"
+      ],
+      "preferred_materials": [
+        "pla",
+        "petg"
+      ],
+      "quality_ids": [
+        "standard",
+        "high"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong"
+      ],
+      "material_ids": [
+        "pla",
+        "petg"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "mini-02",
+      "label": "LulzBot Mini B",
+      "printer_id": "lulzbot-mini",
+      "default_nozzle_mm": 0.5,
+      "enabled": true,
+      "priority": 52,
+      "roles": [
+        "small",
+        "flexible",
+        "short-job"
+      ],
+      "preferred_materials": [
+        "tpu",
+        "pla",
+        "petg"
+      ],
+      "quality_ids": [
+        "standard",
+        "high"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong"
+      ],
+      "material_ids": [
+        "tpu",
+        "pla"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "wasp-2040-01",
+      "label": "Delta WASP 2040 1",
+      "printer_id": "deltawasp-2040",
+      "default_nozzle_mm": 0.4,
+      "enabled": true,
+      "priority": 58,
+      "roles": [
+        "tall",
+        "detail",
+        "general"
+      ],
+      "preferred_materials": [
+        "pla",
+        "petg"
+      ],
+      "quality_ids": [
+        "standard",
+        "high",
+        "ultra"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong"
+      ],
+      "material_ids": [
+        "pla",
+        "petg"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "wasp-2040-02",
+      "label": "Delta WASP 2040 2",
+      "printer_id": "deltawasp-2040",
+      "default_nozzle_mm": 0.7,
+      "enabled": true,
+      "priority": 45,
+      "roles": [
+        "tall",
+        "large",
+        "strong"
+      ],
+      "preferred_materials": [
+        "pla",
+        "petg"
+      ],
+      "quality_ids": [
+        "draft",
+        "standard"
+      ],
+      "strength_ids": [
+        "standard",
+        "strong",
+        "solid"
+      ],
+      "material_ids": [
+        "pla",
+        "petg"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "wasp-2040-03",
+      "label": "Delta WASP 2040 3",
+      "printer_id": "deltawasp-2040",
+      "default_nozzle_mm": 0.4,
+      "enabled": true,
+      "priority": 54,
+      "roles": [
+        "general",
+        "overflow"
+      ],
+      "preferred_materials": [
+        "pla",
+        "petg",
+        "tpu"
+      ],
+      "quality_ids": [
+        "draft",
+        "standard",
+        "high"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong"
+      ],
+      "material_ids": [
+        "pla",
+        "petg",
+        "tpu"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "wasp-turbo-01",
+      "label": "Delta WASP 2040 Turbo 1",
+      "printer_id": "deltawasp-2040-turbo",
+      "default_nozzle_mm": 0.4,
+      "enabled": true,
+      "priority": 85,
+      "roles": [
+        "engineering",
+        "enclosed",
+        "fast",
+        "detail"
+      ],
+      "preferred_materials": [
+        "abs",
+        "asa",
+        "petg"
+      ],
+      "quality_ids": [
+        "standard",
+        "high"
+      ],
+      "strength_ids": [
+        "standard",
+        "strong"
+      ],
+      "material_ids": [
+        "abs",
+        "asa",
+        "petg"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "wasp-turbo-02",
+      "label": "Delta WASP 2040 Turbo 2",
+      "printer_id": "deltawasp-2040-turbo",
+      "default_nozzle_mm": 0.7,
+      "enabled": true,
+      "priority": 76,
+      "roles": [
+        "engineering",
+        "enclosed",
+        "fast",
+        "large"
+      ],
+      "preferred_materials": [
+        "abs",
+        "asa",
+        "petg",
+        "pla"
+      ],
+      "quality_ids": [
+        "draft",
+        "standard"
+      ],
+      "strength_ids": [
+        "standard",
+        "strong",
+        "solid"
+      ],
+      "material_ids": [
+        "abs",
+        "asa",
+        "petg",
+        "pla"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "snapmaker-u1-01",
+      "label": "Snapmaker U1",
+      "printer_id": "snapmaker-u1",
+      "default_nozzle_mm": 0.4,
+      "enabled": true,
+      "priority": 78,
+      "roles": [
+        "multicolor",
+        "multimaterial",
+        "color-defined",
+        "detail"
+      ],
+      "preferred_materials": [
+        "pla",
+        "petg",
+        "tpu"
+      ],
+      "quality_ids": [
+        "standard",
+        "high",
+        "ultra"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong"
+      ],
+      "material_ids": [
+        "pla",
+        "petg",
+        "tpu"
+      ],
+      "production_ready": true,
+      "calibration_status": "physical-validated"
+    },
+    {
+      "id": "x1c-01",
+      "label": "Bambu Lab X1C",
+      "printer_id": "bambu-x1c",
+      "default_nozzle_mm": 0.4,
+      "enabled": true,
+      "priority": 92,
+      "roles": [
+        "engineering",
+        "enclosed",
+        "fast",
+        "detail",
+        "color-defined"
+      ],
+      "preferred_materials": [
+        "abs",
+        "asa",
+        "pla",
+        "petg"
+      ],
+      "quality_ids": [
+        "draft",
+        "standard",
+        "high",
+        "ultra"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong",
+        "solid"
+      ],
+      "material_ids": [
+        "pla",
+        "petg",
+        "abs",
+        "asa",
+        "tpu"
+      ],
+      "production_ready": true,
+      "calibration_status": "physical-validated"
+    },
+    {
+      "id": "predator-01",
+      "label": "Anycubic Predator 1",
+      "printer_id": "anycubic-predator",
+      "default_nozzle_mm": 1.0,
+      "enabled": true,
+      "priority": 70,
+      "roles": [
+        "very-large",
+        "large",
+        "coarse",
+        "batch"
+      ],
+      "preferred_materials": [
+        "pla",
+        "petg"
+      ],
+      "quality_ids": [
+        "draft",
+        "standard"
+      ],
+      "strength_ids": [
+        "standard",
+        "strong",
+        "solid"
+      ],
+      "material_ids": [
+        "pla",
+        "petg"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "predator-02",
+      "label": "Anycubic Predator 2",
+      "printer_id": "anycubic-predator",
+      "default_nozzle_mm": 0.6,
+      "enabled": true,
+      "priority": 62,
+      "roles": [
+        "very-large",
+        "large",
+        "tall",
+        "general"
+      ],
+      "preferred_materials": [
+        "pla",
+        "petg",
+        "tpu"
+      ],
+      "quality_ids": [
+        "draft",
+        "standard",
+        "high"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong"
+      ],
+      "material_ids": [
+        "pla",
+        "petg",
+        "tpu"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "v400-01",
+      "label": "FLSUN V400",
+      "printer_id": "flsun-v400",
+      "default_nozzle_mm": 0.4,
+      "enabled": true,
+      "priority": 88,
+      "roles": [
+        "fast",
+        "tall",
+        "detail",
+        "general"
+      ],
+      "preferred_materials": [
+        "pla",
+        "petg"
+      ],
+      "quality_ids": [
+        "draft",
+        "standard",
+        "high"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong"
+      ],
+      "material_ids": [
+        "pla",
+        "petg",
+        "tpu"
+      ],
+      "production_ready": false,
+      "calibration_status": "pending-physical-calibration"
+    },
+    {
+      "id": "phrozen-mini4k-01",
+      "label": "Phrozen Sonic Mini 4K",
+      "printer_id": "phrozen-sonic-mini-4k",
+      "enabled": true,
+      "priority": 90,
+      "roles": [
+        "resin",
+        "miniature",
+        "very-high-detail",
+        "small"
+      ],
+      "preferred_materials": [
+        "resin-standard",
+        "resin-tough"
+      ],
+      "quality_ids": [
+        "high",
+        "ultra"
+      ],
+      "strength_ids": [
+        "light",
+        "standard"
+      ],
+      "material_ids": [
+        "resin-standard",
+        "resin-tough"
+      ],
+      "production_ready": false,
+      "calibration_status": "manual-slicer-calibration"
+    },
+    {
+      "id": "prusa-i3-pool",
+      "label": "Pool Prusa i3 autocostruite",
+      "printer_id": "prusa-i3-custom",
+      "default_nozzle_mm": 0.4,
+      "enabled": true,
+      "priority": 35,
+      "pool": true,
+      "configured_units": 0,
+      "roles": [
+        "overflow",
+        "small",
+        "general"
+      ],
+      "preferred_materials": [
+        "pla",
+        "petg"
+      ],
+      "quality_ids": [
+        "draft",
+        "standard",
+        "high"
+      ],
+      "strength_ids": [
+        "light",
+        "standard",
+        "strong"
+      ],
+      "material_ids": [
+        "pla",
+        "petg"
+      ],
+      "production_ready": false,
+      "calibration_status": "requires-machine-inventory"
+    }
+  ],
+  "routing_rules": {
+    "defined_color_prefers": [
+      "snapmaker-u1-01",
+      "x1c-01"
+    ],
+    "engineering_materials": [
+      "abs",
+      "asa"
+    ],
+    "flexible_materials": [
+      "tpu"
+    ],
+    "resin_materials": [
+      "resin-standard",
+      "resin-tough"
+    ],
+    "large_footprint_ratio": 0.65,
+    "tall_threshold_mm": 250,
+    "batch_threshold": 4
+  }
+}

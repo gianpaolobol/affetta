@@ -20,7 +20,7 @@ if (Test-Path $stopScript) {
 }
 
 $replaceDirs = @('config','docs','integration','public','samples','scripts','src','test','tools')
-$manifestPath = Join-Path $TargetFull 'data\update-0412-manifest.json'
+$manifestPath = Join-Path $TargetFull 'data\update-0501-manifest.json'
 if (Test-Path $manifestPath) {
     $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json
     foreach ($name in @($manifest.installed_top_files)) {

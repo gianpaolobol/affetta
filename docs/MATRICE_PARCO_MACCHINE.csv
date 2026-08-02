@@ -1,0 +1,18 @@
+unit_id;unit_label;printer_id;technology;build_mm;bed_shape;filament_diameter_mm;default_nozzle_mm;primary_engine;fallback_engines;materials;qualities;strengths;roles;production_ready;calibration_status
+taz-01;LulzBot TAZ 4;lulzbot-taz4;fff;298x275x250;rectangular;2.85;0.5;cura;prusa;pla,petg;draft,standard,high;light,standard,strong;general,batch;False;pending-physical-calibration
+taz-02;LulzBot TAZ 5;lulzbot-taz5;fff;298x275x250;rectangular;2.85;0.5;cura;prusa;tpu;standard,high;light,standard,strong;flexible,general;False;pending-physical-calibration
+taz-03;LulzBot TAZ 6;lulzbot-taz6;fff;280x280x250;rectangular;2.85;0.8;cura;prusa;pla,petg;draft,standard;standard,strong,solid;large,coarse,batch,strong;False;pending-physical-calibration
+mini-01;LulzBot Mini A;lulzbot-mini;fff;152x152x158;rectangular;2.85;0.5;cura;prusa;pla,petg;standard,high;light,standard,strong;small,short-job,detail;False;pending-physical-calibration
+mini-02;LulzBot Mini B;lulzbot-mini;fff;152x152x158;rectangular;2.85;0.5;cura;prusa;tpu,pla;standard,high;light,standard,strong;small,flexible,short-job;False;pending-physical-calibration
+wasp-2040-01;Delta WASP 2040 1;deltawasp-2040;fff;200x200x400;circular;1.75;0.4;prusa;cura;pla,petg;standard,high,ultra;light,standard,strong;tall,detail,general;False;pending-physical-calibration
+wasp-2040-02;Delta WASP 2040 2;deltawasp-2040;fff;200x200x400;circular;1.75;0.7;prusa;cura;pla,petg;draft,standard;standard,strong,solid;tall,large,strong;False;pending-physical-calibration
+wasp-2040-03;Delta WASP 2040 3;deltawasp-2040;fff;200x200x400;circular;1.75;0.4;prusa;cura;pla,petg,tpu;draft,standard,high;light,standard,strong;general,overflow;False;pending-physical-calibration
+wasp-turbo-01;Delta WASP 2040 Turbo 1;deltawasp-2040-turbo;fff;200x200x400;circular;1.75;0.4;prusa;cura;abs,asa,petg;standard,high;standard,strong;engineering,enclosed,fast,detail;False;pending-physical-calibration
+wasp-turbo-02;Delta WASP 2040 Turbo 2;deltawasp-2040-turbo;fff;200x200x400;circular;1.75;0.7;prusa;cura;abs,asa,petg,pla;draft,standard;standard,strong,solid;engineering,enclosed,fast,large;False;pending-physical-calibration
+snapmaker-u1-01;Snapmaker U1;snapmaker-u1;fff;270x270x270;rectangular;1.75;0.4;snapmaker_orca;orca;pla,petg,tpu;standard,high,ultra;light,standard,strong;multicolor,multimaterial,color-defined,detail;True;physical-validated
+x1c-01;Bambu Lab X1C;bambu-x1c;fff;256x256x256;rectangular;1.75;0.4;orca;;pla,petg,abs,asa,tpu;draft,standard,high,ultra;light,standard,strong,solid;engineering,enclosed,fast,detail,color-defined;True;physical-validated
+predator-01;Anycubic Predator 1;anycubic-predator;fff;370x370x455;circular;1.75;1.0;cura;prusa;pla,petg;draft,standard;standard,strong,solid;very-large,large,coarse,batch;False;pending-physical-calibration
+predator-02;Anycubic Predator 2;anycubic-predator;fff;370x370x455;circular;1.75;0.6;cura;prusa;pla,petg,tpu;draft,standard,high;light,standard,strong;very-large,large,tall,general;False;pending-physical-calibration
+v400-01;FLSUN V400;flsun-v400;fff;300x300x410;circular;1.75;0.4;orca;prusa;pla,petg,tpu;draft,standard,high;light,standard,strong;fast,tall,detail,general;False;pending-physical-calibration
+phrozen-mini4k-01;Phrozen Sonic Mini 4K;phrozen-sonic-mini-4k;msla;134x75x130;rectangular;;;chitubox-manual;;resin-standard,resin-tough;high,ultra;light,standard;resin,miniature,very-high-detail,small;False;manual-slicer-calibration
+prusa-i3-pool;Pool Prusa i3 autocostruite;prusa-i3-custom;fff;200x200x200;rectangular;1.75;0.4;prusa;cura;pla,petg;draft,standard,high;light,standard,strong;overflow,small,general;False;requires-machine-inventory

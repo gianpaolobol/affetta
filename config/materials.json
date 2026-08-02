@@ -1,7 +1,83 @@
 {
-  "pla": {"label":"PLA","density_g_cm3":1.24,"cost_eur_kg":23.0,"nozzle_c":210,"bed_c":55,"speed_factor":1.0,"risk_factor":1.0,"max_volumetric_mm3_s":12,"fan_percent":100,"enclosure":"optional"},
-  "petg": {"label":"PETG","density_g_cm3":1.27,"cost_eur_kg":28.0,"nozzle_c":240,"bed_c":75,"speed_factor":0.86,"risk_factor":1.08,"max_volumetric_mm3_s":9,"fan_percent":45,"enclosure":"optional"},
-  "abs": {"label":"ABS","density_g_cm3":1.04,"cost_eur_kg":29.0,"nozzle_c":255,"bed_c":100,"speed_factor":0.78,"risk_factor":1.18,"max_volumetric_mm3_s":10,"fan_percent":15,"enclosure":"recommended"},
-  "asa": {"label":"ASA","density_g_cm3":1.07,"cost_eur_kg":32.0,"nozzle_c":260,"bed_c":100,"speed_factor":0.76,"risk_factor":1.2,"max_volumetric_mm3_s":9,"fan_percent":15,"enclosure":"recommended"},
-  "tpu": {"label":"TPU","density_g_cm3":1.21,"cost_eur_kg":39.0,"nozzle_c":225,"bed_c":50,"speed_factor":0.42,"risk_factor":1.28,"max_volumetric_mm3_s":3.2,"fan_percent":60,"enclosure":"optional"}
+  "pla": {
+    "label": "PLA",
+    "density_g_cm3": 1.24,
+    "cost_eur_kg": 23.0,
+    "nozzle_c": 210,
+    "bed_c": 55,
+    "speed_factor": 1.0,
+    "risk_factor": 1.0,
+    "max_volumetric_mm3_s": 12,
+    "fan_percent": 100,
+    "enclosure": "optional",
+    "technology": "fff"
+  },
+  "petg": {
+    "label": "PETG",
+    "density_g_cm3": 1.27,
+    "cost_eur_kg": 28.0,
+    "nozzle_c": 240,
+    "bed_c": 75,
+    "speed_factor": 0.86,
+    "risk_factor": 1.08,
+    "max_volumetric_mm3_s": 9,
+    "fan_percent": 45,
+    "enclosure": "optional",
+    "technology": "fff"
+  },
+  "abs": {
+    "label": "ABS",
+    "density_g_cm3": 1.04,
+    "cost_eur_kg": 29.0,
+    "nozzle_c": 255,
+    "bed_c": 100,
+    "speed_factor": 0.78,
+    "risk_factor": 1.18,
+    "max_volumetric_mm3_s": 10,
+    "fan_percent": 15,
+    "enclosure": "recommended",
+    "technology": "fff"
+  },
+  "asa": {
+    "label": "ASA",
+    "density_g_cm3": 1.07,
+    "cost_eur_kg": 32.0,
+    "nozzle_c": 260,
+    "bed_c": 100,
+    "speed_factor": 0.76,
+    "risk_factor": 1.2,
+    "max_volumetric_mm3_s": 9,
+    "fan_percent": 15,
+    "enclosure": "recommended",
+    "technology": "fff"
+  },
+  "tpu": {
+    "label": "TPU",
+    "density_g_cm3": 1.21,
+    "cost_eur_kg": 39.0,
+    "nozzle_c": 225,
+    "bed_c": 50,
+    "speed_factor": 0.42,
+    "risk_factor": 1.28,
+    "max_volumetric_mm3_s": 3.2,
+    "fan_percent": 60,
+    "enclosure": "optional",
+    "technology": "fff"
+  },
+  "resin-standard": {
+    "label": "Resina standard",
+    "technology": "msla",
+    "density_g_cm3": 1.1,
+    "cost_eur_kg": 38.0,
+    "risk_factor": 1.25,
+    "exposure_profile": "printer-resin-specific"
+  },
+  "resin-tough": {
+    "label": "Resina tough/funzionale",
+    "technology": "msla",
+    "density_g_cm3": 1.12,
+    "cost_eur_kg": 58.0,
+    "risk_factor": 1.35,
+    "exposure_profile": "printer-resin-specific"
+  }
 }

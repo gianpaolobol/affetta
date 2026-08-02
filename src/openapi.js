@@ -16,8 +16,8 @@ export function openApiDocument() {
   };
   const sliceProperties = {
     ...selections,
-    printer_id: { type: 'string', example: 'generic-reprap-marlin' },
-    nozzle_mm: { type: 'number', default: 0.4 }
+    printer_id: { type: 'string', example: 'auto-lab', description: 'Usa auto-lab per il Profilo automatico laboratorio. Il profilo è interno e non compare nella lista pubblica delle stampanti.' },
+    nozzle_mm: { type: ['number', 'null'], default: null, description: 'Può essere null con printer_id=auto-lab.' }
   };
   return {
     openapi: '3.1.0',
@@ -33,6 +33,18 @@ export function openApiDocument() {
         sessionCookie: { type: 'apiKey', in: 'cookie', name: 'affetta_session', description: 'Sessione utente della web app.' }
       },
       schemas: {
+
+        RouteRequest: { type: 'object', required: ['filename', 'file_base64'], properties: selections },
+        FleetUnit: {
+          type: 'object',
+          properties: {
+            id: { type: 'string' }, label: { type: 'string' }, printer_id: { type: 'string' }, printer_label: { type: 'string' },
+            technology: { type: 'string' }, build_mm: { type: 'array', items: { type: 'number' }, minItems: 3, maxItems: 3 },
+            bed_shape: { type: 'string' }, filament_diameter_mm: { type: ['number','null'] }, default_nozzle_mm: { type: ['number','null'] },
+            roles: { type: 'array', items: { type: 'string' } }, material_ids: { type: 'array', items: { type: 'string' } },
+            production_ready: { type: 'boolean' }, calibration_status: { type: 'string' }
+          }
+        },
         RegistrationRequest: {
           type: 'object', required: ['name', 'username', 'email', 'phone', 'password'],
           properties: {
@@ -66,6 +78,16 @@ export function openApiDocument() {
     paths: {
       '/api/v1/health': { get: { summary: 'Stato servizio', responses: { '200': { description: 'OK' } } } },
       '/api/v1/catalog': { get: { summary: 'Cataloghi pubblici', responses: { '200': { description: 'Catalogo' } } } },
+
+      '/api/v1/fleet': { get: { summary: 'Elenca unità fisiche, ruoli, materiali assegnati e stato di calibrazione', responses: { '200': { description: 'Parco macchine del laboratorio' } } } },
+      '/api/v1/route': {
+        post: {
+          summary: 'Seleziona automaticamente una unità produttiva già validata',
+          security: [{ bearerAuth: [] }, {}],
+          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/RouteRequest' } } } },
+          responses: { '200': { description: 'Unità selezionata e alternative' }, '422': { description: 'Nessuna unità produttiva validata compatibile' } }
+        }
+      },
       '/api/v1/capabilities': { get: { summary: 'Capacità disponibili senza esporre i motori', responses: { '200': { description: 'Capacità' } } } },
       '/api/v1/profile-preview': { get: { summary: 'Anteprima del profilo automatico applicato alla stampante', parameters: [
         { name:'printer_id', in:'query', required:true, schema:{type:'string'} },

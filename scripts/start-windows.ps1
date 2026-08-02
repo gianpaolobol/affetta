@@ -12,7 +12,7 @@ Set-Location $Root
 $DataDir = Join-Path $Root 'data'
 $RuntimeDir = Join-Path $Root 'runtime'
 $VersionFile = Join-Path $Root 'VERSION'
-$ExpectedVersion = if (Test-Path $VersionFile) { (Get-Content $VersionFile -Raw).Trim() } else { '0.4.12' }
+$ExpectedVersion = if (Test-Path $VersionFile) { (Get-Content $VersionFile -Raw).Trim() } else { '0.5.1' }
 $NodeVersion = '24.18.1'
 $NodeFolder = "node-v$NodeVersion-win-x64"
 $NodeHome = Join-Path $RuntimeDir $NodeFolder
@@ -211,20 +211,97 @@ function Set-DotEnvValue([string]$Name, [string]$Value) {
     Set-Content -Path $EnvFile -Value $out -Encoding UTF8
 }
 
+function Get-DotEnvValue([string]$Name) {
+    if (-not (Test-Path $EnvFile)) { return $null }
+    $pattern = '^\s*' + [Regex]::Escape($Name) + '\s*=\s*(.*?)\s*$'
+    foreach ($line in Get-Content $EnvFile) {
+        if ($line -match $pattern) {
+            $value = [string]$Matches[1]
+            $value = $value.Trim()
+            if ($value.Length -ge 2) {
+                $first = $value.Substring(0, 1)
+                $last = $value.Substring($value.Length - 1, 1)
+                if (($first -eq '"' -and $last -eq '"') -or ($first -eq "'" -and $last -eq "'")) {
+                    $value = $value.Substring(1, $value.Length - 2)
+                }
+            }
+            return [Environment]::ExpandEnvironmentVariables($value)
+        }
+    }
+    return $null
+}
+
+function Get-ConfiguredValue([string]$Name) {
+    $processValue = [Environment]::GetEnvironmentVariable($Name, 'Process')
+    if (-not [string]::IsNullOrWhiteSpace($processValue)) {
+        return [Environment]::ExpandEnvironmentVariables($processValue.Trim())
+    }
+    return Get-DotEnvValue $Name
+}
+
+function Find-EngineInRoots([string[]]$Roots, [string[]]$Names) {
+    foreach ($rootCandidate in $Roots) {
+        if ([string]::IsNullOrWhiteSpace($rootCandidate)) { continue }
+        $found = Find-EngineExecutable $rootCandidate $Names
+        if ($found) { return $found }
+    }
+    return $null
+}
+
+function Resolve-EngineExecutable(
+    [string]$VariableName,
+    [string[]]$FallbackRoots,
+    [string[]]$Names,
+    [switch]$Optional
+) {
+    $configured = Get-ConfiguredValue $VariableName
+    if (-not [string]::IsNullOrWhiteSpace($configured)) {
+        if (Test-Path -LiteralPath $configured -PathType Leaf) {
+            return (Resolve-Path -LiteralPath $configured).Path
+        }
+        throw "$VariableName punta a un file inesistente: $configured"
+    }
+
+    $found = Find-EngineInRoots $FallbackRoots $Names
+    if ($found) { return $found }
+    if ($Optional) { return $null }
+
+    throw "$VariableName non configurato e motore non trovato. Imposta un percorso assoluto nel file .env."
+}
+
 function Configure-EnginePaths {
-    $PrusaRoot = Join-Path $Root 'runtime\engines\prusa'
-    $OrcaRoot = Join-Path $Root 'runtime\engines\orca'
-    $CuraRoot = Join-Path $Root 'runtime\engines\cura'
+    $ExternalRuntime = 'C:\AFFETTA_RUNTIME\engines'
 
-    $PrusaExe = Find-EngineExecutable $PrusaRoot @('prusa-slicer-console.exe')
-    $OrcaExe = Find-EngineExecutable $OrcaRoot @('orca-slicer.exe', 'OrcaSlicer.exe')
-    $CuraExe = Find-EngineExecutable $CuraRoot @('CuraEngine.exe')
+    $PrusaExe = Resolve-EngineExecutable `
+        'PRUSA_SLICER_BIN' `
+        @((Join-Path $Root 'runtime\engines\prusa'), (Join-Path $ExternalRuntime 'prusa')) `
+        @('prusa-slicer-console.exe')
 
-    if (-not $PrusaExe) { throw "PrusaSlicer non trovato in $PrusaRoot. Riesegui PREPARA_MOTORI_AFFETTA.cmd." }
-    if (-not $OrcaExe) { throw "OrcaSlicer non trovato in $OrcaRoot. Riesegui PREPARA_MOTORI_AFFETTA.cmd." }
+    $OrcaExe = Resolve-EngineExecutable `
+        'ORCA_SLICER_BIN' `
+        @((Join-Path $Root 'runtime\engines\orca'), (Join-Path $ExternalRuntime 'orca')) `
+        @('orca-slicer.exe', 'OrcaSlicer.exe')
 
-    # Le vecchie variabili AFFETTA_ENGINE_COMMAND_* trasformavano i motori in comandi custom
-    # e bypassavano gli adattatori reali. Vanno eliminate sia dal processo sia da .env.
+    $SnapmakerConfigured = Get-ConfiguredValue 'SNAPMAKER_ORCA_BIN'
+    if (-not [string]::IsNullOrWhiteSpace($SnapmakerConfigured)) {
+        if (-not (Test-Path -LiteralPath $SnapmakerConfigured -PathType Leaf)) {
+            throw "SNAPMAKER_ORCA_BIN punta a un file inesistente: $SnapmakerConfigured"
+        }
+        $SnapmakerExe = (Resolve-Path -LiteralPath $SnapmakerConfigured).Path
+    } else {
+        $SnapmakerExe = Find-EngineInRoots `
+            @((Join-Path $Root 'runtime\engines\snapmaker_orca'), (Join-Path $ExternalRuntime 'snapmaker_orca')) `
+            @('snapmaker-orca.exe', 'orca-slicer.exe', 'OrcaSlicer.exe')
+        if (-not $SnapmakerExe) { $SnapmakerExe = $OrcaExe }
+    }
+
+    $CuraExe = Resolve-EngineExecutable `
+        'CURA_ENGINE_BIN' `
+        @((Join-Path $Root 'runtime\engines\cura'), (Join-Path $ExternalRuntime 'cura')) `
+        @('CuraEngine.exe') `
+        -Optional
+
+    # Le variabili legacy trasformavano i motori in comandi custom e bypassavano gli adattatori reali.
     $legacy = @(
         'AFFETTA_ENGINE_COMMAND_PRUSA',
         'AFFETTA_ENGINE_COMMAND_CURA',
@@ -234,13 +311,14 @@ function Configure-EnginePaths {
     foreach ($name in $legacy) { Remove-Item "Env:$name" -ErrorAction SilentlyContinue }
     Remove-DotEnvKeys $legacy
 
-    # Impostiamo percorsi assoluti: nessun fallback a "prusa-slicer" o "orca-slicer" nel PATH.
+    # Manteniamo nel .env percorsi assoluti e verificati. Il launcher non li sostituisce più
+    # con percorsi relativi alla cartella da cui viene eseguito.
     $env:PRUSA_SLICER_BIN = $PrusaExe
     $env:ORCA_SLICER_BIN = $OrcaExe
-    $env:SNAPMAKER_ORCA_BIN = $OrcaExe
+    $env:SNAPMAKER_ORCA_BIN = $SnapmakerExe
     Set-DotEnvValue 'PRUSA_SLICER_BIN' $PrusaExe
     Set-DotEnvValue 'ORCA_SLICER_BIN' $OrcaExe
-    Set-DotEnvValue 'SNAPMAKER_ORCA_BIN' $OrcaExe
+    Set-DotEnvValue 'SNAPMAKER_ORCA_BIN' $SnapmakerExe
 
     if ($CuraExe) {
         $env:CURA_ENGINE_BIN = $CuraExe
@@ -249,7 +327,8 @@ function Configure-EnginePaths {
 
     Write-StartupLog "PrusaSlicer: $PrusaExe"
     Write-StartupLog "OrcaSlicer: $OrcaExe"
-    Write-StartupLog 'Snapmaker U1: OrcaSlicer con profili U1 della stessa release'
+    Write-StartupLog "Snapmaker U1: $SnapmakerExe"
+    if ($CuraExe) { Write-StartupLog "CuraEngine: $CuraExe" }
 }
 
 try {
@@ -268,9 +347,9 @@ try {
     $BaseUrl = "http://127.0.0.1:$Port"
     $InstanceId = Get-InstanceId $Root
     $env:AFFETTA_INSTANCE_ID = $InstanceId
-    $env:AFFETTA_BUILD_ID = 'windows-matrix-fixed-0412'
+    $env:AFFETTA_BUILD_ID = 'windows-lab-fleet-0501'
     Set-DotEnvValue 'AFFETTA_INSTANCE_ID' $InstanceId
-    Set-DotEnvValue 'AFFETTA_BUILD_ID' 'windows-matrix-fixed-0412'
+    Set-DotEnvValue 'AFFETTA_BUILD_ID' 'windows-lab-fleet-0501'
 
     $ExistingHealth = Test-AffettaHealth $BaseUrl
     if ($ExistingHealth -and $ExistingHealth.service -eq 'affetta') {

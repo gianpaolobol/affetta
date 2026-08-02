@@ -9,13 +9,15 @@ import { ensureDir, formatDuration, id, safeFilename, sha256 } from './utils.js'
 import { CommandSlicerProvider, resolvePrinter } from './providers/command-slicer.js';
 import { publicProfile, resolvePrintProfile } from './providers/profile-resolver.js';
 import { appendDiagnostic, normalizeError } from './runtime-diagnostics.js';
+import { routeProductionJob } from './fleet-router.js';
 
 function publicJob(job) {
   const { input_path, artifact_path, download_token, engine_internal, ...safe } = job;
   const publicPrinter = safe.printer ? {
     id: safe.printer.id,
     label: safe.printer.label,
-    profile_status: safe.printer.profile_status
+    profile_status: safe.printer.profile_status,
+    fleet_unit_id: safe.printer.fleet_unit_id || null
   } : null;
   const publicResult = safe.result ? {
     ...safe.result,
@@ -45,13 +47,31 @@ function updateJobSafely(jobId, patch, diagnosticEvent) {
 }
 
 export function createSliceJob({ tenant, modelBuffer, filename, options }) {
-  const printer = resolvePrinter(options.printer_id);
-  if (!printer) throw Object.assign(new Error('Profilo stampante non trovato.'), { statusCode: 400, code: 'invalid_printer' });
-  const arranged = arrangeStlCopies(modelBuffer, options.quantity, printer.build_mm);
-  const analysis = arranged.analysis;
-  if (analysis.bounds_mm.size.some((v, i) => v > printer.build_mm[i] + 0.01)) {
-    throw Object.assign(new Error('Il modello o la disposizione delle copie supera il volume della stampante selezionata.'), { statusCode: 422, code: 'model_too_large' });
+  const requestedOptions = { ...options };
+  let routing = null;
+  let resolvedOptions = { ...options };
+  if (options.printer_id === 'auto-lab') {
+    routing = routeProductionJob({ modelBuffer, options });
+    routing.profile = {
+      id: 'laboratory-auto',
+      label: catalogs.internalProfiles['laboratory-auto'].label,
+      visibility: 'internal'
+    };
+    if (routing.selected.technology !== 'fff') {
+      throw Object.assign(new Error('Il router ha selezionato il reparto resina: il file CTB deve ancora essere preparato con CHITUBOX.'), { statusCode: 409, code: 'manual_resin_slicer_required' });
+    }
+    resolvedOptions = {
+      ...options,
+      printer_id: routing.selected.printer_id,
+      nozzle_mm: routing.selected.nozzle_mm,
+      fleet_unit_id: routing.selected.unit_id,
+      routing_mode: 'laboratory-auto'
+    };
   }
+  const printer = resolvePrinter(resolvedOptions.printer_id);
+  if (!printer) throw Object.assign(new Error('Profilo stampante non trovato.'), { statusCode: 400, code: 'invalid_printer' });
+  const arranged = arrangeStlCopies(modelBuffer, resolvedOptions.quantity, printer);
+  const analysis = arranged.analysis;
   ensureDir(config.uploadDir);
   ensureDir(config.artifactDir);
   const jobId = id('slice');
@@ -62,9 +82,9 @@ export function createSliceJob({ tenant, modelBuffer, filename, options }) {
   const job = jobStore.create({
     id: jobId,
     tenant,
-    source: options.source,
-    external_ref: options.external_ref,
-    metadata: options.metadata,
+    source: resolvedOptions.source,
+    external_ref: resolvedOptions.external_ref,
+    metadata: resolvedOptions.metadata,
     status: 'queued',
     phase: 'queued',
     progress: 0,
@@ -75,8 +95,10 @@ export function createSliceJob({ tenant, modelBuffer, filename, options }) {
     model_sha256: sha256(modelBuffer),
     model_analysis: analysis,
     layout: arranged.layout,
-    selections: options,
-    printer: { id: options.printer_id, label: printer.label, profile_status: printer.status },
+    requested_selections: requestedOptions,
+    selections: resolvedOptions,
+    routing,
+    printer: { id: resolvedOptions.printer_id, label: printer.label, profile_status: printer.status, fleet_unit_id: resolvedOptions.fleet_unit_id || null },
     engine_internal: printer.engines[0],
     input_path: inputPath,
     artifact_path: outputPath,
@@ -87,7 +109,8 @@ export function createSliceJob({ tenant, modelBuffer, filename, options }) {
 
   appendDiagnostic('slice_job_created', {
     job_id: jobId,
-    printer_id: options.printer_id,
+    printer_id: resolvedOptions.printer_id,
+    fleet_unit_id: resolvedOptions.fleet_unit_id || null,
     engine_candidates: printer.engines,
     input_bytes: arranged.buffer.length,
     memory: process.memoryUsage()

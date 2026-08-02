@@ -1,10 +1,19 @@
-# Verifica Windows reale pendente
+# Collaudo Windows reale pendente — Affetta 0.5.1
 
-Le cause osservate nella matrice 0.4.11 sono state corrette e coperte da test automatici. Non è possibile dichiarare 960/960 slicing reali superati senza eseguire nuovamente la matrice sul computer Windows che contiene i runtime e i profili effettivi.
+Dopo l’applicazione su `C:\AFFETTA` eseguire:
 
-Dopo l'aggiornamento:
+```bat
+C:\AFFETTA\AVVIA_AFFETTA.cmd
+C:\AFFETTA\COLLAUDO_FORENSE_AFFETTA.cmd
+C:\AFFETTA\COLLAUDA_PROFILI_LABORATORIO.cmd
+C:\AFFETTA\COLLAUDA_MOTORI_PARCO_MACCHINE.cmd
+```
 
-1. eseguire `COLLAUDO_FORENSE_AFFETTA.cmd`;
-2. eseguire il collaudatore matrice v0.2;
-3. verificare che il riepilogo riporti 960 superati, 0 falliti e 0 errori API;
-4. controllare manualmente almeno un G-code per Prusa MK4, X1C e Snapmaker U1.
+Controllare inoltre nel browser:
+
+- assenza dei profili interni nella lista stampanti;
+- presenza di TAZ 4, TAZ 5, TAZ 6 e LulzBot Mini;
+- piano circolare per Predator, V400 e Delta WASP;
+- etichetta `Prusa i3 autocostruita`.
+
+Le unità nuove non devono essere abilitate in produzione finché il relativo G-code non è stato controllato e stampato fisicamente.

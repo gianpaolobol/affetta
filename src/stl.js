@@ -142,24 +142,87 @@ function writeBinaryTriangles(triangles, headerText = 'Affetta arranged STL') {
  * Duplica un STL su una griglia centrata. Restituisce un unico STL binario.
  * È intenzionalmente prudente: tutte le copie devono stare su un solo piano.
  */
-export function arrangeStlCopies(buffer, quantity, buildMm, { spacingMm = 5, maxTriangles = 5_000_000 } = {}) {
+function normalizeBuildGeometry(buildOrPrinter) {
+  if (Array.isArray(buildOrPrinter)) {
+    return { buildMm: buildOrPrinter, bedShape: 'rectangular', diameterMm: null };
+  }
+  const printer = buildOrPrinter || {};
+  return {
+    buildMm: printer.build_mm,
+    bedShape: printer.bed_shape || 'rectangular',
+    diameterMm: Number(printer.build_diameter_mm || Math.min(...(printer.build_mm || [0, 0])))
+  };
+}
+
+function rectangleInsideCircle(centerX, centerY, width, depth, radius) {
+  const halfX = width / 2;
+  const halfY = depth / 2;
+  return [
+    [centerX - halfX, centerY - halfY],
+    [centerX + halfX, centerY - halfY],
+    [centerX + halfX, centerY + halfY],
+    [centerX - halfX, centerY + halfY]
+  ].every(([x, y]) => Math.hypot(x, y) <= radius + 0.01);
+}
+
+/**
+ * Duplica un STL su una griglia centrata. Restituisce un unico STL binario.
+ * Supporta piani rettangolari e circolari. Per i piani circolari usa un
+ * controllo prudente sui quattro vertici dell'ingombro di ogni copia.
+ */
+export function arrangeStlCopies(buffer, quantity, buildOrPrinter, { spacingMm = 5, maxTriangles = 5_000_000 } = {}) {
   const units = Math.max(1, Math.trunc(Number(quantity) || 1));
   const analysis = analyzeStl(buffer);
-  if (units === 1) return { buffer, analysis, layout: { quantity: 1, columns: 1, rows: 1, spacing_mm: 0 } };
+  const { buildMm, bedShape, diameterMm } = normalizeBuildGeometry(buildOrPrinter);
+  if (!Array.isArray(buildMm) || buildMm.length < 3) throw new Error('Volume stampante non valido.');
   const [sizeX, sizeY, sizeZ] = analysis.bounds_mm.size;
   if (![sizeX, sizeY, sizeZ].every((value) => Number.isFinite(value) && value > 0)) throw new Error('Dimensioni STL non valide per la disposizione multipla.');
   const [buildX, buildY, buildZ] = buildMm;
   if (sizeZ > buildZ + 0.01) throw Object.assign(new Error('Il modello supera l’altezza utile della stampante.'), { code: 'model_too_large', statusCode: 422 });
+
+  const circular = bedShape === 'circular';
+  const radius = circular ? diameterMm / 2 : null;
+  if (circular && !rectangleInsideCircle(0, 0, sizeX, sizeY, radius)) {
+    throw Object.assign(new Error('L’ingombro del modello non rientra nel piano circolare della stampante.'), { code: 'model_too_large', statusCode: 422 });
+  }
+  if (!circular && (sizeX > buildX + 0.01 || sizeY > buildY + 0.01)) {
+    throw Object.assign(new Error('Il modello supera il piano utile della stampante.'), { code: 'model_too_large', statusCode: 422 });
+  }
+
+  if (units === 1) {
+    return {
+      buffer,
+      analysis,
+      layout: {
+        quantity: 1, columns: 1, rows: 1, spacing_mm: 0,
+        bed_shape: bedShape,
+        footprint_mm: [round(sizeX, 3), round(sizeY, 3), round(sizeZ, 3)]
+      }
+    };
+  }
 
   let best = null;
   for (let columns = 1; columns <= units; columns++) {
     const rows = Math.ceil(units / columns);
     const width = columns * sizeX + (columns - 1) * spacingMm;
     const depth = rows * sizeY + (rows - 1) * spacingMm;
-    if (width <= buildX + 0.01 && depth <= buildY + 0.01) {
-      const score = Math.max(width / buildX, depth / buildY) + Math.abs(columns - rows) * 0.001;
-      if (!best || score < best.score) best = { columns, rows, width, depth, score };
+    if (width > buildX + 0.01 || depth > buildY + 0.01) continue;
+
+    let fits = true;
+    if (circular) {
+      const originX = -width / 2 + sizeX / 2;
+      const originY = -depth / 2 + sizeY / 2;
+      for (let index = 0; index < units && fits; index++) {
+        const column = index % columns;
+        const row = Math.floor(index / columns);
+        const centerX = originX + column * (sizeX + spacingMm);
+        const centerY = originY + row * (sizeY + spacingMm);
+        fits = rectangleInsideCircle(centerX, centerY, sizeX, sizeY, radius);
+      }
     }
+    if (!fits) continue;
+    const score = Math.max(width / buildX, depth / buildY) + Math.abs(columns - rows) * 0.001;
+    if (!best || score < best.score) best = { columns, rows, width, depth, score };
   }
   if (!best) {
     throw Object.assign(new Error(`Le ${units} copie non entrano tutte sul piano selezionato. Riduci la quantità o scegli una stampante più grande.`), { code: 'quantity_does_not_fit', statusCode: 422 });
@@ -193,6 +256,7 @@ export function arrangeStlCopies(buffer, quantity, buildMm, { spacingMm = 5, max
       columns: best.columns,
       rows: best.rows,
       spacing_mm: spacingMm,
+      bed_shape: bedShape,
       footprint_mm: [round(best.width, 3), round(best.depth, 3), round(sizeZ, 3)]
     }
   };
