@@ -36,6 +36,7 @@ test('completa end-to-end un job X3G con checksum, GPX e capability sperimentali
   assert.equal(stored?.state, 'completed');
   assert.equal(local.createCount(), 1);
   assert.deepEqual(cloud.uploaded(), local.output);
+  assert.equal(cloud.uploadContentLength(), String(local.output.length));
   const completion = cloud.completedResult() as { result?: { result?: { output_format?: string; postprocessors?: unknown[]; validation?: { valid?: boolean } } } };
   assert.equal(completion.result?.result?.output_format, 'x3g');
   assert.equal(completion.result?.result?.postprocessors?.length, 1);
@@ -56,6 +57,7 @@ test('riprende dopo un upload fallito senza creare un secondo job locale', async
   assert.equal(second.db.getJob('job_mock_01')?.state, 'completed');
   assert.equal(local.createCount(), 1);
   assert.deepEqual(cloud.uploaded(), local.output);
+  assert.equal(cloud.uploadContentLength(), String(local.output.length));
   assert.equal(cloud.failCount(), 1);
 });
 

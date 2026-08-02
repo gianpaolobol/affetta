@@ -58,3 +58,10 @@ Il backend continua a rifiutare `queued/queue` sugli endpoint di avanzamento
 di un job già assegnato. Questa separazione preserva una macchina a stati cloud
 monotona e impedisce che dettagli interni del runtime locale modifichino il
 contratto distribuito.
+
+
+## Upload di artefatti firmati
+
+Gli upload PUT firmati dichiarano la lunghezza esatta del corpo. L'Agent ricava
+`Content-Length` dal file locale, verifica valori già presenti negli header e
+mantiene lo streaming.

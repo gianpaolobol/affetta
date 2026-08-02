@@ -139,12 +139,33 @@ export async function downloadSignedFile(config: AgentConfig, rawUrl: string, de
 
 export async function uploadSignedFile(config: AgentConfig, rawUrl: string, source: string, headers: Record<string, string> = {}): Promise<void> {
   const url = assertArtifactUrl(config, rawUrl);
+  const stat = await fs.promises.stat(source);
+  if (!stat.isFile()) {
+    throw new AgentError('artifact_upload_source_invalid', 'Il percorso dell’artefatto non è un file.', {
+      stage: 'uploading', retryable: false, details: { source: path.basename(source) }
+    });
+  }
+  const contentLength = String(stat.size);
+  const requestHeaders: Record<string, string> = {};
+  for (const [name, value] of Object.entries(headers)) {
+    if (name.toLowerCase() === 'content-length') {
+      if (value !== contentLength) {
+        throw new AgentError('artifact_upload_length_mismatch', 'La dimensione firmata non corrisponde al file da caricare.', {
+          stage: 'uploading', retryable: false,
+          details: { declared_size_bytes: value, observed_size_bytes: stat.size }
+        });
+      }
+      continue;
+    }
+    requestHeaders[name] = value;
+  }
+  requestHeaders['Content-Length'] = contentLength;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), Math.max(config.httpTimeoutMs, 120000));
   try {
     const response = await fetch(url, {
       method: 'PUT',
-      headers,
+      headers: requestHeaders,
       body: fs.createReadStream(source) as unknown as BodyInit,
       duplex: 'half',
       signal: controller.signal

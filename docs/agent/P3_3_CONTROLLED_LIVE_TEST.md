@@ -51,3 +51,10 @@ pubblica al backend `preparing/prepare` fino all'avvio effettivo dello slicing.
 
 I mock end-to-end applicano lo stesso insieme di stati e stage consentiti dal
 backend reale, così un ritorno futuro di `queued/queue` rende la suite rossa.
+
+
+## Upload firmato e Content-Length
+
+Il PUT del risultato usa uno stream con `Content-Length` ricavato dalla
+dimensione reale del file. Questo evita HTTP 411 di MinIO senza caricare il
+G-code interamente in memoria.

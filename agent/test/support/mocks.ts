@@ -152,6 +152,7 @@ export interface MockCloud {
   completedResult: () => unknown;
   failCount: () => number;
   heartbeatCount: () => number;
+  uploadContentLength: () => string | undefined;
   close: () => Promise<void>;
 }
 
@@ -162,6 +163,7 @@ export async function startMockCloud(options: { failFirstUpload?: boolean; revok
   let uploadAttempts = 0;
   let failures = 0;
   let heartbeats = 0;
+  let uploadContentLength: string | undefined;
   const request: JobRequestV1 = {
     schema_version: 'affetta.job.v1',
     request_id: 'req_mock_01',
@@ -245,7 +247,14 @@ export async function startMockCloud(options: { failFirstUpload?: boolean; revok
     }
     if (httpRequest.method === 'PUT' && url.pathname === '/storage/output') {
       uploadAttempts += 1;
+      uploadContentLength = httpRequest.headers['content-length'];
+      if (!uploadContentLength) {
+        return json(response, 411, { error: { code: 'length_required', message: 'Content-Length obbligatorio.' } });
+      }
       const body = await readBody(httpRequest);
+      if (Number(uploadContentLength) !== body.length) {
+        return json(response, 400, { error: { code: 'length_mismatch', message: 'Content-Length non coerente.' } });
+      }
       if (options.failFirstUpload && uploadAttempts === 1) return json(response, 503, { error: { code: 'storage_unavailable' } });
       uploaded = Buffer.from(body);
       response.writeHead(200);
@@ -261,6 +270,7 @@ export async function startMockCloud(options: { failFirstUpload?: boolean; revok
     uploaded: () => uploaded,
     completedResult: () => completed,
     failCount: () => failures,
-    heartbeatCount: () => heartbeats
+    heartbeatCount: () => heartbeats,
+    uploadContentLength: () => uploadContentLength
   };
 }
