@@ -1,6 +1,6 @@
 # Affetta 0.5.2 — Thing-O-Matic e output X3G
 
-Affetta 0.5.1 corregge la separazione tra modelli stampante pubblici e funzioni interne di Stampa3DBologna, oltre alla rappresentazione dei piani circolari delle stampanti delta.
+Affetta 0.5.2 integra la pipeline sperimentale CuraEngine → GPX `t6` → X3G per MakerBot Thing-O-Matic e mantiene la separazione tra modelli pubblici, profili interni e unità fisiche del laboratorio.
 
 ## Novità principali
 
@@ -10,31 +10,43 @@ Affetta 0.5.1 corregge la separazione tra modelli stampante pubblici e funzioni 
 - profili pubblici LulzBot TAZ 4, TAZ 5, TAZ 6 e Mini prima generazione;
 - unità private del laboratorio collegate ai modelli reali;
 - `Prusa i3 autocostruita` rinominata senza suffisso;
-- 68 test automatici superati e 327 profili laboratorio verificati staticamente.
+- output X3G sperimentale per Thing-O-Matic Mk6/Sailfish.
 
-## Installazione Windows
+## Sorgente GitHub e runtime esterno
 
-1. Estrai il pacchetto in una cartella diversa da `C:\AFFETTA`, ad esempio `C:\AFFETTA_UPDATE_0501`.
-2. Esegui `APPLICA_AFFETTA_0501.cmd` dalla cartella estratta.
-3. Avvia `C:\AFFETTA\AVVIA_AFFETTA.cmd`.
-4. Esegui `C:\AFFETTA\COLLAUDO_FORENSE_AFFETTA.cmd`.
-5. Esegui `C:\AFFETTA\COLLAUDA_PROFILI_LABORATORIO.cmd`.
-6. Esegui `C:\AFFETTA\COLLAUDA_MOTORI_PARCO_MACCHINE.cmd`.
+Il ramo GitHub `main` contiene il codice sorgente, i profili, i test e la documentazione. Non contiene gli eseguibili dei motori, credenziali, upload, log, database o artefatti generati.
 
-L’installer preserva `.env`, `data`, `runtime` e `node_modules` e crea `C:\AFFETTA_BACKUP_PRE_0501_<data_ora>`.
+Percorsi consigliati su Windows:
+
+```text
+C:\AFFETTA_GITHUB_0412   clone sorgente
+C:\AFFETTA_RUNTIME       motori esterni
+C:\AFFETTA               installazione operativa, se presente
+```
+
+Il runtime deve restare esterno al repository. I percorsi dei motori vengono configurati nel file `.env` tramite `PRUSA_SLICER_BIN`, `CURA_ENGINE_BIN`, `GPX_BIN`, `ORCA_SLICER_BIN` e `SNAPMAKER_ORCA_BIN`.
+
+## Setup sorgente su Windows
+
+```powershell
+git clone https://github.com/gianpaolobol/affetta.git C:\AFFETTA_GITHUB_0412
+Set-Location C:\AFFETTA_GITHUB_0412
+git checkout main
+git pull --ff-only origin main
+Copy-Item .env.example .env
+npm install
+npm test
+npm start
+```
+
+Prima dei test live, compilare `.env` con i percorsi reali dei motori presenti in `C:\AFFETTA_RUNTIME`. I test statici e contrattuali non devono richiedere il runtime esterno.
 
 ## Stato produttivo
 
-X1C e Snapmaker U1 restano abilitate. Le nuove unità LulzBot e delta restano `production_ready=false` fino al collaudo reale del motore e alla stampa fisica.
-
+X1C e Snapmaker U1 restano abilitate. Le unità non collaudate restano `production_ready=false` fino alla verifica reale del motore e alla stampa fisica.
 
 ## Thing-O-Matic
 
-La versione 0.5.2 aggiunge la pipeline CuraEngine → GPX t6 → X3G per la Thing-O-Matic Mk6/Sailfish. I profili PLA, ABS, PETG e TPU sono utilizzabili ma sperimentali; la macchina resta esclusa dal routing produttivo automatico fino al collaudo fisico.
+La versione 0.5.2 aggiunge la pipeline CuraEngine → GPX `t6` → X3G per la Thing-O-Matic Mk6/Sailfish. I profili PLA, ABS, PETG e TPU sono sperimentali; la macchina resta esclusa dal routing produttivo automatico fino al collaudo fisico.
 
-## Stato Thing-O-Matic
-
-La generazione X3G è funzionante, ma il collaudo fisico è ancora pendente.
-La macchina resta sperimentale e non disponibile per il routing produttivo automatico.
-
-Vedi: `docs/THING_O_MATIC_PHYSICAL_VALIDATION_PENDING.md`
+La generazione X3G è funzionante, ma il collaudo fisico è ancora pendente. Vedi `docs/THING_O_MATIC_PHYSICAL_VALIDATION_PENDING.md`.
