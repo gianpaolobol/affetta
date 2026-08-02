@@ -1,0 +1,89 @@
+{
+  "schema_version": "affetta.agent-capabilities.v1",
+  "agent_id": "agt_bologna_lab_01",
+  "observed_at": "2026-08-02T05:00:00Z",
+  "status": "online",
+  "affetta_version": "0.5.2",
+  "protocol_versions": [
+    "affetta.job.v1",
+    "affetta.result.v1",
+    "affetta.event.v1"
+  ],
+  "active_jobs": 0,
+  "disk_free_bytes": 153000000000,
+  "platform": {
+    "os": "windows",
+    "arch": "x64",
+    "node_version": "22.16.0",
+    "hostname_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  },
+  "engines": [
+    {
+      "id": "cura",
+      "available": true,
+      "version": "5.13.0"
+    },
+    {
+      "id": "orca",
+      "available": true,
+      "version": "2.4.1"
+    },
+    {
+      "id": "prusa",
+      "available": true,
+      "version": "2.9.5"
+    },
+    {
+      "id": "snapmaker_orca",
+      "available": true,
+      "version": "2.3.5"
+    }
+  ],
+  "postprocessors": [
+    {
+      "id": "gpx",
+      "available": true,
+      "version": "2.6.8"
+    }
+  ],
+  "output_formats": [
+    "gcode",
+    "x3g"
+  ],
+  "printer_profiles": [
+    {
+      "profile_id": "bambu-x1c-04-petg",
+      "profile_version": "2.3.1",
+      "profile_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "profile_status": "verified",
+      "output_format": "gcode",
+      "materials": [
+        "petg"
+      ],
+      "nozzles_mm": [
+        0.4
+      ],
+      "production_ready": true,
+      "physical_validation": "passed"
+    },
+    {
+      "profile_id": "thing-o-matic-mk6-035-pla",
+      "profile_version": "1.0.0-experimental.1",
+      "profile_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "profile_status": "experimental",
+      "output_format": "x3g",
+      "materials": [
+        "pla",
+        "abs",
+        "petg",
+        "tpu"
+      ],
+      "nozzles_mm": [
+        0.35
+      ],
+      "production_ready": false,
+      "physical_validation": "pending"
+    }
+  ],
+  "capability_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+}

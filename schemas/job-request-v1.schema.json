@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.affetta.dev/job-request-v1.schema.json",
+  "title": "Affetta normalized job request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_id",
+    "idempotency_key",
+    "source",
+    "operation",
+    "input",
+    "print_intent",
+    "routing"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "affetta.job.v1"
+    },
+    "request_id": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/typedId"
+    },
+    "idempotency_key": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/idempotencyKey"
+    },
+    "source": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/source"
+    },
+    "operation": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/operation"
+    },
+    "created_at": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/timestamp"
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id",
+        "filename",
+        "format",
+        "sha256",
+        "size_bytes"
+      ],
+      "properties": {
+        "artifact_id": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/typedId"
+        },
+        "filename": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/safeFilename"
+        },
+        "format": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/inputFormat"
+        },
+        "sha256": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/sha256"
+        },
+        "size_bytes": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/byteCount"
+        },
+        "units": {
+          "const": "millimeter"
+        }
+      }
+    },
+    "print_intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "material_id",
+        "quality_id",
+        "strength_id",
+        "color_id",
+        "quantity"
+      ],
+      "properties": {
+        "material_id": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/slug"
+        },
+        "quality_id": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/slug"
+        },
+        "strength_id": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/slug"
+        },
+        "color_id": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/slug"
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "nozzle_mm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 3
+        },
+        "requested_output_format": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/outputFormat"
+        }
+      }
+    },
+    "routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "require_production_ready"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "automatic",
+            "manual"
+          ]
+        },
+        "require_production_ready": {
+          "type": "boolean"
+        },
+        "printer_profile_id": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/slug"
+        },
+        "fleet_unit_id": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/typedId"
+        },
+        "preferred_engine": {
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/engineId"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "manual"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "printer_profile_id": {
+                    "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/slug"
+                  }
+                },
+                "required": [
+                  "printer_profile_id"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "fleet_unit_id": {
+                    "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/typedId"
+                  }
+                },
+                "required": [
+                  "fleet_unit_id"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "extensions": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/extensions"
+    }
+  }
+}

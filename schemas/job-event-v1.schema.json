@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.affetta.dev/job-event-v1.schema.json",
+  "title": "Affetta append-only job event v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "job_id",
+    "sequence",
+    "event_type",
+    "status",
+    "stage",
+    "occurred_at",
+    "actor"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "affetta.event.v1"
+    },
+    "event_id": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/typedId"
+    },
+    "job_id": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/typedId"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "state_changed",
+        "progress",
+        "warning",
+        "retry_scheduled",
+        "lease_acquired",
+        "lease_renewed",
+        "lease_released",
+        "artifact_uploaded",
+        "diagnostic"
+      ]
+    },
+    "status": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/jobStatus"
+    },
+    "stage": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/jobStage"
+    },
+    "occurred_at": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/timestamp"
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "system",
+            "backend",
+            "agent",
+            "user"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 144
+        }
+      }
+    },
+    "progress_percent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "payload": {
+      "type": "object",
+      "maxProperties": 100,
+      "additionalProperties": true
+    },
+    "error": {
+      "$ref": "https://schemas.affetta.dev/error-v1.schema.json"
+    },
+    "correlation_id": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/typedId"
+    },
+    "extensions": {
+      "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/extensions"
+    }
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.affetta.dev/common-v1.schema.json",
+  "title": "Affetta common contract definitions v1",
+  "$defs": {
+    "typedId": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 144,
+      "pattern": "^[a-z][a-z0-9]{1,15}_[A-Za-z0-9][A-Za-z0-9_-]{7,127}$"
+    },
+    "slug": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "byteCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1099511627776
+    },
+    "idempotencyKey": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{7,127}$"
+    },
+    "safeFilename": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[^/\\\\\\u0000-\\u001F\\u007F]+$"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "standalone",
+        "beta-web",
+        "stampa3dbologna",
+        "reborn",
+        "partner",
+        "api"
+      ]
+    },
+    "operation": {
+      "type": "string",
+      "enum": [
+        "slice",
+        "estimate",
+        "analyze",
+        "validate"
+      ]
+    },
+    "inputFormat": {
+      "type": "string",
+      "enum": [
+        "stl",
+        "obj",
+        "amf",
+        "3mf",
+        "step"
+      ]
+    },
+    "outputFormat": {
+      "type": "string",
+      "enum": [
+        "gcode",
+        "x3g",
+        "3mf",
+        "json"
+      ]
+    },
+    "artifactType": {
+      "type": "string",
+      "enum": [
+        "model",
+        "gcode",
+        "x3g",
+        "preview",
+        "report",
+        "diagnostic",
+        "thumbnail",
+        "archive"
+      ]
+    },
+    "engineId": {
+      "type": "string",
+      "enum": [
+        "kiri",
+        "cura",
+        "prusa",
+        "orca",
+        "snapmaker_orca",
+        "mock"
+      ]
+    },
+    "postprocessorId": {
+      "type": "string",
+      "enum": [
+        "gpx"
+      ]
+    },
+    "jobStatus": {
+      "type": "string",
+      "enum": [
+        "created",
+        "uploaded",
+        "queued",
+        "leased",
+        "assigned",
+        "downloading",
+        "preparing",
+        "slicing",
+        "validating",
+        "postprocessing",
+        "uploading",
+        "completed",
+        "retrying",
+        "manual_review",
+        "cancel_requested",
+        "cancelled",
+        "failed",
+        "expired"
+      ]
+    },
+    "jobStage": {
+      "type": "string",
+      "enum": [
+        "created",
+        "uploaded",
+        "queued",
+        "leased",
+        "assigned",
+        "downloading",
+        "preparing",
+        "slicing",
+        "validating",
+        "postprocessing",
+        "uploading",
+        "completed",
+        "retrying",
+        "manual_review",
+        "cancelling",
+        "cancelled",
+        "failed",
+        "expired"
+      ]
+    },
+    "errorCode": {
+      "type": "string",
+      "enum": [
+        "invalid_request",
+        "unsupported_schema_version",
+        "artifact_not_found",
+        "artifact_hash_mismatch",
+        "artifact_too_large",
+        "unsupported_input_format",
+        "no_compatible_printer",
+        "no_production_ready_unit",
+        "engine_unavailable",
+        "slicing_failed",
+        "gcode_validation_failed",
+        "postprocessing_failed",
+        "upload_failed",
+        "lease_expired",
+        "lease_conflict",
+        "job_cancelled",
+        "internal_error"
+      ]
+    },
+    "profileStatus": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "experimental",
+        "validated",
+        "verified",
+        "deprecated"
+      ]
+    },
+    "extensions": {
+      "type": "object",
+      "maxProperties": 50,
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z0-9-]+)+$"
+      },
+      "additionalProperties": true
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id",
+        "type",
+        "format",
+        "sha256",
+        "size_bytes"
+      ],
+      "properties": {
+        "artifact_id": {
+          "$ref": "#/$defs/typedId"
+        },
+        "type": {
+          "$ref": "#/$defs/artifactType"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "stl",
+            "obj",
+            "amf",
+            "3mf",
+            "step",
+            "gcode",
+            "x3g",
+            "json",
+            "png",
+            "jpg",
+            "zip"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "$ref": "#/$defs/byteCount"
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128,
+          "pattern": "^[a-z0-9.+-]+/[a-z0-9.+-]+$"
+        },
+        "retention_until": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    }
+  }
+}

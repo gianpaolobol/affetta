@@ -1,0 +1,53 @@
+{
+  "schema_version": "affetta.result.v1",
+  "job_id": "job_01K1A2B3C4D5E6F7G8H9J0K1M6",
+  "request_id": "req_01K1A2B3C4D5E6F7G8H9J0K1M2",
+  "idempotency_key": "s3db-order-2026-000184-line-1",
+  "status": "completed",
+  "updated_at": "2026-08-02T04:54:00Z",
+  "result": {
+    "printer_profile_id": "bambu-x1c-04-petg",
+    "printer_profile_version": "2.3.1",
+    "printer_profile_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "profile_status": "verified",
+    "fleet_unit_id": "unit_01K1A2B3C4D5E6F7G8H9J0K1M7",
+    "engine": {
+      "id": "orca",
+      "version": "2.4.1"
+    },
+    "output_format": "gcode",
+    "time_seconds": 6240,
+    "filament": {
+      "grams": 84.3,
+      "millimeters": 28742
+    },
+    "validation": {
+      "valid": true,
+      "warnings": [],
+      "observed": {
+        "motion_bounds_mm": {
+          "min": [
+            0,
+            0,
+            0.2
+          ],
+          "max": [
+            94.2,
+            61.8,
+            18.4
+          ]
+        }
+      }
+    },
+    "artifacts": [
+      {
+        "artifact_id": "art_01K1A2B3C4D5E6F7G8H9J0K1M8",
+        "type": "gcode",
+        "format": "gcode",
+        "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "size_bytes": 1234567,
+        "media_type": "text/x-gcode"
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "affetta.job.v1",
+  "request_id": "req_01K1A2B3C4D5E6F7G8H9J0K1M4",
+  "idempotency_key": "lab-tom-software-validation-0001",
+  "source": "standalone",
+  "operation": "slice",
+  "created_at": "2026-08-02T03:20:00Z",
+  "input": {
+    "artifact_id": "art_01K1A2B3C4D5E6F7G8H9J0K1M5",
+    "filename": "cube20.stl",
+    "format": "stl",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "size_bytes": 28412,
+    "units": "millimeter"
+  },
+  "print_intent": {
+    "material_id": "pla",
+    "quality_id": "standard",
+    "strength_id": "standard",
+    "color_id": "natural",
+    "quantity": 1,
+    "nozzle_mm": 0.35,
+    "requested_output_format": "x3g"
+  },
+  "routing": {
+    "mode": "manual",
+    "require_production_ready": false,
+    "printer_profile_id": "thing-o-matic-mk6-035-pla"
+  }
+}

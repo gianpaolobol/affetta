@@ -1,0 +1,68 @@
+{
+  "schema_version": "affetta.result.v1",
+  "job_id": "job_01K1A2B3C4D5E6F7G8H9J0K1M9",
+  "request_id": "req_01K1A2B3C4D5E6F7G8H9J0K1M4",
+  "idempotency_key": "lab-tom-software-validation-0001",
+  "status": "completed",
+  "updated_at": "2026-08-02T03:22:30Z",
+  "result": {
+    "printer_profile_id": "thing-o-matic-mk6-035-pla",
+    "printer_profile_version": "1.0.0-experimental.1",
+    "printer_profile_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "profile_status": "experimental",
+    "fleet_unit_id": "unit_01K1A2B3C4D5E6F7G8H9J0K1MA",
+    "engine": {
+      "id": "cura",
+      "version": "5.13.0"
+    },
+    "postprocessors": [
+      {
+        "id": "gpx",
+        "version": "2.6.8"
+      }
+    ],
+    "output_format": "x3g",
+    "time_seconds": 1320,
+    "filament": {
+      "grams": 7.8,
+      "millimeters": 1104
+    },
+    "validation": {
+      "valid": true,
+      "warnings": [
+        "Profilo sperimentale: collaudo fisico Thing-O-Matic pendente.",
+        "Artefatto non abilitato al routing produttivo."
+      ],
+      "observed": {
+        "motion_bounds_mm": {
+          "min": [
+            2.5,
+            2.5,
+            0.2
+          ],
+          "max": [
+            22.5,
+            22.5,
+            20.2
+          ]
+        },
+        "build_volume_mm": [
+          100,
+          100,
+          100
+        ],
+        "origin_center": false
+      }
+    },
+    "artifacts": [
+      {
+        "artifact_id": "art_01K1A2B3C4D5E6F7G8H9J0K1MB",
+        "type": "x3g",
+        "format": "x3g",
+        "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "size_bytes": 245870,
+        "media_type": "application/octet-stream"
+      }
+    ]
+  }
+}

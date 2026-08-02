@@ -1,0 +1,34 @@
+{
+  "code": "gcode_validation_failed",
+  "message": "Il G-code supera i limiti di movimento del profilo.",
+  "stage": "validating",
+  "retryable": false,
+  "details": {
+    "printer_profile_id": "thing-o-matic-mk6-035-pla"
+  },
+  "observed": {
+    "min_xyz": [
+      0,
+      0,
+      0
+    ],
+    "max_xyz": [
+      116.811,
+      116.811,
+      20
+    ],
+    "motion_bounds_mm": {
+      "min": [
+        0,
+        0,
+        0
+      ],
+      "max": [
+        100,
+        100,
+        100
+      ]
+    }
+  },
+  "correlation_id": "corr_01K1A2B3C4D5E6F7G8H9J0K1ME"
+}

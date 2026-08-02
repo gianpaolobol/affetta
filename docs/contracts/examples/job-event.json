@@ -1,0 +1,17 @@
+{
+  "schema_version": "affetta.event.v1",
+  "event_id": "evt_01K1A2B3C4D5E6F7G8H9J0K1MC",
+  "job_id": "job_01K1A2B3C4D5E6F7G8H9J0K1M6",
+  "sequence": 7,
+  "event_type": "state_changed",
+  "status": "validating",
+  "stage": "validating",
+  "occurred_at": "2026-08-02T04:51:12Z",
+  "actor": {
+    "type": "agent",
+    "id": "agt_bologna_lab_01"
+  },
+  "progress_percent": 82,
+  "message": "Validazione G-code in corso",
+  "correlation_id": "corr_01K1A2B3C4D5E6F7G8H9J0K1MD"
+}
