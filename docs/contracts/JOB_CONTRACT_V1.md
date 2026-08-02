@@ -130,3 +130,8 @@ Le capability separano:
 - `additionalProperties=false` nei nuclei contrattuali per intercettare typo;
 - estensioni isolate nel campo `extensions`;
 - log e diagnostica non devono includere segreti.
+## Identificatori delle unità fisiche
+
+`fleet_unit_id` usa lo stesso slug pubblico del catalogo locale, ad esempio
+`x1c-01` o `thing-o-matic-01`. Non usa il formato degli ID database con
+prefisso e underscore. La regola vale in richieste, capability Agent e risultati.

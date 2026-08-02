@@ -10,7 +10,7 @@
     "printer_profile_version": "2.3.1",
     "printer_profile_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     "profile_status": "verified",
-    "fleet_unit_id": "unit_01K1A2B3C4D5E6F7G8H9J0K1M7",
+    "fleet_unit_id": "x1c-01",
     "engine": {
       "id": "orca",
       "version": "2.4.1"

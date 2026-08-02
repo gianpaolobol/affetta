@@ -84,10 +84,10 @@ export async function collectCapabilities(
   }
 
   const version = normalizeSemver(health.version);
-  const printerProfiles = Object.entries(catalog.printers ?? {}).map(([profileId, printer]) => {
+  const printerProfiles: AgentCapabilitiesV1['printer_profiles'] = [];
+  for (const [profileId, printer] of Object.entries(catalog.printers ?? {})) {
     const item = objectValue(printerDiagnostics[profileId]);
     const units = unitsByPrinter.get(profileId) ?? [];
-    const productionReady = units.some((unit) => unit.production_ready === true);
     const outputFormat: OutputFormat = item.output_format === 'x3g' ? 'x3g' : 'gcode';
     const profileSource = {
       profile_id: profileId,
@@ -100,18 +100,32 @@ export async function collectCapabilities(
         calibration_status: unit.calibration_status ?? 'unknown'
       }))
     };
-    return {
+    const common = {
       profile_id: profileId,
       profile_version: version,
       profile_sha256: sha256Json(profileSource),
       profile_status: normalizeProfileStatus(printer.status ?? item.profile_status),
       output_format: outputFormat,
       materials: [...new Set((printer.materials ?? ['pla']).map(String))].sort(),
-      nozzles_mm: [...new Set((printer.nozzles ?? [printer.default_nozzle ?? 0.4]).map(Number))].sort((a, b) => a - b),
-      production_ready: productionReady,
-      physical_validation: units.length === 0 ? 'not_required' as const : productionReady ? 'passed' as const : 'pending' as const
+      nozzles_mm: [...new Set((printer.nozzles ?? [printer.default_nozzle ?? 0.4]).map(Number))].sort((a, b) => a - b)
     };
-  });
+    if (units.length === 0) {
+      printerProfiles.push({
+        ...common,
+        production_ready: false,
+        physical_validation: 'not_required'
+      });
+      continue;
+    }
+    for (const unit of units) {
+      printerProfiles.push({
+        ...common,
+        production_ready: unit.production_ready === true,
+        physical_validation: unit.production_ready === true ? 'passed' : 'pending',
+        fleet_unit_id: unit.id
+      });
+    }
+  }
   const outputFormats = [...new Set(printerProfiles.map((profile) => profile.output_format))].sort() as OutputFormat[];
   if (outputFormats.length === 0) outputFormats.push('gcode');
 

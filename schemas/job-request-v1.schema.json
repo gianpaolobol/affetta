@@ -124,7 +124,7 @@
           "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/slug"
         },
         "fleet_unit_id": {
-          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/typedId"
+          "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/slug"
         },
         "preferred_engine": {
           "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/engineId"
@@ -159,7 +159,7 @@
                 "type": "object",
                 "properties": {
                   "fleet_unit_id": {
-                    "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/typedId"
+                    "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/slug"
                   }
                 },
                 "required": [

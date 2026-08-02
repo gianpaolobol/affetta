@@ -181,6 +181,7 @@ export interface AgentCapabilitiesV1 {
     nozzles_mm: number[];
     production_ready: boolean;
     physical_validation: 'pending' | 'passed' | 'failed' | 'not_required';
+    fleet_unit_id?: string;
   }>;
   capability_sha256: string;
   extensions?: Record<string, unknown>;

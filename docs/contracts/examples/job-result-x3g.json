@@ -10,7 +10,7 @@
     "printer_profile_version": "1.0.0-experimental.1",
     "printer_profile_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     "profile_status": "experimental",
-    "fleet_unit_id": "unit_01K1A2B3C4D5E6F7G8H9J0K1MA",
+    "fleet_unit_id": "thing-o-matic-01",
     "engine": {
       "id": "cura",
       "version": "5.13.0"

@@ -146,3 +146,25 @@ test('la capability Thing-O-Matic resta sperimentale e non produttiva', () => {
   assert.equal(thingOMatic.physical_validation, 'pending');
   assert.equal(thingOMatic.output_format, 'x3g');
 });
+
+test('le capability possono identificare la singola unità fisica del laboratorio', () => {
+  const payload = clone(examples.agent);
+  const profile = payload.printer_profiles.find((item) => item.output_format === 'gcode');
+  assert.ok(profile);
+  profile.fleet_unit_id = 'x1c-01';
+  expectValid(validators.agent, payload);
+});
+
+test('fleet_unit_id usa gli slug reali del parco macchine', () => {
+  const request = clone(examples.requestGcode);
+  request.routing = { mode: 'manual', require_production_ready: true, fleet_unit_id: 'x1c-01' };
+  expectValid(validators.request, request);
+
+  const result = clone(examples.resultGcode);
+  result.result.fleet_unit_id = 'x1c-01';
+  expectValid(validators.result, result);
+
+  const legacyDatabaseId = clone(examples.resultGcode);
+  legacyDatabaseId.result.fleet_unit_id = 'unit_01K1A2B3C4D5E6F7G8H9J0K1M7';
+  expectInvalid(validators.result, legacyDatabaseId);
+});

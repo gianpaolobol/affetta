@@ -226,6 +226,9 @@
               "failed",
               "not_required"
             ]
+          },
+          "fleet_unit_id": {
+            "$ref": "https://schemas.affetta.dev/common-v1.schema.json#/$defs/slug"
           }
         }
       }
