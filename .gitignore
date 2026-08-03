@@ -35,3 +35,8 @@ data/mail-outbox/*
 *.obj
 *.pid
 /FULL_DIFF_*.patch
+
+# Python bytecode e cache
+__pycache__/
+*.py[cod]
+
