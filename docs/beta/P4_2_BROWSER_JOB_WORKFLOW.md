@@ -60,3 +60,12 @@ duplicati e revoca. Lo stack resta su loopback.
 - nessun antivirus o sandbox CAD;
 - nessuna stampa fisica;
 - nessuna garanzia SLA.
+
+
+## Compatibilità del collaudo con commit correttivi
+
+Il launcher PowerShell non richiede più che `HEAD` coincida esattamente con il
+commit iniziale P4.2. Verifica invece che la milestone
+`beta: add browser job workflow and enforce free quotas` sia presente nella
+cronologia recente. Questo consente di eseguire il collaudo dopo patch
+correttive P4.2.x, mantenendo il blocco sui repository che non contengono P4.2.

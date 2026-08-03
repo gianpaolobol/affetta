@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [string]$RepoPath = 'C:\AFFETTA_GITHUB_0412',
     [string]$AffettaRoot = '',
@@ -78,9 +78,12 @@ try {
     if ((& $GitExe branch --show-current).Trim() -ne 'main') { throw 'Il ramo corrente deve essere main.' }
     if (@(& $GitExe status --porcelain).Count -ne 0) { throw 'Working tree non pulito.' }
     $subject = (& $GitExe log -1 --pretty=%s).Trim()
-    if ($subject -ne 'beta: add browser job workflow and enforce free quotas') {
-        throw "HEAD inatteso: '$subject'. Applicare prima P4.2."
+    $requiredMilestone = 'beta: add browser job workflow and enforce free quotas'
+    $historySubjects = @(& $GitExe log -20 --pretty=%s)
+    if ($historySubjects -notcontains $requiredMilestone) {
+        throw "Milestone P4.2 non trovata nella cronologia recente. HEAD corrente: '$subject'. Applicare prima P4.2."
     }
+    Write-Host "Milestone P4.2 rilevata nella cronologia. HEAD corrente: $subject" -ForegroundColor Green
 }
 finally { Pop-Location }
 
