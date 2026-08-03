@@ -1,0 +1,16 @@
+{
+  "name": "@affetta/server-lite",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Server Affetta local-first, intermittente e offline-capable.",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test test/*.test.js",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=22.16"
+  },
+  "license": "UNLICENSED"
+}

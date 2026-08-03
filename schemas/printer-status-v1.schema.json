@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://affetta.local/schemas/printer-status-v1.schema.json",
+  "title": "Affetta Printer Status v1",
+  "type": "object",
+  "required": [
+    "schema_version", "printer_id", "printer_name", "printer_model", "adapter",
+    "observed_at", "connection_status", "machine_status", "job_status",
+    "server_dependency", "alerts", "temperatures"
+  ],
+  "properties": {
+    "schema_version": { "const": "affetta.printer-status.v1" },
+    "printer_id": { "type": "string", "minLength": 1 },
+    "printer_name": { "type": "string", "minLength": 1 },
+    "printer_model": { "type": "string", "minLength": 1 },
+    "adapter": { "type": "string", "minLength": 1 },
+    "observed_at": { "type": "string", "format": "date-time" },
+    "connection_status": {
+      "enum": ["unknown", "connecting", "connected", "degraded", "disconnected", "unreachable", "authentication_failed", "protocol_error", "disabled"]
+    },
+    "machine_status": {
+      "enum": ["unknown", "offline", "initializing", "ready", "idle", "preparing", "heating", "calibrating", "printing", "paused", "cooling", "maintenance_required", "error"]
+    },
+    "job_status": {
+      "enum": ["none", "queued", "transferring", "transferred", "starting", "printing", "paused", "completed", "failed", "cancelled", "interrupted", "outcome_unknown"]
+    },
+    "progress_percent": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+    "phase": { "type": ["string", "null"] },
+    "elapsed_seconds": { "type": ["integer", "null"], "minimum": 0 },
+    "remaining_seconds": { "type": ["integer", "null"], "minimum": 0 },
+    "layer_current": { "type": ["integer", "null"], "minimum": 0 },
+    "layer_total": { "type": ["integer", "null"], "minimum": 0 },
+    "active_file": { "type": ["string", "null"] },
+    "remote_job_id": { "type": ["string", "null"] },
+    "temperatures": { "type": "object" },
+    "alerts": { "type": "array" },
+    "server_dependency": { "enum": ["server_required", "device_autonomous", "not_applicable", "unknown"] },
+    "error": { "type": ["object", "null"] },
+    "raw": { "type": "object" }
+  },
+  "additionalProperties": false
+}

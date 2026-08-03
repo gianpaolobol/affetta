@@ -3,7 +3,7 @@
   "version": "0.5.2",
   "private": true,
   "type": "module",
-  "description": "Affetta — slicer FDM standalone con beta web gratuita, Agent locale, quote Free e download G-code verificati.",
+  "description": "Affetta — slicer FDM standalone con beta web e fondazione Server Lite local-first/offline.",
   "scripts": {
     "init": "node scripts/init.mjs",
     "start": "node bootstrap.js",
@@ -26,7 +26,10 @@
     "agent:p3.3:test": "npm --prefix agent run test:p3.3",
     "agent:p3.3:live": "npm --prefix agent run live:p3.3",
     "backend:p4.1:live": "npm --prefix backend run live:p4.1",
-    "backend:p4.2:live": "npm --prefix backend run live:p4.2"
+    "backend:p4.2:live": "npm --prefix backend run live:p4.2",
+    "server-lite:start": "node server-lite/src/index.js",
+    "server-lite:test": "node --test server-lite/test/*.test.js",
+    "server-lite:smoke": "node server-lite/scripts/smoke.mjs"
   },
   "engines": {
     "node": ">=20"

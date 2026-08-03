@@ -1,0 +1,5 @@
+config/local-server.json
+data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal

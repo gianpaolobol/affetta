@@ -1,0 +1,45 @@
+{
+  "host": "0.0.0.0",
+  "port": 8791,
+  "poll_seconds": 15,
+  "request_timeout_ms": 5000,
+  "database_file": "affetta-server-lite.sqlite",
+  "api_token": null,
+  "printers": [
+    {
+      "id": "bambu-x1c",
+      "name": "Bambu Lab X1C",
+      "model": "Bambu Lab X1C",
+      "adapter": "bambu-lan",
+      "endpoint": "192.168.50.20",
+      "access_code": "env:AFFETTA_BAMBU_X1C_ACCESS_CODE",
+      "serial": "env:AFFETTA_BAMBU_X1C_SERIAL",
+      "enabled": false
+    },
+    {
+      "id": "snapmaker-u1",
+      "name": "Snapmaker U1",
+      "model": "Snapmaker U1",
+      "adapter": "snapmaker-lan",
+      "endpoint": "http://192.168.50.21",
+      "enabled": false
+    },
+    {
+      "id": "flsun-v400",
+      "name": "FLSUN V400",
+      "model": "FLSUN V400",
+      "adapter": "moonraker",
+      "endpoint": "http://192.168.50.22",
+      "enabled": false
+    },
+    {
+      "id": "anycubic-predator",
+      "name": "Anycubic Predator",
+      "model": "Anycubic Predator + OctoPrint",
+      "adapter": "octoprint",
+      "endpoint": "http://192.168.50.23",
+      "api_key": "env:AFFETTA_OCTOPRINT_PREDATOR_API_KEY",
+      "enabled": false
+    }
+  ]
+}
