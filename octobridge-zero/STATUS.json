@@ -1,0 +1,10 @@
+{
+  "component": "Affetta OctoBridge Zero Snapshot",
+  "version": "0.1.0-experimental+p4.4",
+  "release_channel": "experimental",
+  "production_ready": false,
+  "target": "Raspberry Pi Zero V1.3 / ARMv6 / Raspberry Pi OS Lite 32-bit",
+  "hardware_validation": "pending",
+  "image_built": false,
+  "installer_built": true
+}

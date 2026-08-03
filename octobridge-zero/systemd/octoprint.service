@@ -1,0 +1,29 @@
+[Unit]
+Description=OctoPrint locale per Affetta OctoBridge Zero
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=octoprint
+Group=octoprint
+SupplementaryGroups=dialout
+WorkingDirectory=/home/octoprint
+ExecStart=/opt/octoprint/venv/bin/octoprint serve --safe --basedir /home/octoprint/.octoprint --host 127.0.0.1 --port 5000
+Restart=on-failure
+RestartSec=5
+LogRateLimitIntervalSec=30s
+LogRateLimitBurst=200
+Nice=-5
+IOSchedulingClass=best-effort
+IOSchedulingPriority=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/octoprint/.octoprint
+UMask=0077
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

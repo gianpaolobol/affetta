@@ -1,0 +1,30 @@
+[Unit]
+Description=Affetta OctoBridge Zero Snapshot EXPERIMENTAL
+After=network-online.target octoprint.service
+Wants=network-online.target octoprint.service
+
+[Service]
+Type=simple
+User=octobridge
+Group=octobridge
+SupplementaryGroups=video
+WorkingDirectory=/opt/affetta-octobridge
+Environment=PYTHONPATH=/opt/affetta-octobridge
+Environment=AFFETTA_OCTOBRIDGE_CONFIG=/etc/affetta-octobridge/config.json
+ExecStart=/usr/bin/python3 -m affetta_octobridge
+Restart=on-failure
+RestartSec=5
+LogRateLimitIntervalSec=30s
+LogRateLimitBurst=200
+Nice=0
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadOnlyPaths=/etc/affetta-octobridge /opt/affetta-octobridge
+ReadWritePaths=/var/lib/affetta-octobridge /run
+UMask=0077
+TimeoutStopSec=20
+
+[Install]
+WantedBy=multi-user.target

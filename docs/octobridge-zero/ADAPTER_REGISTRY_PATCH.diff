@@ -1,0 +1,9 @@
+diff --git a/server-lite/src/adapter-registry.js b/server-lite/src/adapter-registry.js
+--- a/server-lite/src/adapter-registry.js
++++ b/server-lite/src/adapter-registry.js
+@@
+ import { OctoPrintAdapter } from './adapters/octoprint.js';
++import { OctoBridgeAdapter } from './adapters/octobridge.js';
+@@
+       ['octoprint', new OctoPrintAdapter({ timeoutMs, fetchImpl })],
++      ['octobridge', new OctoBridgeAdapter({ timeoutMs, fetchImpl })],

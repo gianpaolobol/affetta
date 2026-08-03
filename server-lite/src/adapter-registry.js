@@ -1,6 +1,7 @@
 import { MockPrinterAdapter } from './adapters/mock.js';
 import { MoonrakerAdapter } from './adapters/moonraker.js';
 import { OctoPrintAdapter } from './adapters/octoprint.js';
+import { OctoBridgeAdapter } from './adapters/octobridge.js';
 import { UnsupportedPrinterAdapter } from './adapters/unsupported.js';
 
 export class AdapterRegistry {
@@ -9,6 +10,7 @@ export class AdapterRegistry {
       ['mock', new MockPrinterAdapter({ snapshots: mockSnapshots })],
       ['moonraker', new MoonrakerAdapter({ timeoutMs, fetchImpl })],
       ['octoprint', new OctoPrintAdapter({ timeoutMs, fetchImpl })],
+      ['octobridge', new OctoBridgeAdapter({ timeoutMs, fetchImpl })],
       ['bambu-lan', new UnsupportedPrinterAdapter('bambu-lan')],
       ['snapmaker-lan', new UnsupportedPrinterAdapter('snapmaker-lan')]
     ]);

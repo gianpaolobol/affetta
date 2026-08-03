@@ -1,0 +1,189 @@
+{
+  "schema_version": "affetta.octobridge-printer-catalog.v1",
+  "release_channel": "experimental",
+  "production_ready": false,
+  "selection_does_not_modify_gcode": true,
+  "printers": [
+    {
+      "id": "bambu-x1c",
+      "name": "Bambu Lab X1C + AMS",
+      "selectable": true,
+      "transport": "network_native",
+      "octobridge_serial_eligible": false,
+      "activation": "blocked",
+      "reason": "Usare integrazione LAN Bambu dedicata; non instradare attraverso seriale OctoPrint.",
+      "production_ready": false
+    },
+    {
+      "id": "snapmaker-u1",
+      "name": "Snapmaker U1",
+      "selectable": true,
+      "transport": "network_native",
+      "octobridge_serial_eligible": false,
+      "activation": "blocked",
+      "reason": "Usare integrazione LAN Snapmaker dedicata; compatibilità seriale non verificata.",
+      "production_ready": false
+    },
+    {
+      "id": "flsun-v400",
+      "name": "FLSUN V400",
+      "selectable": true,
+      "transport": "moonraker",
+      "octobridge_serial_eligible": false,
+      "activation": "blocked",
+      "reason": "Moonraker/Klipper è il percorso previsto; OctoBridge seriale non deve sostituirlo senza collaudo specifico.",
+      "production_ready": false
+    },
+    {
+      "id": "anycubic-predator",
+      "name": "Anycubic Predator",
+      "selectable": true,
+      "transport": "serial_candidate",
+      "octobridge_serial_eligible": true,
+      "activation": "experimental",
+      "serial": {
+        "port": "AUTO",
+        "baudrate": "AUTO"
+      },
+      "production_ready": false
+    },
+    {
+      "id": "lulzbot-taz-4",
+      "name": "LulzBot TAZ 4",
+      "selectable": true,
+      "transport": "serial_candidate",
+      "octobridge_serial_eligible": true,
+      "activation": "experimental",
+      "serial": {
+        "port": "AUTO",
+        "baudrate": "AUTO"
+      },
+      "production_ready": false
+    },
+    {
+      "id": "lulzbot-taz-5",
+      "name": "LulzBot TAZ 5",
+      "selectable": true,
+      "transport": "serial_candidate",
+      "octobridge_serial_eligible": true,
+      "activation": "experimental",
+      "serial": {
+        "port": "AUTO",
+        "baudrate": "AUTO"
+      },
+      "production_ready": false
+    },
+    {
+      "id": "lulzbot-taz-6",
+      "name": "LulzBot TAZ 6",
+      "selectable": true,
+      "transport": "serial_candidate",
+      "octobridge_serial_eligible": true,
+      "activation": "experimental",
+      "serial": {
+        "port": "AUTO",
+        "baudrate": "AUTO"
+      },
+      "production_ready": false
+    },
+    {
+      "id": "lulzbot-mini",
+      "name": "LulzBot Mini (prima generazione)",
+      "selectable": true,
+      "transport": "serial_candidate",
+      "octobridge_serial_eligible": true,
+      "activation": "experimental",
+      "serial": {
+        "port": "AUTO",
+        "baudrate": "AUTO"
+      },
+      "production_ready": false
+    },
+    {
+      "id": "deltawasp-2040",
+      "name": "Delta WASP 2040",
+      "selectable": true,
+      "transport": "serial_candidate",
+      "octobridge_serial_eligible": true,
+      "activation": "experimental",
+      "serial": {
+        "port": "AUTO",
+        "baudrate": "AUTO"
+      },
+      "production_ready": false
+    },
+    {
+      "id": "deltawasp-2040-pro",
+      "name": "Delta WASP 2040 PRO",
+      "selectable": true,
+      "transport": "serial_candidate",
+      "octobridge_serial_eligible": true,
+      "activation": "experimental",
+      "serial": {
+        "port": "AUTO",
+        "baudrate": "AUTO"
+      },
+      "production_ready": false,
+      "note": "Denominazione presente nel catalogo Affetta; associare all'unità fisica solo dopo verifica."
+    },
+    {
+      "id": "deltawasp-2040-turbo",
+      "name": "Delta WASP 2040 Turbo / Turbo2",
+      "selectable": true,
+      "transport": "serial_candidate",
+      "octobridge_serial_eligible": true,
+      "activation": "experimental",
+      "serial": {
+        "port": "AUTO",
+        "baudrate": "AUTO"
+      },
+      "production_ready": false
+    },
+    {
+      "id": "prusa-i3-autocostruita",
+      "name": "Prusa i3 autocostruita",
+      "selectable": true,
+      "transport": "serial_candidate",
+      "octobridge_serial_eligible": true,
+      "activation": "experimental",
+      "serial": {
+        "port": "AUTO",
+        "baudrate": "AUTO"
+      },
+      "production_ready": false
+    },
+    {
+      "id": "zed-prusa-100",
+      "name": "Zed (base Prusa, 100 × 100 mm)",
+      "selectable": true,
+      "transport": "serial_candidate",
+      "octobridge_serial_eligible": true,
+      "activation": "experimental",
+      "serial": {
+        "port": "AUTO",
+        "baudrate": "AUTO"
+      },
+      "production_ready": false
+    },
+    {
+      "id": "thing-o-matic",
+      "name": "Thing-O-Matic",
+      "selectable": true,
+      "transport": "x3g_external",
+      "octobridge_serial_eligible": false,
+      "activation": "blocked",
+      "reason": "Affetta genera X3G con CuraEngine → GPX t6. OctoBridge non converte né modifica G-code/X3G.",
+      "production_ready": false
+    },
+    {
+      "id": "phrozen-sonic-mini-4k",
+      "name": "Phrozen Sonic Mini 4K",
+      "selectable": true,
+      "transport": "resin_separate",
+      "octobridge_serial_eligible": false,
+      "activation": "blocked",
+      "reason": "Stampante a resina: flusso e formato separati da OctoPrint seriale FDM.",
+      "production_ready": false
+    }
+  ]
+}

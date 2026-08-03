@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://affetta.local/schemas/octobridge-config-v1.schema.json",
+  "title": "Affetta OctoBridge config v1",
+  "type": "object",
+  "required": [
+    "release_channel",
+    "production_ready",
+    "bridge_id",
+    "api_token",
+    "printer_profile_id",
+    "octoprint_url",
+    "octoprint_api_key"
+  ],
+  "properties": {
+    "release_channel": {
+      "const": "experimental"
+    },
+    "production_ready": {
+      "const": false
+    },
+    "bridge_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "api_token": {
+      "type": "string",
+      "minLength": 32
+    },
+    "printer_profile_id": {
+      "type": "string"
+    },
+    "serial_printing_enabled": {
+      "type": "boolean"
+    },
+    "octoprint_url": {
+      "type": "string",
+      "pattern": "^https?://"
+    },
+    "octoprint_api_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verify_remote_sha256": {
+      "const": true
+    },
+    "require_pre_print_snapshot": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": true
+}

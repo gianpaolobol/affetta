@@ -1,0 +1,42 @@
+{
+  "schema_version": "affetta.octobridge-config.v1",
+  "release_channel": "experimental",
+  "production_ready": false,
+  "bridge_id": "octobridge-zero-01",
+  "bind_host": "0.0.0.0",
+  "bind_port": 8792,
+  "api_token": "REPLACE_WITH_AT_LEAST_32_RANDOM_CHARACTERS",
+  "data_dir": "/var/lib/affetta-octobridge",
+  "printer_catalog": "/opt/affetta-octobridge/config/printer-catalog.json",
+  "printer_profile_id": "UNCONFIGURED",
+  "serial_port": "AUTO",
+  "baudrate": "AUTO",
+  "octoprint_url": "http://127.0.0.1:5000",
+  "octoprint_api_key": "REPLACE_WITH_LOCAL_OCTOPRINT_KEY",
+  "poll_seconds": 5,
+  "request_timeout_seconds": 20,
+  "max_gcode_bytes": 2147483648,
+  "verify_remote_sha256": true,
+  "require_pre_print_snapshot": true,
+  "retention_days_after_sync": 30,
+  "camera": {
+    "command": "auto",
+    "width": 640,
+    "height": 480,
+    "quality": 75,
+    "timeout_ms": 1500,
+    "rotation": 0
+  },
+  "live": {
+    "enabled_on_demand_only": true,
+    "default_seconds": 45,
+    "max_seconds": 120,
+    "width": 640,
+    "height": 480,
+    "fps": 2,
+    "max_parallel_sessions": 1
+  },
+  "serial_printing_enabled": false,
+  "physical_validation_stage": "not_started",
+  "serial_connect_timeout_seconds": 60
+}

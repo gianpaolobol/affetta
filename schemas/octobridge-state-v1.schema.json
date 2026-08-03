@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://affetta.local/schemas/octobridge-state-v1.schema.json",
+  "title": "Affetta OctoBridge status v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "release_channel",
+    "production_ready",
+    "bridge_id",
+    "printer_snapshot"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "affetta.octobridge-status.v1"
+    },
+    "release_channel": {
+      "const": "experimental"
+    },
+    "production_ready": {
+      "const": false
+    },
+    "bridge_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "printer_profile_id": {
+      "type": "string"
+    },
+    "serial_printing_enabled": {
+      "type": "boolean"
+    },
+    "active_job_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pending_sync_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "printer_snapshot": {
+      "type": "object",
+      "required": [
+        "connection_status",
+        "machine_status",
+        "job_status",
+        "progress_percent",
+        "server_dependency"
+      ],
+      "properties": {
+        "connection_status": {
+          "type": "string"
+        },
+        "machine_status": {
+          "type": "string"
+        },
+        "job_status": {
+          "type": "string"
+        },
+        "progress_percent": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "server_dependency": {
+          "enum": [
+            "device_autonomous",
+            "not_applicable",
+            "unknown"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

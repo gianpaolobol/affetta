@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://affetta.local/schemas/octobridge-job-v1.schema.json",
+  "title": "Affetta OctoBridge job v1",
+  "type": "object",
+  "required": [
+    "job_id",
+    "filename",
+    "size_bytes",
+    "sha256",
+    "printer_profile_id",
+    "state",
+    "production_ready"
+  ],
+  "properties": {
+    "job_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$"
+    },
+    "filename": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,191}\\.gcode$"
+    },
+    "size_bytes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "printer_profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "enum": [
+        "created",
+        "receiving",
+        "staged",
+        "transferring",
+        "transferred",
+        "starting",
+        "printing",
+        "paused",
+        "cancel_requested",
+        "completed",
+        "failed",
+        "cancelled",
+        "interrupted",
+        "outcome_unknown"
+      ]
+    },
+    "release_channel": {
+      "const": "experimental"
+    },
+    "production_ready": {
+      "const": false
+    }
+  },
+  "additionalProperties": true
+}

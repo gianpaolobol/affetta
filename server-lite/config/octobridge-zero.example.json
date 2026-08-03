@@ -1,0 +1,10 @@
+{
+  "id": "predator-octobridge-zero-01",
+  "name": "Anycubic Predator — OctoBridge Zero 01",
+  "model": "Anycubic Predator",
+  "adapter": "octobridge",
+  "enabled": false,
+  "endpoint": "http://192.168.1.80:8792",
+  "api_key": "env:AFFETTA_OCTOBRIDGE_PREDATOR_TOKEN",
+  "notes": "EXPERIMENTAL; production_ready=false; abilitare solo durante il collaudo fisico."
+}
