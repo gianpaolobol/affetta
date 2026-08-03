@@ -149,7 +149,7 @@ async function main() {
 
     const pageResponse = await fetch(`${backendUrl}/beta/`);
     const page = await pageResponse.text();
-    if (!pageResponse.ok || !page.includes('model-file') || !page.includes('jobs-list')) {
+    if (!pageResponse.ok || !/\bid=["']file["']/.test(page) || !/\bid=["']jobs["']/.test(page)) {
       throw new Error('Pagina beta P4.2 assente o incompleta.');
     }
     report.checks.beta_browser_page = 'ok';

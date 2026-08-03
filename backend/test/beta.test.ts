@@ -132,6 +132,8 @@ test('espone pagina beta e limiti Free senza mostrare il motore come scelta base
     assert.match(String(page.body), /AFFETTA <span>BETA<\/span>/);
     assert.match(String(page.body), /nasconde motore e post-processori/);
     assert.match(String(page.body), /Nessun comando viene inviato alla stampante/);
+    assert.match(String(page.body), /\bid="file"/);
+    assert.match(String(page.body), /\bid="jobs"/);
     assert.equal(page.headers['content-type'], 'text/html; charset=utf-8');
 
     const limits = await context.api.inject({ method: 'GET', path: '/v1/beta/limits' });
