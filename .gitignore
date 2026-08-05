@@ -40,3 +40,15 @@ data/mail-outbox/*
 __pycache__/
 *.py[cod]
 
+**/server-lite-registration.json
+**/*.server-lite-registration.json
+**/octobridge-secrets.json
+**/.env
+**/.env.*
+!**/.env.example
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/.pytest_cache/
+**/diagnostics-*.txt
+**/affetta-octobridge-diagnostics-*.txt

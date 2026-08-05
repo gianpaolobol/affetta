@@ -1,0 +1,36 @@
+{
+  "schema_version": "affetta.lab-non-octobridge-transports.v1",
+  "note": "Queste macchine non devono usare i Raspberry/OctoBridge seriali.",
+  "machines": [
+    {
+      "id": "x1c-01",
+      "name": "Bambu Lab X1C",
+      "transport": "bambu-lan",
+      "reason": "Connettività LAN nativa dedicata."
+    },
+    {
+      "id": "snapmaker-u1-01",
+      "name": "Snapmaker U1",
+      "transport": "snapmaker-lan",
+      "reason": "Connettività LAN nativa dedicata."
+    },
+    {
+      "id": "v400-01",
+      "name": "FLSUN V400",
+      "transport": "moonraker",
+      "reason": "Klipper/Moonraker nativo."
+    },
+    {
+      "id": "thing-o-matic-01",
+      "name": "Thing-O-Matic",
+      "transport": "x3g_external",
+      "reason": "Output X3G CuraEngine→GPX; il bridge seriale G-code attuale non è compatibile."
+    },
+    {
+      "id": "phrozen-mini4k-01",
+      "name": "Phrozen Sonic Mini 4K",
+      "transport": "resin_separate",
+      "reason": "Flusso resina separato."
+    }
+  ]
+}

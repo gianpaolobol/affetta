@@ -1,0 +1,20 @@
+{
+  "schema_version": "affetta.lab-octobridge-machine.v2",
+  "release_channel": "experimental",
+  "production_ready": false,
+  "transport": "octobridge",
+  "serial_printing_enabled_default": false,
+  "fleet_unit_id": "predator-02",
+  "display_name": "Anycubic Predator 2",
+  "model": "Anycubic Predator",
+  "printer_profile_id": "anycubic-predator",
+  "bridge_id": "octobridge-predator-02",
+  "hostname": "affetta-predator-02",
+  "nozzle_mm": 0.6,
+  "filament_diameter_mm": 1.75,
+  "firmware": "TO_VERIFY",
+  "board": "TO_VERIFY",
+  "baudrate": "AUTO",
+  "camera_enabled": false,
+  "notes": "Seconda Predator; dati elettronica e ugello da confermare fisicamente."
+}

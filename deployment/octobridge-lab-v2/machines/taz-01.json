@@ -1,0 +1,20 @@
+{
+  "schema_version": "affetta.lab-octobridge-machine.v2",
+  "release_channel": "experimental",
+  "production_ready": false,
+  "transport": "octobridge",
+  "serial_printing_enabled_default": false,
+  "fleet_unit_id": "taz-01",
+  "display_name": "LulzBot TAZ 4",
+  "model": "LulzBot TAZ 4",
+  "printer_profile_id": "lulzbot-taz-4",
+  "bridge_id": "octobridge-taz-01",
+  "hostname": "affetta-taz-01",
+  "nozzle_mm": 0.5,
+  "filament_diameter_mm": 2.85,
+  "firmware": "TO_VERIFY",
+  "board": "TO_VERIFY",
+  "baudrate": "AUTO",
+  "camera_enabled": false,
+  "notes": "Unità fisica taz-01; calibrazione fisica ancora pendente."
+}

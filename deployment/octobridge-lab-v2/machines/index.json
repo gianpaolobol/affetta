@@ -1,0 +1,110 @@
+{
+  "schema_version": "affetta.lab-octobridge-index.v2",
+  "release_channel": "experimental",
+  "production_ready": false,
+  "machines": [
+    {
+      "fleet_unit_id": "taz-01",
+      "display_name": "LulzBot TAZ 4",
+      "manifest": "taz-01.json",
+      "hostname": "affetta-taz-01",
+      "bridge_id": "octobridge-taz-01",
+      "printer_profile_id": "lulzbot-taz-4"
+    },
+    {
+      "fleet_unit_id": "taz-02",
+      "display_name": "LulzBot TAZ 5",
+      "manifest": "taz-02.json",
+      "hostname": "affetta-taz-02",
+      "bridge_id": "octobridge-taz-02",
+      "printer_profile_id": "lulzbot-taz-5"
+    },
+    {
+      "fleet_unit_id": "taz-03",
+      "display_name": "LulzBot TAZ 6",
+      "manifest": "taz-03.json",
+      "hostname": "affetta-taz-03",
+      "bridge_id": "octobridge-taz-03",
+      "printer_profile_id": "lulzbot-taz-6"
+    },
+    {
+      "fleet_unit_id": "mini-01",
+      "display_name": "LulzBot Mini A",
+      "manifest": "mini-01.json",
+      "hostname": "affetta-mini-01",
+      "bridge_id": "octobridge-mini-01",
+      "printer_profile_id": "lulzbot-mini"
+    },
+    {
+      "fleet_unit_id": "mini-02",
+      "display_name": "LulzBot Mini B",
+      "manifest": "mini-02.json",
+      "hostname": "affetta-mini-02",
+      "bridge_id": "octobridge-mini-02",
+      "printer_profile_id": "lulzbot-mini"
+    },
+    {
+      "fleet_unit_id": "wasp-2040-01",
+      "display_name": "Delta WASP 2040 1",
+      "manifest": "wasp-2040-01.json",
+      "hostname": "affetta-wasp-2040-01",
+      "bridge_id": "octobridge-wasp-2040-01",
+      "printer_profile_id": "deltawasp-2040"
+    },
+    {
+      "fleet_unit_id": "wasp-2040-02",
+      "display_name": "Delta WASP 2040 2",
+      "manifest": "wasp-2040-02.json",
+      "hostname": "affetta-wasp-2040-02",
+      "bridge_id": "octobridge-wasp-2040-02",
+      "printer_profile_id": "deltawasp-2040"
+    },
+    {
+      "fleet_unit_id": "wasp-2040-03",
+      "display_name": "Delta WASP 2040 3",
+      "manifest": "wasp-2040-03.json",
+      "hostname": "affetta-wasp-2040-03",
+      "bridge_id": "octobridge-wasp-2040-03",
+      "printer_profile_id": "deltawasp-2040"
+    },
+    {
+      "fleet_unit_id": "wasp-turbo-01",
+      "display_name": "Delta WASP 2040 Turbo 1",
+      "manifest": "wasp-turbo-01.json",
+      "hostname": "affetta-wasp-turbo-01",
+      "bridge_id": "octobridge-wasp-turbo-01",
+      "printer_profile_id": "deltawasp-2040-turbo"
+    },
+    {
+      "fleet_unit_id": "wasp-turbo-02",
+      "display_name": "Delta WASP 2040 Turbo 2",
+      "manifest": "wasp-turbo-02.json",
+      "hostname": "affetta-wasp-turbo-02",
+      "bridge_id": "octobridge-wasp-turbo-02",
+      "printer_profile_id": "deltawasp-2040-turbo"
+    },
+    {
+      "fleet_unit_id": "predator-01",
+      "display_name": "Anycubic Predator 1",
+      "manifest": "predator-01.json",
+      "hostname": "affetta-predator-01",
+      "bridge_id": "octobridge-predator-01",
+      "printer_profile_id": "anycubic-predator"
+    },
+    {
+      "fleet_unit_id": "predator-02",
+      "display_name": "Anycubic Predator 2",
+      "manifest": "predator-02.json",
+      "hostname": "affetta-predator-02",
+      "bridge_id": "octobridge-predator-02",
+      "printer_profile_id": "anycubic-predator"
+    }
+  ],
+  "uncounted_pool": {
+    "fleet_unit_id": "prusa-i3-pool",
+    "display_name": "Pool Prusa i3 autocostruite",
+    "configured_units": 0,
+    "installer": "../installers/install-prusa-i3-autocostruita.sh",
+    "reason": "La quantità e gli identificativi fisici non sono ancora censiti in Affetta."
+  }
+}

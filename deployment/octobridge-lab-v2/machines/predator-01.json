@@ -1,0 +1,20 @@
+{
+  "schema_version": "affetta.lab-octobridge-machine.v2",
+  "release_channel": "experimental",
+  "production_ready": false,
+  "transport": "octobridge",
+  "serial_printing_enabled_default": false,
+  "fleet_unit_id": "predator-01",
+  "display_name": "Anycubic Predator 1",
+  "model": "Anycubic Predator",
+  "printer_profile_id": "anycubic-predator",
+  "bridge_id": "octobridge-predator-01",
+  "hostname": "affetta-predator-01",
+  "nozzle_mm": 1.0,
+  "filament_diameter_mm": 1.75,
+  "firmware": "Marlin",
+  "board": "Trigorilla Pro",
+  "baudrate": "AUTO",
+  "camera_enabled": false,
+  "notes": "Pilot principale; ugello reale 1,0 mm."
+}

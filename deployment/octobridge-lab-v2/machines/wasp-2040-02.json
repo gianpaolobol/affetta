@@ -1,0 +1,20 @@
+{
+  "schema_version": "affetta.lab-octobridge-machine.v2",
+  "release_channel": "experimental",
+  "production_ready": false,
+  "transport": "octobridge",
+  "serial_printing_enabled_default": false,
+  "fleet_unit_id": "wasp-2040-02",
+  "display_name": "Delta WASP 2040 2",
+  "model": "Delta WASP 2040",
+  "printer_profile_id": "deltawasp-2040",
+  "bridge_id": "octobridge-wasp-2040-02",
+  "hostname": "affetta-wasp-2040-02",
+  "nozzle_mm": 0.7,
+  "filament_diameter_mm": 1.75,
+  "firmware": "TO_VERIFY",
+  "board": "TO_VERIFY",
+  "baudrate": "AUTO",
+  "camera_enabled": false,
+  "notes": "Unità delta; piano circolare."
+}

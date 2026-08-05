@@ -1,0 +1,20 @@
+{
+  "schema_version": "affetta.lab-octobridge-machine.v2",
+  "release_channel": "experimental",
+  "production_ready": false,
+  "transport": "octobridge",
+  "serial_printing_enabled_default": false,
+  "fleet_unit_id": "mini-01",
+  "display_name": "LulzBot Mini A",
+  "model": "LulzBot Mini prima generazione",
+  "printer_profile_id": "lulzbot-mini",
+  "bridge_id": "octobridge-mini-01",
+  "hostname": "affetta-mini-01",
+  "nozzle_mm": 0.5,
+  "filament_diameter_mm": 2.85,
+  "firmware": "TO_VERIFY",
+  "board": "TO_VERIFY",
+  "baudrate": "AUTO",
+  "camera_enabled": false,
+  "notes": "Prima LulzBot Mini; non Mini 2."
+}
