@@ -7,6 +7,7 @@ from pathlib import Path
 
 from affetta_octobridge.config import BridgeConfig
 from affetta_octobridge.jobs import JobConflict, JobManager
+from affetta_octobridge.octoprint import OctoPrintError
 from affetta_octobridge.storage import JobStore
 
 
@@ -136,6 +137,22 @@ class JobTests(unittest.TestCase):
             self.assertIn("pre_print", job["snapshots"])
             self.assertEqual(job["state"], "starting")
 
+    def test_remote_integrity_failure_is_retryable_octoprint_error(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            manager, store, octo = self.make(tmp)
+            self.stage(manager)
+            original_download = octo.download_sha256
+            octo.download_sha256 = lambda remote_path: (
+                len(octo.files[remote_path]),
+                "0" * 64,
+            )
+            with self.assertRaises(OctoPrintError) as caught:
+                manager.transfer_to_octoprint("job-1")
+            self.assertEqual(caught.exception.code, "remote_integrity_mismatch")
+            self.assertEqual(store.load("job-1")["state"], "staged")
+            octo.download_sha256 = original_download
+            manager.transfer_to_octoprint("job-1")
+            self.assertEqual(store.load("job-1")["state"], "transferred")
     def test_progress_and_terminal_snapshots_are_idempotent(self):
         with tempfile.TemporaryDirectory() as tmp:
             manager, store, octo = self.make(tmp)

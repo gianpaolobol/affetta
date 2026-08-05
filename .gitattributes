@@ -1,0 +1,6 @@
+deployment/octobridge-lab-v2/**/*.sh text eol=lf
+deployment/octobridge-lab-v2/**/*.py text eol=lf
+deployment/octobridge-lab-v2/**/*.mjs text eol=lf
+.github/workflows/*.yml text eol=lf
+octobridge-zero/**/*.py text eol=lf
+deployment/octobridge-lab-v2/ci/*.yml text eol=lf

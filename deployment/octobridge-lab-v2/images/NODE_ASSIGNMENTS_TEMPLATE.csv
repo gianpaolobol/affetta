@@ -1,0 +1,4 @@
+node_id,raspberry_model,revision_code,ram_mb,printer_id,hostname,sd_label,power_supply,usb_hub,network_adapter,mac_address,ip_reservation,status
+NODE-01,,,,predator-01,affetta-predator-01,PREDATOR-01,,,,,,planned
+NODE-02,,,,,,,,,,,,unassigned
+NODE-03,,,,,,,,,,,,unassigned

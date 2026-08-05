@@ -180,3 +180,64 @@ sudo bash lib/enable-experimental-printing.sh
 
 Richiede di digitare il bridge ID esatto. Non promuove mai la macchina a
 produzione.
+
+## P4.4.2 — Software readiness prima delle microSD
+
+Il pacchetto include ora un simulatore OctoPrint deterministico e una suite
+end-to-end che usa il codice reale presente in `octobridge-zero` e
+`server-lite`.
+
+Su Windows, dal repository Affetta:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+
+.\deployment\octobridge-lab-v2\tests\Invoke-AffettaOctoBridgeReadiness.ps1 `
+  -RepoRoot 'C:\AFFETTA_GITHUB_0412' `
+  -RuntimeRoot 'C:\AFFETTA_RUNTIME'
+```
+
+La suite verifica:
+
+- autenticazione OctoPrint e Bearer token OctoBridge;
+- upload multipart e conservazione byte-per-byte;
+- dimensione e SHA-256 locale/remoto;
+- errore di checksum e retry;
+- transfer, start, pausa, ripresa e annullamento;
+- completamento e fallimento;
+- pending-sync e acknowledge;
+- completamento mentre Affetta è spento;
+- riavvio del bridge e riconciliazione;
+- OctoPrint irraggiungibile senza perdita dell’API bridge;
+- adapter Server Lite reale;
+- test Python, Node e inventario di laboratorio;
+- assenza di `production_ready=true` e segreti evidenti.
+
+I report vengono salvati in:
+
+```text
+C:\AFFETTA_RUNTIME\reports\octobridge-readiness
+```
+
+Il workflow da installare come
+`.github/workflows/octobridge-readiness.yml` ripete gli stessi test su GitHub,
+inclusa una verifica dedicata in Python 3.7.
+
+### Simulatore manuale
+
+```powershell
+.\deployment\octobridge-lab-v2\simulator\Start-FakeOctoPrint.ps1
+```
+
+Il simulatore ascolta solo su `127.0.0.1` e non deve essere usato come server
+reale di stampa.
+
+### Preparazione SD
+
+```powershell
+.\deployment\octobridge-lab-v2\images\Prepare-AffettaSdPlan.ps1
+```
+
+La cartella runtime generata contiene matrice immagine, assegnazioni nodi ed
+etichette. Il collaudo fisico resta obbligatorio e nessun test software imposta
+`production_ready=true`.

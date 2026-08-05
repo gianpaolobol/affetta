@@ -1,0 +1,94 @@
+name: OctoBridge software readiness
+
+on:
+  push:
+    branches:
+      - main
+      - feature/octobridge-lab-v2
+    paths:
+      - 'octobridge-zero/**'
+      - 'server-lite/**'
+      - 'deployment/octobridge-lab-v2/**'
+      - '.github/workflows/octobridge-readiness.yml'
+  pull_request:
+    paths:
+      - 'octobridge-zero/**'
+      - 'server-lite/**'
+      - 'deployment/octobridge-lab-v2/**'
+      - '.github/workflows/octobridge-readiness.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: octobridge-readiness-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  software-readiness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Node dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+      - name: Validate deployment package
+        run: |
+          bash deployment/octobridge-lab-v2/tests/run-static-tests.sh
+          python deployment/octobridge-lab-v2/tests/validate_lab_package.py
+          python deployment/octobridge-lab-v2/tests/test_fake_octoprint.py
+
+      - name: Test OctoBridge Python
+        env:
+          PYTHONPATH: octobridge-zero
+        run: |
+          python -m compileall -q octobridge-zero/affetta_octobridge deployment/octobridge-lab-v2
+          python -m unittest discover -s octobridge-zero/tests -v
+
+      - name: Test Server Lite
+        run: node --test server-lite/test/*.test.js
+
+      - name: E2E Server Lite adapter
+        run: node deployment/octobridge-lab-v2/tests/e2e_server_lite_adapter.mjs --repo-root "$PWD"
+
+      - name: E2E OctoBridge with Fake OctoPrint
+        run: python deployment/octobridge-lab-v2/tests/e2e_octobridge_readiness.py --repo-root "$PWD"
+
+      - name: Full Affetta tests
+        run: npm test
+
+  python37-compatibility:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile and test under Python 3.7 container
+        run: |
+          docker run --rm \
+            -v "$PWD:/work" \
+            -w /work \
+            python:3.7.17-slim-bullseye \
+            sh -lc '
+              python -m compileall -q octobridge-zero/affetta_octobridge deployment/octobridge-lab-v2 &&
+              PYTHONPATH=octobridge-zero python -m unittest discover -s octobridge-zero/tests -v &&
+              python deployment/octobridge-lab-v2/tests/test_fake_octoprint.py &&
+              python deployment/octobridge-lab-v2/tests/e2e_octobridge_readiness.py --repo-root /work
+            '

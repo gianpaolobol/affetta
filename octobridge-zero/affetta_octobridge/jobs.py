@@ -123,12 +123,18 @@ class JobManager:
                 metadata = self.octoprint.file_metadata(remote_path)
                 remote_size = int(metadata.get("size", -1))
                 if remote_size != int(job["size_bytes"]):
-                    raise ValueError(f"dimensione remota OctoPrint {remote_size}, attesa {job['size_bytes']}")
+                    raise OctoPrintError(
+                        f"dimensione remota OctoPrint {remote_size}, attesa {job['size_bytes']}",
+                        code="remote_integrity_mismatch",
+                    )
                 verified_hash = None
                 if self.config.verify_remote_sha256:
                     verified_size, verified_hash = self.octoprint.download_sha256(remote_path)
                     if verified_size != int(job["size_bytes"]) or verified_hash != job["sha256"]:
-                        raise ValueError("verifica SHA-256 del file memorizzato da OctoPrint fallita")
+                        raise OctoPrintError(
+                            "verifica SHA-256 del file memorizzato da OctoPrint fallita",
+                            code="remote_integrity_mismatch",
+                        )
             except Exception as error:
                 self.store.set_state(job_id, "staged", reason="trasferimento OctoPrint fallito")
                 self.store.append_event(job_id, "octoprint.transfer_failed", {"error": str(error)})

@@ -1,0 +1,60 @@
+{
+  "schema_version": "affetta.octobridge-image-plan.v1",
+  "verified_on": "2026-08-06",
+  "source_page": "https://octoprint.org/download/",
+  "primary_image": {
+    "name": "OctoPi 1.1.0 32-bit",
+    "octoprint_version": "1.11.8",
+    "sha256": "5cfb364cee2c4d73e6b16db2297bbc5f86895e840820f135d9832a002442fdc2",
+    "installation_method": "Raspberry Pi Imager > Other Specific Purpose OS > 3D printing > OctoPi > stable",
+    "compatible_models": [
+      "Raspberry Pi 1A",
+      "Raspberry Pi 1A+",
+      "Raspberry Pi 1B",
+      "Raspberry Pi 1B+",
+      "Raspberry Pi Zero",
+      "Raspberry Pi Zero W"
+    ],
+    "support_note": "Pi 1 e Pi Zero sono compatibili con l’immagine ma non sono hardware raccomandato/supportato ufficialmente per carichi pesanti. Disabilitare webcam, timelapse e plugin non necessari."
+  },
+  "targets": [
+    {
+      "hardware": "Raspberry Pi 1 Model B",
+      "status": "candidate_pending_exact_revision",
+      "image": "OctoPi 1.1.0 32-bit",
+      "camera_default": false,
+      "plugins_allowed": false,
+      "pilot_priority": 1
+    },
+    {
+      "hardware": "Raspberry Pi Zero v1.2",
+      "status": "candidate_pending_physical_test",
+      "image": "OctoPi 1.1.0 32-bit",
+      "camera_default": false,
+      "plugins_allowed": false,
+      "pilot_priority": 3
+    },
+    {
+      "hardware": "Raspberry Pi Zero v1.3",
+      "status": "candidate_pending_physical_test",
+      "image": "OctoPi 1.1.0 32-bit",
+      "camera_default": false,
+      "plugins_allowed": false,
+      "pilot_priority": 2
+    }
+  ],
+  "gates": [
+    "boot",
+    "ssh",
+    "network",
+    "usb-host",
+    "octoprint-api",
+    "octobridge-health",
+    "serial-by-id",
+    "24h-stability",
+    "test-print",
+    "affetta-offline-continuity",
+    "restart-reconciliation"
+  ],
+  "production_ready": false
+}
