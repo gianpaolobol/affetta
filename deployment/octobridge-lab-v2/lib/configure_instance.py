@@ -74,6 +74,7 @@ def main():
     parser.add_argument("--serial-port", default="AUTO")
     parser.add_argument("--octoprint-url", default="http://127.0.0.1:5000")
     parser.add_argument("--octoprint-api-key-file", type=Path)
+    parser.add_argument("--bridge-token-file", type=Path)
     parser.add_argument("--enable-experimental-printing", action="store_true")
     parser.add_argument("--rotate-bridge-token", action="store_true")
     parser.add_argument("--endpoint-host")
@@ -105,9 +106,15 @@ def main():
     if len(api_key or "") < 10:
         raise SystemExit("API key OctoPrint assente o troppo corta.")
 
-    bridge_token = str(existing.get("api_token") or "").strip()
-    if args.rotate_bridge_token or len(bridge_token) < 32:
-        bridge_token = secrets.token_hex(32)
+    preprovisioned_bridge_token = read_secret_file(args.bridge_token_file)
+    if preprovisioned_bridge_token:
+        if len(preprovisioned_bridge_token) < 32:
+            raise SystemExit("Token bridge pre-provisionato assente o troppo corto.")
+        bridge_token = preprovisioned_bridge_token
+    else:
+        bridge_token = str(existing.get("api_token") or "").strip()
+        if args.rotate_bridge_token or len(bridge_token) < 32:
+            bridge_token = secrets.token_hex(32)
 
     serial_port = str(args.serial_port or "AUTO").strip()
     if not serial_port:

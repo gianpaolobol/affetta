@@ -190,6 +190,40 @@ class JobTests(unittest.TestCase):
             self.assertIn("cancelled", job["snapshots"])
 
 
+    def test_cancel_intent_is_persisted_before_remote_side_effect(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            manager, store, octo = self.make(tmp)
+            self.stage(manager)
+            manager.transfer_to_octoprint("job-1")
+            manager.start_job("job-1")
+            octo.mode = "printing"
+            manager.poll_once()
+            observed = []
+            original_cancel = octo.cancel
+
+            def cancel_after_observing_intent():
+                observed.append(store.load("job-1")["state"])
+                original_cancel()
+
+            octo.cancel = cancel_after_observing_intent
+            job = manager.cancel_job("job-1")
+            self.assertEqual(observed, ["cancel_requested"])
+            self.assertEqual(job["state"], "cancelled")
+
+    def test_stale_printing_observation_does_not_erase_cancel_request(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            manager, store, octo = self.make(tmp)
+            self.stage(manager)
+            manager.transfer_to_octoprint("job-1")
+            manager.start_job("job-1")
+            octo.mode = "printing"
+            manager.poll_once()
+            store.set_state("job-1", "cancel_requested")
+            manager.poll_once()
+            self.assertEqual(store.load("job-1")["state"], "cancel_requested")
+            octo.cancel()
+            manager.poll_once()
+            self.assertEqual(store.load("job-1")["state"], "cancelled")
     def test_external_cancellation_is_recorded_when_octoprint_exposes_cancelling(self):
         with tempfile.TemporaryDirectory() as tmp:
             manager, store, octo = self.make(tmp)

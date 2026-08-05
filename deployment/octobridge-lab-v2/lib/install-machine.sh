@@ -10,6 +10,8 @@ AFFETTA_SOURCE=""
 AFFETTA_REF="${AFFETTA_REF:-main}"
 SERIAL_PORT_REQUESTED="${SERIAL_PORT:-AUTO}"
 OCTOPRINT_URL="${OCTOPRINT_URL:-http://127.0.0.1:5000}"
+OCTOPRINT_API_KEY_FILE=""
+BRIDGE_TOKEN_FILE=""
 OCTOPRINT_SERVICE="${OCTOPRINT_SERVICE:-octoprint.service}"
 ENABLE_EXPERIMENTAL_PRINTING=0
 ROTATE_TOKEN=0
@@ -45,6 +47,8 @@ Opzioni:
   --serial-port AUTO|/dev/...       porta esplicita o rilevamento sicuro
   --octoprint-url URL               predefinito http://127.0.0.1:5000
   --octoprint-service NAME          predefinito octoprint.service
+  --octoprint-api-key-file PATH     API key OctoPrint da file 0600
+  --bridge-token-file PATH          token bridge pre-provisionato da file 0600
   --enable-experimental-printing    abilita start seriale, senza production_ready
   --rotate-token                    genera un nuovo token bridge
   --no-start                        installa e abilita senza avviare il servizio
@@ -71,6 +75,12 @@ while (( $# )); do
         --octoprint-service)
             [[ $# -ge 2 ]] || die "--octoprint-service richiede un valore"
             OCTOPRINT_SERVICE="$2"; shift 2 ;;
+        --octoprint-api-key-file)
+            [[ $# -ge 2 ]] || die "--octoprint-api-key-file richiede un valore"
+            OCTOPRINT_API_KEY_FILE="$2"; shift 2 ;;
+        --bridge-token-file)
+            [[ $# -ge 2 ]] || die "--bridge-token-file richiede un valore"
+            BRIDGE_TOKEN_FILE="$2"; shift 2 ;;
         --enable-experimental-printing)
             ENABLE_EXPERIMENTAL_PRINTING=1; shift ;;
         --rotate-token)
@@ -208,15 +218,23 @@ SECRET_FILE="$(mktemp)"
 trap 'rm -f -- "${SECRET_FILE}"' EXIT
 chmod 0600 "${SECRET_FILE}"
 
-if [[ -t 0 ]]; then
+if [[ -n "${OCTOPRINT_API_KEY_FILE}" ]]; then
+    [[ -f "${OCTOPRINT_API_KEY_FILE}" ]] || die "File API key OctoPrint non trovato: ${OCTOPRINT_API_KEY_FILE}"
+    OCTOPRINT_API_KEY="$(tr -d '\r\n' < "${OCTOPRINT_API_KEY_FILE}")"
+elif [[ -t 0 ]]; then
     read -rsp "API key OctoPrint: " OCTOPRINT_API_KEY
     printf '\n'
 else
-    die "Installazione non interattiva: fornire una TTY per inserire la API key."
+    die "Installazione non interattiva: usare --octoprint-api-key-file oppure fornire una TTY."
 fi
 [[ ${#OCTOPRINT_API_KEY} -ge 10 ]] || die "API key OctoPrint troppo corta."
 printf '%s\n' "${OCTOPRINT_API_KEY}" > "${SECRET_FILE}"
 unset OCTOPRINT_API_KEY
+
+if [[ -n "${BRIDGE_TOKEN_FILE}" ]]; then
+    [[ -f "${BRIDGE_TOKEN_FILE}" ]] || die "File token bridge non trovato: ${BRIDGE_TOKEN_FILE}"
+    chmod 0600 "${BRIDGE_TOKEN_FILE}" 2>/dev/null || true
+fi
 
 if systemctl is-active --quiet "${OCTOPRINT_SERVICE}" 2>/dev/null; then
     python3 "${SCRIPT_DIR}/check_octoprint.py" \
@@ -249,6 +267,7 @@ CONFIG_ARGS=(
     --octoprint-api-key-file "${SECRET_FILE}"
     --endpoint-host "${HOSTNAME_NEW}.local"
 )
+[[ -n "${BRIDGE_TOKEN_FILE}" ]] && CONFIG_ARGS+=(--bridge-token-file "${BRIDGE_TOKEN_FILE}")
 (( ENABLE_EXPERIMENTAL_PRINTING )) && CONFIG_ARGS+=(--enable-experimental-printing)
 (( ROTATE_TOKEN )) && CONFIG_ARGS+=(--rotate-bridge-token)
 

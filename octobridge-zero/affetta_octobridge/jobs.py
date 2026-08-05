@@ -213,11 +213,24 @@ class JobManager:
     def cancel_job(self, job_id: str) -> dict[str, Any]:
         with self._lock:
             job = self.store.load(job_id)
-            if job.get("state") not in ("starting", "printing", "paused"):
+            previous_state = job.get("state")
+            if previous_state not in ("starting", "printing", "paused", "cancel_requested"):
                 raise JobConflict("annullamento non consentito nello stato corrente")
-            self.octoprint.cancel()
-            self.store.set_state(job_id, "cancel_requested", cancel_requested_at=utc_now())
-            self.store.append_event(job_id, "octoprint.cancel_requested", {})
+            if previous_state != "cancel_requested":
+                self.store.set_state(job_id, "cancel_requested", cancel_requested_at=utc_now())
+                self.store.append_event(job_id, "octoprint.cancel_requested", {})
+            try:
+                self.octoprint.cancel()
+            except Exception as error:
+                self.store.append_event(job_id, "octoprint.cancel_request_failed", {
+                    "error": str(error),
+                    "state_retained": "cancel_requested",
+                })
+                raise
+            # Conferma subito quando il controller Ã¨ giÃ  tornato idle.
+            # Con un controller ancora in transizione, poll_once conserva
+            # cancel_requested e il monitor completerÃ  la riconciliazione.
+            self.poll_once()
             return self.store.load(job_id)
 
     def pause_job(self, job_id: str) -> dict[str, Any]:
@@ -393,52 +406,69 @@ class JobManager:
                 self._last_bridge_error = str(error)
 
     def poll_once(self) -> None:
-        active_jobs = [job for job in self.store.nonterminal_jobs() if job.get("state") in ACTIVE_STATES]
-        if not active_jobs:
-            return
-        try:
-            raw = self.octoprint.state()
-            observation = self.normalize_observation(raw)
-        except Exception as error:
-            for job in active_jobs:
-                self.store.append_event(job["job_id"], "monitor.unreachable", {"error": str(error)})
-            return
-        for job in active_jobs:
-            job_id = job["job_id"]
-            remote = (job.get("octoprint") or {}).get("remote_path")
-            active_file = observation.get("active_file")
-            same_file = remote and active_file and Path(str(remote)).name == Path(str(active_file)).name
-            previous_state = job.get("state")
-            observed_state = observation["job_status"]
-            if same_file and observed_state in ("printing", "paused"):
-                self.store.set_state(job_id, observed_state, last_observation=observation)
-                progress = observation.get("progress_percent")
-                if progress is not None:
-                    for threshold, key, filename in SNAPSHOT_PLAN:
-                        if progress >= threshold:
-                            self._capture(job_id, key, filename, required=False)
-                continue
-            if observed_state == "cancel_requested" and previous_state in ("starting", "printing", "paused"):
-                self.store.set_state(job_id, "cancel_requested", reason="annullamento rilevato da OctoPrint")
-                continue
-            if observed_state in ("failed", "interrupted") and previous_state in ACTIVE_STATES:
-                self._finalize(job_id, observed_state, "evento esplicito OctoPrint")
-                continue
-            if previous_state == "cancel_requested" and observed_state == "none":
-                self._finalize(job_id, "cancelled", "annullamento richiesto da Affetta e confermato da OctoPrint")
-                continue
-            if previous_state in ("starting", "printing", "paused") and observed_state == "none":
-                outcome = self._explicit_terminal_from_file(job, observation)
-                if outcome:
-                    self._finalize(job_id, outcome, "esito registrato da OctoPrint")
-                elif previous_state == "starting":
-                    # può servire qualche polling prima che il file diventi attivo
-                    age = time.time() - self._iso_epoch(job.get("start_requested_at"))
-                    if age > 90:
-                        self.store.set_state(job_id, "outcome_unknown", reason="avvio non confermato entro 90 secondi")
-                else:
-                    self.store.set_state(job_id, "outcome_unknown", reason="stampa non più attiva, esito non verificabile")
+        # Serializza il polling con start/cancel/pause/resume: una risposta
+        # OctoPrint iniziata prima del comando non deve sovrascrivere
+        # l'intenzione locale piÃ¹ recente.
+        with self._lock:
+            active_jobs = [job for job in self.store.nonterminal_jobs() if job.get("state") in ACTIVE_STATES]
+            if not active_jobs:
+                return
+            try:
+                raw = self.octoprint.state()
+                observation = self.normalize_observation(raw)
+            except Exception as error:
+                for job in active_jobs:
+                    self.store.append_event(job["job_id"], "monitor.unreachable", {"error": str(error)})
+                return
+            for listed_job in active_jobs:
+                job_id = listed_job["job_id"]
+                # Ricarica sotto lock per non usare uno stato letto prima di
+                # un comando concorrente.
+                job = self.store.load(job_id)
+                previous_state = job.get("state")
+                if previous_state not in ACTIVE_STATES:
+                    continue
+                remote = (job.get("octoprint") or {}).get("remote_path")
+                active_file = observation.get("active_file")
+                same_file = remote and active_file and Path(str(remote)).name == Path(str(active_file)).name
+                observed_state = observation["job_status"]
 
+                # L'intenzione di annullamento Ã¨ monotona: non viene mai
+                # riportata a printing/paused da un'osservazione precedente.
+                if previous_state == "cancel_requested":
+                    if observed_state == "none":
+                        self._finalize(job_id, "cancelled", "annullamento richiesto da Affetta e confermato da OctoPrint")
+                    elif observed_state in ("failed", "interrupted"):
+                        self._finalize(job_id, observed_state, "errore esplicito durante l'annullamento")
+                    else:
+                        self.store.update(job_id, last_observation=observation)
+                    continue
+
+                if same_file and observed_state in ("printing", "paused"):
+                    self.store.set_state(job_id, observed_state, last_observation=observation)
+                    progress = observation.get("progress_percent")
+                    if progress is not None:
+                        for threshold, key, filename in SNAPSHOT_PLAN:
+                            if progress >= threshold:
+                                self._capture(job_id, key, filename, required=False)
+                    continue
+                if observed_state == "cancel_requested" and previous_state in ("starting", "printing", "paused"):
+                    self.store.set_state(job_id, "cancel_requested", reason="annullamento rilevato da OctoPrint")
+                    continue
+                if observed_state in ("failed", "interrupted") and previous_state in ACTIVE_STATES:
+                    self._finalize(job_id, observed_state, "evento esplicito OctoPrint")
+                    continue
+                if previous_state in ("starting", "printing", "paused") and observed_state == "none":
+                    outcome = self._explicit_terminal_from_file(job, observation)
+                    if outcome:
+                        self._finalize(job_id, outcome, "esito registrato da OctoPrint")
+                    elif previous_state == "starting":
+                        # puÃ² servire qualche polling prima che il file diventi attivo
+                        age = time.time() - self._iso_epoch(job.get("start_requested_at"))
+                        if age > 90:
+                            self.store.set_state(job_id, "outcome_unknown", reason="avvio non confermato entro 90 secondi")
+                    else:
+                        self.store.set_state(job_id, "outcome_unknown", reason="stampa non piÃ¹ attiva, esito non verificabile")
     @staticmethod
     def _iso_epoch(value: str | None) -> float:
         if not value:

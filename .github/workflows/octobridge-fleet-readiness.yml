@@ -1,0 +1,50 @@
+name: OctoBridge fleet readiness
+
+on:
+  push:
+    branches: [main, feature/octobridge-lab-v2]
+    paths:
+      - 'octobridge-zero/**'
+      - 'server-lite/**'
+      - 'deployment/octobridge-lab-v2/fleet/**'
+      - 'deployment/octobridge-lab-v2/tests/e2e_fleet_readiness.py'
+      - 'deployment/octobridge-lab-v2/tests/e2e_server_lite_fleet.mjs'
+      - 'deployment/octobridge-lab-v2/tests/test_fleet_provisioning.py'
+      - 'deployment/octobridge-lab-v2/tests/validate_fleet_readiness.py'
+      - '.github/workflows/octobridge-fleet-readiness.yml'
+  pull_request:
+    paths:
+      - 'octobridge-zero/**'
+      - 'server-lite/**'
+      - 'deployment/octobridge-lab-v2/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: octobridge-fleet-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fleet-readiness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Node dependencies
+        run: if [ -f package-lock.json ]; then npm ci; else npm install; fi
+      - name: Static and provisioning tests
+        run: |
+          python deployment/octobridge-lab-v2/tests/validate_fleet_readiness.py deployment/octobridge-lab-v2
+          python deployment/octobridge-lab-v2/tests/test_fleet_provisioning.py
+          python -m compileall -q deployment/octobridge-lab-v2 octobridge-zero/affetta_octobridge
+      - name: Twelve-node fleet E2E
+        run: python deployment/octobridge-lab-v2/tests/e2e_fleet_readiness.py --repo-root "$PWD"

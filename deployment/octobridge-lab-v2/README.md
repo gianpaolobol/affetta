@@ -241,3 +241,25 @@ reale di stampa.
 La cartella runtime generata contiene matrice immagine, assegnazioni nodi ed
 etichette. Il collaudo fisico resta obbligatorio e nessun test software imposta
 `production_ready=true`.
+
+
+## P4.4.3 — Fleet readiness e provisioning SD
+
+La simulazione estesa avvia dodici coppie Fake OctoPrint/OctoBridge e verifica
+isolamento, parallelismo, nodo offline e riconciliazione:
+
+```powershell
+.\fleet\Invoke-AffettaFleetReadiness.ps1
+```
+
+Generazione dei token e dei bundle fuori da Git:
+
+```powershell
+.\fleet\New-AffettaFleetProvisioning.ps1
+.\fleet\Prepare-Predator01Pilot.ps1
+```
+
+I segreti vengono salvati esclusivamente sotto `C:\AFFETTA_RUNTIME` con ACL
+restrittive. La API key OctoPrint viene inserita dopo il primo avvio del nodo.
+Il bundle include i sorgenti Affetta, ma pacchetti OS e installazione iniziale
+di OctoPrint possono ancora richiedere Internet.
