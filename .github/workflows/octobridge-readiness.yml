@@ -6,12 +6,14 @@ on:
       - main
       - feature/octobridge-lab-v2
     paths:
+      - 'package-lock.json'
       - 'octobridge-zero/**'
       - 'server-lite/**'
       - 'deployment/octobridge-lab-v2/**'
       - '.github/workflows/octobridge-readiness.yml'
   pull_request:
     paths:
+      - 'package-lock.json'
       - 'octobridge-zero/**'
       - 'server-lite/**'
       - 'deployment/octobridge-lab-v2/**'
