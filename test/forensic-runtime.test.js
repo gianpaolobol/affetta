@@ -52,7 +52,7 @@ test('diagnostica forense copre fasi HTTP, rejection job e stream artefatto', ()
 test('runProcess limita i buffer in memoria e conserva output completo su file', async () => {
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'affetta-runprocess-'));
   const script = path.join(temp, 'noisy.mjs');
-  fs.writeFileSync(script, `process.stdout.write('O'.repeat(180000)); process.stderr.write('E'.repeat(170000)); process.exit(7);`);
+  fs.writeFileSync(script, `process.stdout.write('O'.repeat(180000)); process.stderr.write('E'.repeat(170000)); process.exitCode = 7;`);
   try {
     await assert.rejects(
       runProcess(process.execPath, [script], { cwd: temp, diagnosticDir: path.join(temp, 'logs'), timeoutMs: 5000 }),

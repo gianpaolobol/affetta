@@ -7,6 +7,10 @@ on:
       - feature/octobridge-lab-v2
     paths:
       - 'package-lock.json'
+      - 'package.json'
+      - 'src/**'
+      - 'scripts/**'
+      - 'test/**'
       - 'octobridge-zero/**'
       - 'server-lite/**'
       - 'deployment/octobridge-lab-v2/**'
@@ -14,6 +18,10 @@ on:
   pull_request:
     paths:
       - 'package-lock.json'
+      - 'package.json'
+      - 'src/**'
+      - 'scripts/**'
+      - 'test/**'
       - 'octobridge-zero/**'
       - 'server-lite/**'
       - 'deployment/octobridge-lab-v2/**'
