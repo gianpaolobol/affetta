@@ -1,0 +1,103 @@
+{
+  "schema_version": "affetta.octobridge-sd-baseline.v1",
+  "baseline_id": "AFFETTA-OCTOBRIDGE-SD-V1",
+  "captured_on": "2026-08-13",
+  "status": "pilot_validated_partial",
+  "source_pilot": {
+    "fleet_unit_id": "taz-03",
+    "printer": "LulzBot TAZ 6",
+    "hostname": "affetta-taz-03",
+    "raspberry_model": "Raspberry Pi Model B Rev 2",
+    "soc": "BCM2835",
+    "architecture": "armv6l"
+  },
+  "platform": {
+    "octopi_version": "1.1.0",
+    "octoprint_version": "1.11.8",
+    "python_version": "3.11.2",
+    "image": "OctoPi 1.1.0 32-bit",
+    "timezone": "Europe/Rome",
+    "keyboard": "it",
+    "wifi_country": "IT",
+    "ssh_enabled": true,
+    "octoprint_service_enabled": true,
+    "octoprint_bind": "127.0.0.1:5000"
+  },
+  "armv6_runtime_fix": {
+    "applies_when": "platform.machine() == armv6l",
+    "package": "pydantic_core",
+    "package_version": "2.46.4",
+    "pydantic_version": "2.13.4",
+    "wheel_tag": "cp311-cp311-linux_armv6l",
+    "fixed_wheel_sha256": "641aa429ed5be3c52d0d69b1d01e20019efc7d6139fdc224884ebf1dd4e67e02",
+    "policy": "install only the validated ARMv6 wheel; do not upgrade or downgrade pydantic, pydantic_core, pip, OctoPrint or OctoPi during pilot validation",
+    "validated": true
+  },
+  "camera": {
+    "enabled": true,
+    "camera_auto_detect": 1,
+    "validated_sensor": "ov5647",
+    "validated_mode": "640x480",
+    "primary_mode": "continuous_mjpeg_stream",
+    "device_owner": "mjpg_streamer via webcamd",
+    "direct_rpicam_access_while_streaming": false,
+    "milestone_snapshots_required": false,
+    "snapshot_policy": "optional/on-demand from the existing stream; never contend directly for /dev/video0 while mjpg_streamer owns it"
+  },
+  "network": {
+    "preferred": "ethernet_when_available",
+    "addressing": "DHCP with optional router-side reservation",
+    "hostname_pattern": "affetta-<fleet_unit_id>",
+    "mdns_pattern": "affetta-<fleet_unit_id>.local"
+  },
+  "safety": {
+    "serial_printing_enabled_default": false,
+    "production_ready": false,
+    "no_automatic_package_upgrades_during_pilot": true,
+    "printer_usb_must_be_validated_separately": true
+  },
+  "reusable_layer": {
+    "common": [
+      "OctoPi/OctoPrint/Python versions",
+      "ARMv6 pydantic_core repair when applicable",
+      "camera_auto_detect=1",
+      "MJPEG live-stream camera policy",
+      "timezone/locale policy",
+      "SSH enabled",
+      "OctoPrint service policy",
+      "serial printing disabled by default"
+    ],
+    "per_node_must_be_unique": [
+      "fleet_unit_id",
+      "hostname",
+      "bridge_id",
+      "printer_profile_id",
+      "printer USB serial/by-id identity",
+      "MAC/IP reservation",
+      "SSH host keys when cloning a raw SD image",
+      "credentials/secrets"
+    ]
+  },
+  "validation_gates_passed": [
+    "boot",
+    "ethernet_network",
+    "ssh",
+    "armv6_pydantic_core_import",
+    "pydantic_import",
+    "octoprint_service_active",
+    "camera_csi_detection",
+    "ov5647_detection",
+    "mjpg_streamer_owns_video0",
+    "octoprint_remains_active_with_camera"
+  ],
+  "validation_gates_pending": [
+    "printer_usb_serial_detection",
+    "read_only_serial_identification",
+    "controlled_serial_test",
+    "test_print",
+    "24h_stability",
+    "affetta_offline_continuity",
+    "restart_reconciliation"
+  ],
+  "production_ready": false
+}
