@@ -15,6 +15,6 @@
   "firmware": "TO_VERIFY",
   "board": "TO_VERIFY",
   "baudrate": "AUTO",
-  "camera_enabled": false,
-  "notes": "Unità fisica taz-03; calibrazione fisica ancora pendente."
+  "camera_enabled": true,
+  "notes": "Unità fisica taz-03; calibrazione fisica ancora pendente. Snapshot Affetta richiesti: pre-stampa, 25%, 50%, 75% e stato terminale."
 }
