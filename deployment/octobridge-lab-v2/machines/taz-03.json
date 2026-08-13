@@ -16,5 +16,5 @@
   "board": "TO_VERIFY",
   "baudrate": "AUTO",
   "camera_enabled": true,
-  "notes": "Unità fisica taz-03; calibrazione fisica ancora pendente. Snapshot Affetta richiesti: pre-stampa, 25%, 50%, 75% e stato terminale."
+  "notes": "Unità fisica taz-03; calibrazione fisica ancora pendente. Camera policy: live MJPEG continuo via OctoPi/webcamd/mjpg_streamer; snapshot milestone non obbligatori; evitare accesso diretto concorrente a /dev/video0."
 }
