@@ -45,7 +45,24 @@ Il pilot ha validato un sensore `OV5647` via CSI. La policy Affetta diventa:
 4. Gli snapshot pre-stampa/25%/50%/75%/terminale non sono più requisito obbligatorio.
 5. Se serve una foto statica, deve essere ricavata on-demand dallo stream o da un endpoint compatibile, senza contendere `/dev/video0` a `mjpg_streamer`.
 
-## Cosa si riusa e cosa NON si clona
+## Golden image sperimentale
+
+La decisione operativa è di creare subito, senza attendere lo stato `production_ready`, una immagine raw riutilizzabile della SD attualmente validata sul pilot `taz-03`.
+
+Nome artefatto previsto:
+
+`AFFETTA_OCTOBRIDGE_SD_V1_EXPERIMENTAL_2026-08-13.img`
+
+Ruolo:
+
+- base comune per nuovi nodi OctoBridge ancora sperimentali;
+- evita di ripetere installazione OctoPi, fix ARMv6, configurazione OctoPrint e configurazione camera;
+- NON trasferisce automaticamente la validazione hardware della TAZ6 alle altre stampanti;
+- ogni clone resta `production_ready=false` finché non supera i gate specifici della propria stampante.
+
+Il file raw va catturato dalla SD fisica validata dopo arresto corretto del Raspberry. Il repository include `Capture-AffettaGoldenSd.ps1`, che effettua una lettura raw della SD su Windows, genera SHA-256 e manifest e non modifica la SD sorgente.
+
+## Cosa si riusa e cosa deve essere personalizzato
 
 ### Riutilizzabile su tutti i nodi
 
@@ -59,24 +76,18 @@ La configurazione software sopra descritta, i gate, la policy camera, il fix ARM
 - `printer_profile_id`
 - identità USB/seriale della stampante
 - MAC e eventuale prenotazione DHCP
-- credenziali e segreti
-- SSH host keys se si effettua una clonazione binaria della SD
+- SSH host keys dopo una clonazione raw
+- credenziali/segreti quando richiesto dalla policy del nodo
 
-Per questo motivo una copia raw della SD non deve essere considerata pronta semplicemente perché avvia OctoPrint: prima dell'uso devono essere rigenerate/personalizzate le identità del nodo.
-
-## Strategia consigliata
-
-La configurazione corrente è salvata come `pilot_validated_partial`. Quando `taz-03` avrà superato anche USB/seriale, stampa controllata, stabilità 24h, continuità offline e riconciliazione al riavvio, la stessa baseline potrà essere promossa a `golden SD image`.
-
-Fino a quel momento la baseline serve per eliminare il lavoro già risolto (immagine OctoPi, ARMv6, OctoPrint, camera e policy video) ma non per saltare i gate hardware specifici della singola stampante.
+Non avviare contemporaneamente sulla stessa LAN la SD sorgente e più cloni raw non ancora re-identificati: hostname e SSH host keys della copia sono inizialmente quelli della SD sorgente.
 
 ## Processo per una nuova stampante
 
-1. Associare il nodo a una voce in `machines/index.json`.
-2. Preparare la SD con OctoPi 1.1.0 32-bit oppure clonare la futura golden image.
-3. Applicare la baseline comune.
-4. Personalizzare hostname/bridge/printer profile/credenziali/identità SSH.
-5. Verificare `pydantic_core` ARMv6 solo se il Raspberry è `armv6l`.
+1. Scrivere `AFFETTA_OCTOBRIDGE_SD_V1_EXPERIMENTAL_2026-08-13.img` su una SD della stessa capacità o superiore.
+2. Avviare un solo clone alla volta durante la fase di re-identificazione.
+3. Personalizzare hostname, `fleet_unit_id`, `bridge_id` e `printer_profile_id`.
+4. Rigenerare le SSH host keys del clone prima dell'uso parallelo in LAN.
+5. Registrare MAC e prenotazione DHCP se prevista.
 6. Verificare OctoPrint `active`.
 7. Verificare camera/live stream se prevista.
 8. Solo dopo collegare la stampante e iniziare il gate USB/seriale specifico.
@@ -95,7 +106,7 @@ Passati sul pilot `taz-03`:
 - OV5647 rilevata
 - streaming gestito da `mjpg_streamer`
 
-Pendenti:
+Pendenti e volutamente NON incorporati come validazione hardware globale:
 
 - USB/seriale TAZ6
 - test seriali controllati
@@ -104,4 +115,4 @@ Pendenti:
 - continuità Affetta offline
 - riconciliazione dopo restart
 
-La baseline resta pertanto sperimentale e `production_ready=false`.
+La golden image V1 resta quindi sperimentale e `production_ready=false` per definizione.
