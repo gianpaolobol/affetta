@@ -50,6 +50,15 @@
     "hostname_pattern": "affetta-<fleet_unit_id>",
     "mdns_pattern": "affetta-<fleet_unit_id>.local"
   },
+  "image_artifact": {
+    "name": "AFFETTA_OCTOBRIDGE_SD_V1_EXPERIMENTAL_2026-08-13.img",
+    "role": "reusable_raw_sd_baseline_for_non-production-ready_nodes",
+    "source": "validated taz-03 SD state after ARMv6/OctoPrint/camera gates",
+    "capture_tool": "Capture-AffettaGoldenSd.ps1",
+    "capture_state": "physical_sd_capture_pending",
+    "production_ready": false,
+    "target_policy": "write only to same-size-or-larger SD cards; after cloning, re-identify the node before parallel LAN use"
+  },
   "safety": {
     "serial_printing_enabled_default": false,
     "production_ready": false,
