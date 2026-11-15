@@ -1,5 +1,8 @@
 # Affetta 0.5.2 — Thing-O-Matic e output X3G
 
+> **Copyright © 2026 Gian Paolo Franceschini** — Tutti i diritti riservati sui soli contributi originali di sua legittima titolarità, nel rispetto delle licenze e dei diritti di terzi. Vedi la [dichiarazione di tutela](RIGHTS_NOTICE.md).
+
+
 Affetta 0.5.2 integra la pipeline sperimentale CuraEngine → GPX `t6` → X3G per MakerBot Thing-O-Matic e mantiene la separazione tra modelli pubblici, profili interni e unità fisiche del laboratorio.
 
 ## Novità principali
